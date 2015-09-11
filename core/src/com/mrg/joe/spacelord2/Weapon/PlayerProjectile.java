@@ -15,6 +15,8 @@ public class PlayerProjectile extends Projectile {
 
         super(player.getPlayerNosePosition(), damage, new Texture("weapons/laser.png"));
 
+        this.sprite.setX(this.getX() - this.sprite.getWidth()/2);
+
     }
 
     @Override

@@ -21,12 +21,14 @@ public class Projectile {
     private int damage;
 
 
+
     public Projectile(float[] pos, int damage, Texture texture){
 
         this.texture = texture;
         this.sprite = new Sprite(texture);
         this.sprite.setPosition(pos[0], pos[1]);
         this.damage = damage;
+
 
     }
 
@@ -84,6 +86,7 @@ public class Projectile {
 
 
     }
+
 
 
 

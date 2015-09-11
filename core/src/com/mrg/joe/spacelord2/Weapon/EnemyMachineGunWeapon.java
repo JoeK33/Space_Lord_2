@@ -31,7 +31,7 @@ public class EnemyMachineGunWeapon extends Weapon {
         if(this.isOn){
 
         // creates new projectiles every interval in seconds
-        if ( System.nanoTime() > interval + (5 * 1000000000)) {
+        if ( System.nanoTime() > interval + (5L * 1000000000L )) {
             projectiles.add(new EnemyMgProjectile(enemy.getNosePos()));
 
             interval = System.nanoTime();

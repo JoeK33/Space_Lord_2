@@ -10,6 +10,7 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SpaceLord2 extends ApplicationAdapter {
@@ -62,10 +63,12 @@ public class SpaceLord2 extends ApplicationAdapter {
 
 		enemyList = manager.getEnemyList();
 
-		List projectiles = getPlayerProjectiles();
+
+
+
 		List enemyProjectiles = new ArrayList();
 
-		collisionHandler.handle(delta, projectiles, enemyProjectiles, enemyList, player);
+		collisionHandler.handle(delta, player.getWeapons(), enemyProjectiles, enemyList, player);
 
 		// draw here
 		batch.begin();
@@ -78,6 +81,7 @@ public class SpaceLord2 extends ApplicationAdapter {
 			e.draw(batch);
 		}
 		batch.end();
+
 	}
 
 	@Override
@@ -94,16 +98,5 @@ public class SpaceLord2 extends ApplicationAdapter {
 		return player;
 	}
 
-	public List getPlayerProjectiles(){
 
-		List projectiles = new ArrayList();
-
-
-		for(Weapon w:player.getWeapons()){
-			projectiles.add(w.getProjectiles());
-		}
-
-		return projectiles;
-
-	}
 }

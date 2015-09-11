@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
+import com.mrg.joe.spacelord2.Weapon.PlayerRocketWeapon;
+import com.mrg.joe.spacelord2.Weapon.PlayerShotgunWeapon;
 import com.mrg.joe.spacelord2.Weapon.PlayerWeapon;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
@@ -32,8 +34,13 @@ public class Player {
 
 
         // players weapons go here.
-        this.weapons = new Weapon[1];
+        this.weapons = new Weapon[3];
         this.weapons[0] = new PlayerWeapon(this);
+       // this.weapons[0].turnOff();
+        this.weapons[1] = new PlayerShotgunWeapon(this);
+       // this.weapons[1].turnOff();
+        this.weapons[2] = new PlayerRocketWeapon(this);
+        // this.weapons[2].turnOff();
 
 
         this.sprite.setPosition((Gdx.graphics.getWidth()/2) - (this.sprite.getWidth()/2), Gdx.graphics.getHeight()/6);
@@ -140,7 +147,7 @@ public class Player {
 
     public void dispose(){
         this.texture.dispose();
-        this.dispose();
+
     }
 
 }

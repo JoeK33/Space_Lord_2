@@ -1,7 +1,9 @@
 package com.mrg.joe.spacelord2;
 
+import com.badlogic.gdx.Gdx;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Weapon.Projectile;
+import com.mrg.joe.spacelord2.Weapon.Weapon;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +20,7 @@ public class CollisionHandler {
 
 
 
-    public void handle(float delta, List projectiles, List enemyProjectiles, List enemyList, Player player){
+    public void handle(float delta, Weapon[] weapons, List enemyProjectiles, List enemyList, Player player){
 
 
     // iterate over all player projectles in play
@@ -37,16 +39,30 @@ public class CollisionHandler {
         }
 
 
-        for(Iterator ite = projectiles.iterator(); ite.hasNext();){
-            Projectile p = (Projectile)ite.next();
 
-            // if a player shot hits an enemy, damage the enemy and remove the shot
-            if(e.isColliding(p.getBoundingRectangle())){
-                e.doDamage(p.getDamage());
-                ite.remove();
-            }
+for(Weapon w: weapons){
+    List projectiles = w.getProjectiles();
 
+    for(Iterator ite = projectiles.iterator(); ite.hasNext();){
+        Projectile p = (Projectile)ite.next();
+
+        // if a player shot hits an enemy, damage the enemy and remove the shot
+        if(e.isColliding(p.getBoundingRectangle())){
+            e.doDamage(p.getDamage());
+            p.remove();
+
+            ite.remove();
         }
+
+    }
+
+}
+
+
+
+
+
+
         // purge dead enemies
         if(!e.isAlive()){
 

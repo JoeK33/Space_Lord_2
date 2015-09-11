@@ -7,9 +7,11 @@ public class GameConstants {
 
     public static final int projectile_speed = 500;
     public static final int player_laser_damage = 5;
+    public static final int player_shotgun_damage = 5;
+    public static final int player_rocket_damage = 5;
 
     // in seconds
-    public static final float projectile_creation_interval = .2f;
+    public static final float projectile_creation_interval = .5f;
 
     public static final int fighter_health = 50;
     public static final int enemy_small_health = 20;

@@ -36,12 +36,13 @@ public class Weapon {
 
     }
 
-    public void replaceProjectileList(List p){
-        this.projectiles = p;
-    }
 
     public void turnOff(){
         this.isOn = false;
+    }
+
+    public void turnOn(){
+        this.isOn = true;
     }
 
     public boolean isOn(){
