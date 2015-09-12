@@ -3,8 +3,10 @@ package com.mrg.joe.spacelord2;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Enemy.EnemyManager;
+import com.mrg.joe.spacelord2.Powerups.PowerupHandler;
 import com.mrg.joe.spacelord2.Weapon.Projectile;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
@@ -24,6 +26,8 @@ public class SpaceLord2 extends ApplicationAdapter {
 	private BackGround background;
 	private EnemyManager manager;
 	private CollisionHandler collisionHandler;
+	private HUD hud;
+	private PowerupHandler powerupHandler;
 
 
 
@@ -38,6 +42,8 @@ public class SpaceLord2 extends ApplicationAdapter {
 		player = new Player();
 		manager = new EnemyManager();
 		collisionHandler = new CollisionHandler();
+		hud = new HUD(player);
+		powerupHandler = new PowerupHandler(player);
 
 
 
@@ -46,6 +52,7 @@ public class SpaceLord2 extends ApplicationAdapter {
 
 		background = new BackGround();
 		Gdx.input.setInputProcessor(new TouchHandler(player));
+
 
 
 
@@ -60,6 +67,8 @@ public class SpaceLord2 extends ApplicationAdapter {
 		background.update();
 		player.update(delta);
 		manager.update();
+		powerupHandler.update(delta);
+		powerupHandler.tryDeploy();
 
 		enemyList = manager.getEnemyList();
 
@@ -75,11 +84,16 @@ public class SpaceLord2 extends ApplicationAdapter {
 		background.draw(batch);
 		player.draw(batch);
 
+
 		// draw all the enemies
 		for (Iterator it = enemyList.iterator(); it.hasNext();){
 			Enemy e = (Enemy)it.next();
 			e.draw(batch);
 		}
+
+		powerupHandler.draw(batch);
+
+		hud.draw(batch);
 		batch.end();
 
 	}
@@ -90,6 +104,7 @@ public class SpaceLord2 extends ApplicationAdapter {
 		batch.dispose();
 		player.dispose();
 		background.dispose();
+		hud.dispose();
 
 	}
 

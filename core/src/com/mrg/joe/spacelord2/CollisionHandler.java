@@ -49,6 +49,7 @@ for(Weapon w: weapons){
         // if a player shot hits an enemy, damage the enemy and remove the shot
         if(e.isColliding(p.getBoundingRectangle())){
             e.doDamage(p.getDamage());
+            player.addScore(p.getDamage());
             p.remove();
 
             ite.remove();
@@ -95,6 +96,7 @@ for(Weapon w: weapons){
         Projectile p = (Projectile)i.next();
         if(p.isColliding(player.getBoundingRectangle())){
             p.remove();
+            i.remove();
             player.takeHit();
         }
 
