@@ -51,7 +51,6 @@ for(Weapon w: weapons){
             e.doDamage(p.getDamage());
             player.addScore(p.getDamage());
             p.remove();
-
             ite.remove();
         }
 
@@ -76,6 +75,7 @@ for(Weapon w: weapons){
             if(e.getWeapon() == null){
                 it.remove();
             }else if (e.getWeapon().getProjectiles().isEmpty()){
+                e.dispose();
                 it.remove();
             }
 
@@ -92,15 +92,19 @@ for(Weapon w: weapons){
     }
 
     // go over enemy projectiles to check player hit
-    for(Iterator i = enemyProjectiles.iterator(); i.hasNext();){
-        Projectile p = (Projectile)i.next();
-        if(p.isColliding(player.getBoundingRectangle())){
-            p.remove();
-            i.remove();
-            player.takeHit();
+        if(player.isAlive()) {
+            for (Iterator i = enemyProjectiles.iterator(); i.hasNext(); ) {
+                Projectile p = (Projectile) i.next();
+                if (p.isColliding(player.getBoundingRectangle())) {
+                    p.remove();
+                    i.remove();
+                    player.takeHit();
+                }
+
+
+            }
         }
-
-
-    }
 }
+
+
 }

@@ -100,4 +100,8 @@ public class Weapon {
         this.damage = damage;
     }
 
+    public void clear(){
+        this.projectiles.clear();
+    }
+
 }

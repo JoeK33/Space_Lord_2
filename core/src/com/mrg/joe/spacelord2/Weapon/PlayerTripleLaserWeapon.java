@@ -7,15 +7,15 @@ import com.mrg.joe.spacelord2.Player;
 import java.util.Iterator;
 
 /**
- * Created by Joe on 8/28/2015.
+ * Created by Joe on 9/14/2015.
  */
-public class PlayerWeapon extends Weapon {
+public class PlayerTripleLaserWeapon extends Weapon {
+
 
     private Player player;
 
 
-
-    public PlayerWeapon(Player player) {
+    public PlayerTripleLaserWeapon(Player player) {
 
         this.player = player;
         this.damage = GameConstants.player_laser_damage;
@@ -30,7 +30,9 @@ public class PlayerWeapon extends Weapon {
         // creates new projectiles every interval in seconds
         if(this.isOn) {
             if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
-                projectiles.add(new PlayerProjectile(this.player, GameConstants.player_laser_damage));
+                projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage,new float[] {player.getCenterX() - (player.getWidth()/4), player.getY() + player.getHeight()}));
+                projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage,new float[] {player.getCenterX() + (player.getWidth()/4), player.getY() + player.getHeight()}));
+
 
                 interval = System.nanoTime();
             }
@@ -48,7 +50,6 @@ public class PlayerWeapon extends Weapon {
                     itr.remove();
 
                 }
-                           }
 
 
             }
@@ -56,4 +57,4 @@ public class PlayerWeapon extends Weapon {
         }
     }
 
-
+}

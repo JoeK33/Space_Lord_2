@@ -16,6 +16,7 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 public class EnemyBoss extends Enemy {
 
     private Weapon weapon;
+    private int small_projectile_width = 12;
 
 
     public EnemyBoss(float x, float y, Behavior b) {
@@ -40,19 +41,19 @@ public class EnemyBoss extends Enemy {
 
     public float[] getWeapon1Pos() {
         float[] pos = this.getNosePos();
-        pos[0] -= (this.getWidth() / 10);
+        pos[0] -= ((this.getWidth() / 10 + small_projectile_width ));
         return pos;
     }
 
     public float[] getWeapon2Pos() {
         float[] pos = this.getNosePos();
-        pos[0] += (this.getWidth() / 10);
+        pos[0] += ((this.getWidth() / 10) - small_projectile_width);
         return pos;
     }
 
     public float[] getWeapon3Pos() {
         float[] pos = this.getNosePos();
-        pos[0] -= this.getWidth() / 10;
+        pos[0] -= this.getWidth() / 10 - (2 * small_projectile_width);
         pos[1] += this.getHeight() / 2;
 
         return pos;

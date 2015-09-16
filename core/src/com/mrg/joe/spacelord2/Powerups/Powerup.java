@@ -20,13 +20,16 @@ public class Powerup {
 
         if(this.type == PowerupType.HEALTH){
 
-            this.sprite = new Sprite(new Texture("health_pickup.png"));
+            this.sprite = new Sprite(new Texture("health_pickup1.png"));
         } else if(this.type == PowerupType.SHOTGUN){
 
             this.sprite = new Sprite(new Texture("shotgun_pickup.png"));
         }else if(this.type == PowerupType.ROCKETS){
 
             this.sprite = new Sprite(new Texture("rocket_pickup.png"));
+        }else if(this.type == PowerupType.LASER){
+
+            this.sprite = new Sprite(new Texture("minigun_pickup.png"));
         }
 
     }

@@ -2,6 +2,7 @@ package com.mrg.joe.spacelord2.Weapon;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.GameConstants;
 
@@ -12,7 +13,7 @@ import java.util.Iterator;
  */
 public class EnemyMachineGunWeapon extends Weapon {
 
-
+private int small_projectile_width = 12;
 
     private Enemy enemy;
 
@@ -32,9 +33,33 @@ public class EnemyMachineGunWeapon extends Weapon {
 
         // creates new projectiles every interval in seconds
         if ( System.nanoTime() > interval + (5L * 1000000000L )) {
-            projectiles.add(new EnemyMgProjectile(enemy.getNosePos()));
+            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
 
             interval = System.nanoTime();
+
+
+            Timer timer = new Timer();
+            timer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    if(enemy.isAlive()) {
+                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
+                    }
+
+                }
+            }, .2f);
+
+            Timer timer2 = new Timer();
+            timer2.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+
+                    if(enemy.isAlive()) {
+                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
+                    }
+                }
+            }, .4f);
+
         }}
 
         if (!projectiles.isEmpty()) {

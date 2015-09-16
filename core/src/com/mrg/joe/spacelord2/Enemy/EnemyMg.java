@@ -13,8 +13,8 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 public class EnemyMg extends Enemy{
 
 
-    private Weapon weapon;
 
+    private Weapon weapon;
 
     public EnemyMg(float x, float y, Behavior b) {
 
@@ -24,6 +24,7 @@ public class EnemyMg extends Enemy{
         super.weapon = this.weapon;
 
 
+
     }
 
 
@@ -31,11 +32,8 @@ public class EnemyMg extends Enemy{
 
     @Override
     public void update(float delta){
-
+this.weapon.update(delta);
         super.update(delta);
-
-        this.weapon.update(delta);
-
 
 
     }

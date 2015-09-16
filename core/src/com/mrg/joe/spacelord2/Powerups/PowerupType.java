@@ -5,5 +5,5 @@ package com.mrg.joe.spacelord2.Powerups;
  */
 public enum PowerupType {
 
-    SHOTGUN, ROCKETS, HEALTH
+    SHOTGUN, ROCKETS, HEALTH, LASER
 }

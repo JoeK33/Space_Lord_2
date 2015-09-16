@@ -11,7 +11,7 @@ public class PowerupHandler {
 
     private Player player;
     private Powerup[] powerups;
-    private int number_of_powerups = 3;
+    private int number_of_powerups = 4;
 
     public PowerupHandler(Player player){
         this.player = player;
@@ -20,6 +20,7 @@ public class PowerupHandler {
         powerups[0] = new Powerup(PowerupType.HEALTH);
         powerups[1] = new Powerup(PowerupType.SHOTGUN);
         powerups[2] = new Powerup(PowerupType.ROCKETS);
+        powerups[3] = new Powerup(PowerupType.LASER);
 
         for(Powerup p: powerups){
 
@@ -39,10 +40,10 @@ public class PowerupHandler {
     public void tryDeploy(){
 
         // try to deploy a powerup
-          //if(((int)Math.random() * 100) == 50) {
+          if(((int)(Math.random() * 100)) == 50) {
 
             powerups[(int) (Math.random() * number_of_powerups)].spawn();
-       // }
+        }
 
 
     }
@@ -51,9 +52,12 @@ public class PowerupHandler {
 
         for(Powerup p: powerups){
             p.update(delta);
+
+            if(player.isAlive()) {
             if(p.isColliding(player.getBoundingRectangle())){
-                player.Powerup(p.getType());
-                p.remove();
+                    player.Powerup(p.getType());
+                    p.remove();
+                }
 
             }
 
@@ -61,6 +65,13 @@ public class PowerupHandler {
         }
 
 
+    }
+
+    public void reset(){
+
+        for(Powerup p: powerups){
+            p.remove();
+                }
     }
 
 

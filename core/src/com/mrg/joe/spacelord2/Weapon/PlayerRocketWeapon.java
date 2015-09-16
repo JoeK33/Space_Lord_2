@@ -27,7 +27,7 @@ public class PlayerRocketWeapon extends Weapon {
         if(this.isOn) {
 
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (5 * GameConstants.projectile_creation_interval * 1000000000)) {
+            if (System.nanoTime() > interval + (2 * GameConstants.projectile_creation_interval * 1000000000)) {
 
                 projectiles.add(new PlayerRocketProjectile(this.player, ProjectilePosition.LEFT_ROCKET));
 

@@ -20,8 +20,8 @@ public class EnemyManager {
     private List<Enemy> enemyList;
     private int rowsDeployed;
     private float front_row_y;
-
     private LinkedList<EnemyConfiguration> configurations;
+    private int total_rows_deployed;
 
     public EnemyManager(){
         rowsDeployed = 0;
@@ -32,41 +32,6 @@ public class EnemyManager {
         configurations = new LinkedList<EnemyConfiguration>();
 
         enemyList = new LinkedList<Enemy>();
-
-
-
-        for(int i = 0; i < 2; i++){
-
-            EnemyConfiguration config = new EnemyConfiguration(3);
-            configurations.add(config);
-
-
-            EnemyConfiguration config2 = new EnemyConfiguration(5);
-            configurations.add(config2);
-
-
-            EnemyConfiguration config3 = new EnemyConfiguration(1);
-            configurations.add(config3);
-
-
-            EnemyConfiguration config4 = new EnemyConfiguration(2);
-            configurations.add(config4);
-
-
-
-
-
-            enemyList.addAll(config.getEnemyConfiguration());
-            enemyList.addAll(config2.getEnemyConfiguration());
-            enemyList.addAll(config3.getEnemyConfiguration());
-            enemyList.addAll(config4.getEnemyConfiguration());
-
-        }
-
-        EnemyConfiguration config5 = new EnemyConfiguration(4);
-        configurations.add(config5);
-        enemyList.addAll(config5.getEnemyConfiguration());
-
 
     }
 
@@ -79,6 +44,8 @@ public class EnemyManager {
 
 
     public void update(){
+
+
 
         if(!configurations.isEmpty()) {
 
@@ -125,12 +92,73 @@ public class EnemyManager {
             }
             }
 
-                if (rowsDeployed < 5) {
-                    // deploy a new row
-                }
+        if (rowsDeployed < 5) {
+            // deploy a new row
+
+
+            if(total_rows_deployed < 10) {
+                EnemyConfiguration config = new EnemyConfiguration(3);
+                configurations.add(config);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config.getEnemyConfiguration());
+
+                EnemyConfiguration config3 = new EnemyConfiguration(1);
+                configurations.add(config3);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config3.getEnemyConfiguration());
+            }else    if(total_rows_deployed < 20 && total_rows_deployed >= 10) {
+                EnemyConfiguration config = new EnemyConfiguration(5);
+                configurations.add(config);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config.getEnemyConfiguration());
+
+                EnemyConfiguration config3 = new EnemyConfiguration(2);
+                configurations.add(config3);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config3.getEnemyConfiguration());
+            }else    if(total_rows_deployed < 30 && total_rows_deployed >= 10) {
+                EnemyConfiguration config = new EnemyConfiguration(4);
+                configurations.add(config);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config.getEnemyConfiguration());
+
+                EnemyConfiguration config3 = new EnemyConfiguration(1);
+                configurations.add(config3);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config3.getEnemyConfiguration());
+            }
+
+
+
+
+        }
 
 
             }
+
+    public void reset(){
+        this.total_rows_deployed = 0;
+        this.rowsDeployed = 0;
+
+        for (Iterator it = enemyList.iterator(); it.hasNext();) {
+            Enemy e = (Enemy) it.next();
+            e.dispose();
+            it.remove();
+        }
+
+    }
         }
 
 

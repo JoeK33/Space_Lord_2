@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SpaceLord2 extends ApplicationAdapter {
-	SpriteBatch batch;
+	static SpriteBatch batch;
 
 	public static int screenWidth;
 	public static int screenHeight;
@@ -24,10 +24,10 @@ public class SpaceLord2 extends ApplicationAdapter {
 	public static Player player;
 	private List<Enemy> enemyList;
 	private BackGround background;
-	private EnemyManager manager;
-	private CollisionHandler collisionHandler;
-	private HUD hud;
-	private PowerupHandler powerupHandler;
+	private static EnemyManager manager;
+	private static CollisionHandler collisionHandler;
+	public static HUD hud;
+	private static PowerupHandler powerupHandler;
 
 
 
@@ -79,6 +79,8 @@ public class SpaceLord2 extends ApplicationAdapter {
 
 		collisionHandler.handle(delta, player.getWeapons(), enemyProjectiles, enemyList, player);
 
+
+
 		// draw here
 		batch.begin();
 		background.draw(batch);
@@ -105,12 +107,39 @@ public class SpaceLord2 extends ApplicationAdapter {
 		player.dispose();
 		background.dispose();
 		hud.dispose();
+		for (Iterator it = enemyList.iterator(); it.hasNext();){
+			Enemy e = (Enemy)it.next();
+			e.dispose();
+		}
 
 	}
 
 
 	public Player getPlayer(){
 		return player;
+	}
+
+	public static void reset(){
+		screenWidth = Gdx.graphics.getWidth();
+		screenHeight = Gdx.graphics.getHeight();
+		batch = new SpriteBatch();
+		player = new Player();
+		manager = new EnemyManager();
+		collisionHandler = new CollisionHandler();
+		hud = new HUD(player);
+		powerupHandler = new PowerupHandler(player);
+
+		Timer timer = new Timer();
+		timer.scheduleTask(new Timer.Task() {
+			@Override
+			public void run() {
+				Gdx.input.setInputProcessor(new TouchHandler(player));
+
+			}
+		}, .5f);
+
+
+
 	}
 
 

@@ -65,14 +65,17 @@ public class Enemy {
 
     public void draw(SpriteBatch batch){
 
-        if(alive) {
-            this.sprite.draw(batch);
+        if(this.sprite.getY() < Gdx.graphics.getHeight()) {
+
+            if (alive) {
+                this.sprite.draw(batch);
+            }
         }
 
+            if (weapon != null) {
+                this.weapon.draw(batch);
+            }
 
-        if(weapon != null) {
-            this.weapon.draw(batch);
-        }
     }
 
     public void update(float delta){
@@ -111,9 +114,9 @@ public class Enemy {
 
 
                 if(goingLeft){
-                    this.setPosition(this.getX() -(delta * 50f), this.getY());
+                    this.setPosition(this.getX() -(delta * 75f), this.getY());
                 } else{
-                    this.setPosition(this.getX() + (delta * 50f), this.getY());
+                    this.setPosition(this.getX() + (delta * 75f), this.getY());
                 }
 
 
@@ -132,9 +135,9 @@ public class Enemy {
             if(this.behavior == Behavior.PATROL){
 
                 if (goingLeft) {
-                    this.setPosition(this.getX() - (delta * 50f), this.getY());
+                    this.setPosition(this.getX() - (delta * 75f), this.getY());
                 } else {
-                    this.setPosition(this.getX() + (delta * 50f), this.getY());
+                    this.setPosition(this.getX() + (delta * 75f), this.getY());
                 }
 
 
@@ -227,7 +230,6 @@ public class Enemy {
 
     public void dispose(){
         enemy_texture.dispose();
-        this.dispose();
     }
 
     public float getHeight(){

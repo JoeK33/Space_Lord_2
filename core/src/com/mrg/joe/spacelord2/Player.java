@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Powerups.PowerupType;
 import com.mrg.joe.spacelord2.Weapon.PlayerRocketWeapon;
 import com.mrg.joe.spacelord2.Weapon.PlayerShotgunWeapon;
+import com.mrg.joe.spacelord2.Weapon.PlayerTripleLaserWeapon;
 import com.mrg.joe.spacelord2.Weapon.PlayerWeapon;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
@@ -25,6 +27,11 @@ public class Player {
     private int health;
     private Color color;
     private int score;
+    private  Timer Shotguntimer;
+    private  Timer Rockettimer;
+    private  Timer Lasertimer;
+    private Explosion explosion;
+    private boolean Alive;
 
 
 
@@ -33,23 +40,26 @@ public class Player {
 
         this.texture = new Texture("player.png");
         this.sprite = new Sprite(texture);
-
+        this.Alive = true;
 
         // players weapons go here.
-        this.weapons = new Weapon[3];
+        this.weapons = new Weapon[4];
         this.weapons[0] = new PlayerWeapon(this);
        // this.weapons[0].turnOff();
         this.weapons[1] = new PlayerShotgunWeapon(this);
         this.weapons[1].turnOff();
         this.weapons[2] = new PlayerRocketWeapon(this);
-         this.weapons[2].turnOff();
+        this.weapons[2].turnOff();
+        this.weapons[3] = new PlayerTripleLaserWeapon(this);
+        this.weapons[3].turnOff();;
 
 
-        this.sprite.setPosition((Gdx.graphics.getWidth()/2) - (this.sprite.getWidth()/2), Gdx.graphics.getHeight()/6);
+        this.sprite.setPosition((Gdx.graphics.getWidth() / 2) - (this.sprite.getWidth() / 2), Gdx.graphics.getHeight() / 6);
         this.color = this.sprite.getColor();
 
 
         this.health = 3;
+
 
 
 
@@ -73,6 +83,19 @@ public class Player {
 
     public void update(float delta){
 
+        if(this.getHealth() <=0){
+            this.Alive = false;
+        }
+
+        if(!this.Alive){
+
+            for(Weapon w:weapons){
+                w.turnOff();
+            }
+
+
+        }
+
         // update all player weapons
         for(Weapon w : weapons){
             w.update(delta);
@@ -86,8 +109,11 @@ public class Player {
         }
 
         if(this.sprite.getX() < 0){
-            this.sprite.setPosition(0,this.sprite.getY());
+            this.sprite.setPosition(0, this.sprite.getY());
         }
+
+
+
 
 
 
@@ -102,6 +128,10 @@ public class Player {
         }
     }
 
+    public boolean isAlive(){
+        return this.Alive;
+    }
+
     public void turnOnWeapon(int weaponSlot){
 
         if(weaponSlot <= weapons.length && weaponSlot >= 0) {
@@ -111,8 +141,8 @@ public class Player {
 
     public void takeHit(){
         this.health--;
-        sprite.setColor(256,256,256,256);
-        Gdx.app.log("Player", "Took damage");
+        sprite.setColor(256, 256, 256, 256);
+
         Gdx.app.log("Player", "health remaining" + this.health);
 
         Timer timer = new Timer();
@@ -137,8 +167,16 @@ public class Player {
         } else if(type == PowerupType.SHOTGUN){
             this.weapons[1].turnOn();
 
-            Timer timer = new Timer();
-            timer.scheduleTask(new Timer.Task() {
+            if(Shotguntimer != null){
+                Shotguntimer.clear();
+            }
+
+            if(Shotguntimer == null) {
+
+                Shotguntimer = new Timer();
+            }
+
+            Shotguntimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[1].turnOff();
@@ -152,11 +190,42 @@ public class Player {
 
             this.weapons[2].turnOn();
 
-            Timer timer = new Timer();
-            timer.scheduleTask(new Timer.Task() {
+            if(Rockettimer != null){
+                Rockettimer.clear();
+            }
+
+            if(Rockettimer == null) {
+
+                Rockettimer = new Timer();
+            }
+
+
+            Rockettimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[2].turnOff();
+
+                }
+            }, 20f);
+
+        }else if(type == PowerupType.LASER){
+
+            this.weapons[3].turnOn();
+
+            if(Lasertimer != null){
+               Lasertimer.clear();
+            }
+
+            if(Lasertimer == null) {
+
+               Lasertimer = new Timer();
+            }
+
+
+           Lasertimer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    weapons[3].turnOff();
 
                 }
             }, 20f);
@@ -196,7 +265,21 @@ public class Player {
 
 
     public void draw(SpriteBatch batch){
-        this.sprite.draw(batch);
+
+
+        if(this.Alive) {
+            this.sprite.draw(batch);
+        }else {
+
+            if(this.explosion == null){
+                this.explosion = new Explosion(this);
+            }
+            this.sprite.setColor(Color.CLEAR);
+
+            this.explosion.draw(batch);
+
+        }
+
 
         for(Weapon w:weapons)
         w.draw(batch);
@@ -216,7 +299,20 @@ public class Player {
     }
 
     public void addScore(int i){
-        this.score+=i;
+        if(this.Alive) {
+            this.score += i;
+        }
+    }
+
+    public void  reset(){
+        this.health = 3;
+        this.Alive = true;
+        for(Weapon w:weapons){
+            w.turnOff();
+            w.clear();
+        }
+        this.turnOnWeapon(0);
+        this.score = 0;
     }
 
 }

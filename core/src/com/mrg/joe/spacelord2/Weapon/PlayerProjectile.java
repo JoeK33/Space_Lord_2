@@ -19,6 +19,15 @@ public class PlayerProjectile extends Projectile {
 
     }
 
+    public PlayerProjectile( int damage, float[] position) {
+
+        super(position, damage, new Texture("weapons/laser.png"));
+
+        this.sprite.setX(this.getX() - this.sprite.getWidth()/2);
+
+    }
+
+
     @Override
     public void update(float delta){
         // projectile behaviors here

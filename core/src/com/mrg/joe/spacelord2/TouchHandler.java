@@ -19,10 +19,18 @@ public class TouchHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    if(player.isAlive()) {
 
+        // move player to touch x pos
+        player.setXPosition((float) screenX);
 
-            // move player to touch x pos
-            player.setXPosition((float)screenX);
+    }
+
+        if(SpaceLord2.hud.isRestart_displayed()){
+            //restart game here
+            SpaceLord2.reset();
+
+        }
 
         return true;
     }
@@ -35,8 +43,11 @@ public class TouchHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if(player.isAlive()) {
 
-        player.setXPosition((float)screenX);
+            player.setXPosition((float) screenX);
+
+        }
         return true;
     }
 
