@@ -40,7 +40,7 @@ public class PowerupHandler {
     public void tryDeploy(){
 
         // try to deploy a powerup
-          if(((int)(Math.random() * 100)) == 50) {
+          if(((int)(Math.random() * 200)) == 50) {
 
             powerups[(int) (Math.random() * number_of_powerups)].spawn();
         }

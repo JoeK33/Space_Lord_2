@@ -6,9 +6,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 
-import java.util.TimerTask;
-
-import javax.swing.text.Position;
 
 /**
  * Created by Joe on 9/10/2015.
@@ -21,7 +18,7 @@ public class PlayerRocketProjectile extends Projectile {
 
     public PlayerRocketProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(), GameConstants.player_rocket_damage, new Texture("weapons/player_rocket_projectile.png"));
+        super(player.getPlayerNosePosition(), GameConstants.player_rocket_damage, new Texture(Gdx.files.internal("weapons/player_rocket_projectile.png")));
         this.position = position;
 
         if (this.position == ProjectilePosition.LEFT_ROCKET) {
@@ -77,7 +74,7 @@ public class PlayerRocketProjectile extends Projectile {
     }
 
     private void changeTexture(){
-        this.sprite.setTexture(new Texture("weapons/player_rocket_projectile_fired.png"));
+        this.sprite.setTexture(new Texture(Gdx.files.internal("weapons/player_rocket_projectile_fired.png")));
     }
 
 

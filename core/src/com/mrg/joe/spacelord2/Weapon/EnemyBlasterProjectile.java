@@ -1,5 +1,6 @@
 package com.mrg.joe.spacelord2.Weapon;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
@@ -13,14 +14,21 @@ import com.mrg.joe.spacelord2.SpaceLord2;
 public class EnemyBlasterProjectile extends Projectile {
 
     public boolean launched;
-    private  boolean movingLeft;
     private Enemy enemy;
+    private static Texture tex;
+
+
+    private float deltax;
+    private float deltay;
+    private double distance;
+    private double velX;
+    private double velY;
 
 
     public EnemyBlasterProjectile(float[] pos, Enemy enemy) {
 
 
-        super(pos, 1, new Texture("weapons/enemy_blaster_projectile.png"));
+        super(pos, 1, new Texture(Gdx.files.internal("weapons/enemy_blaster_projectile.png")));
 
         this.enemy = enemy;
 
@@ -35,6 +43,14 @@ public class EnemyBlasterProjectile extends Projectile {
             }
         }, 4f);
 
+        tex =new Texture(Gdx.files.internal("weapons/enemy_blaster_projectile.png"));
+
+        this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] -this.sprite.getX() + this.sprite.getWidth()/2;
+        this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - SpaceLord2.player.getHeight()/2 - this.sprite.getY();
+        this.distance = (Math.sqrt((deltax * deltax) + (deltay * deltay)));
+        velX = (deltax/distance);
+        velY = (deltay/distance);
+
     }
 
     @Override
@@ -48,9 +64,14 @@ public class EnemyBlasterProjectile extends Projectile {
         if(!launched){
             this.sprite.setPosition(enemy.getX() + enemy.getWidth()/2 - getProjectileHeight()/2, enemy.getY() - getProjectileHeight());
 
-        }else {
-            this.sprite.setPosition(this.getX(), this.sprite.getY() - (delta * GameConstants.projectile_speed));
+            this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] -this.sprite.getX() + this.sprite.getWidth()/2;
+            this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - SpaceLord2.player.getHeight()/2 - this.sprite.getY();
+            this.distance = (Math.sqrt((deltax * deltax) + (deltay * deltay)));
+            velX = (deltax/distance);
+            velY = (deltay/distance);
 
+        }else {
+            this.sprite.setPosition((float)(this.getX() + ((velX) * (delta * GameConstants.projectile_speed))), (this.sprite.getY() + (float)(velY * (delta * GameConstants.projectile_speed))));
 
             if (this.sprite.getY() < -200) {
                 this.remove();
@@ -66,7 +87,6 @@ public class EnemyBlasterProjectile extends Projectile {
 
     public static int getProjectileHeight(){
 
-        Texture tex =new Texture("weapons/enemy_blaster_projectile.png");
 
         return tex.getHeight();
 

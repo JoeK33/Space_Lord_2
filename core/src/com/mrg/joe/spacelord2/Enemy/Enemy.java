@@ -107,17 +107,18 @@ public class Enemy {
             }else
             if(this.behavior == Behavior.TRACK_PLAYER){
 
-                if(player.getCenterX() < this.getCenterX()){
+                if(player.getCenterX() <= this.getCenterX()){
                     goingLeft = true;
                 }else goingLeft = false;
 
 
-
-                if(goingLeft){
-                    this.setPosition(this.getX() -(delta * 75f), this.getY());
-                } else{
+            if(this.getCenterX() != player.getCenterX()) {
+                if (goingLeft) {
+                    this.setPosition(this.getX() - (delta * 75f), this.getY());
+                } else {
                     this.setPosition(this.getX() + (delta * 75f), this.getY());
                 }
+            }
 
 
 
@@ -147,12 +148,42 @@ public class Enemy {
 
                 if (this.getX() + this.getWidth() > Gdx.graphics.getWidth()) {
                     this.goingLeft = true;
+
                 }
 
             }else
             if(this.behavior == Behavior.CHARGE){
                 setAdvancing(true);
+            }else
+        if(this.behavior == Behavior.HUNT){
+
+            if(player.getCenterX() < this.getCenterX()){
+                goingLeft = true;
+            }else goingLeft = false;
+
+
+            if(this.getCenterX() < player.getCenterX() - 5 || this.getCenterX() > player.getCenterX() + 5) {
+
+                if (goingLeft) {
+                    this.setPosition(this.getX() - (delta * 400f), this.getY());
+                } else {
+                    this.setPosition(this.getX() + (delta * 400f), this.getY());
+                }
             }
+
+
+
+            if(this.getX() < 0){
+                this.setPosition(0, this.getY());
+                this.goingLeft = false;
+            }
+
+            if(this.getX() + this.getWidth() > Gdx.graphics.getWidth()){
+                this.goingLeft = true;
+                this.setPosition(Gdx.graphics.getWidth() - this.getWidth(), this.getY());
+            }
+
+        }
 
             if(this.advancing){
 
@@ -249,6 +280,10 @@ public class Enemy {
 
     public int getKillScore(){
         return score;
+    }
+
+    public void changeBehavior(Behavior behavior){
+        this.behavior = behavior;
     }
 
 }

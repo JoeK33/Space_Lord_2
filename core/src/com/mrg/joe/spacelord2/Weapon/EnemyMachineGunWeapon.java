@@ -16,10 +16,14 @@ public class EnemyMachineGunWeapon extends Weapon {
 private int small_projectile_width = 12;
 
     private Enemy enemy;
+    private int shot_offset;
+
 
     public EnemyMachineGunWeapon(Enemy enemy){
 
         this.enemy = enemy;
+        shot_offset = (int)(Math.random() * 10) * 100000;
+
 
 
     }
@@ -32,7 +36,7 @@ private int small_projectile_width = 12;
         if(this.isOn){
 
         // creates new projectiles every interval in seconds
-        if ( System.nanoTime() > interval + (5L * 1000000000L )) {
+        if ( System.nanoTime() > interval + (4L * 1000000000L +shot_offset )) {
             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
 
             interval = System.nanoTime();
@@ -47,7 +51,7 @@ private int small_projectile_width = 12;
                     }
 
                 }
-            }, .2f);
+            }, .5f);
 
             Timer timer2 = new Timer();
             timer2.scheduleTask(new Timer.Task() {
@@ -58,7 +62,7 @@ private int small_projectile_width = 12;
                         projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
                     }
                 }
-            }, .4f);
+            }, 1f);
 
         }}
 

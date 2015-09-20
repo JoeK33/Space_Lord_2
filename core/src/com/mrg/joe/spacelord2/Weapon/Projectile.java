@@ -83,7 +83,7 @@ public class Projectile {
     public void remove(){
         texture.dispose();
 
-        // move projectile away from player so it does not make multiple "hits"
+        // move projectile away so it does not make multiple "hits"
         this.sprite.setX(0 - this.sprite.getWidth() - 5);
     }
 

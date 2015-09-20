@@ -15,7 +15,7 @@ public class PlayerShotgunProjectile extends Projectile {
 
     public PlayerShotgunProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(),  GameConstants.player_shotgun_damage, new Texture("weapons/player_shotgun_projectile.png"));
+        super(player.getPlayerNosePosition(),  GameConstants.player_shotgun_damage, new Texture(Gdx.files.internal("weapons/player_shotgun_projectile.png")));
         this.position = position;
 
 

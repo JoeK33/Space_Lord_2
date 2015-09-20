@@ -13,10 +13,13 @@ public class GameConstants {
     // in seconds
     public static final float projectile_creation_interval = .5f;
 
-    public static final int fighter_health = 50;
-    public static final int enemy_small_health = 20;
+    public static final int fighter_health = 150;
+    public static final int enemy_small_health = 50;
+    public static final int enemy_hunter_health = 100;
     public static final int enemy_mg_health = 100;
     public static final int enemy_boss_health = 500;
+    public static final int enemy_boss2_health = 500;
+    public static final int enemy_boss3_health = 500;
     public static final int enemy_blaster_health = 100;
 
     public static final float enemy_row_gap = 50;

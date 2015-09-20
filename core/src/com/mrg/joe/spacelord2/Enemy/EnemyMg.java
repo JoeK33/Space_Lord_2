@@ -19,7 +19,7 @@ public class EnemyMg extends Enemy{
     public EnemyMg(float x, float y, Behavior b) {
 
 
-        super(GameConstants.enemy_mg_health, x, y, new Texture("enemies/enemy_mg.png"), 250, b);
+        super(GameConstants.enemy_mg_health, x, y, new Texture(Gdx.files.internal("enemies/enemy_mg.png")), 250, b);
         this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
 

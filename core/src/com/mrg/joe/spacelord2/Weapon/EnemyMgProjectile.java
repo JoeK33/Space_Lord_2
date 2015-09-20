@@ -13,7 +13,7 @@ public class EnemyMgProjectile extends Projectile {
 
     public EnemyMgProjectile(float[] pos) {
 
-        super(pos, 1, new Texture("weapons/enemy_mg_laser.png"));
+        super(pos, 1, new Texture(Gdx.files.internal("weapons/enemy_mg_laser.png")));
     }
 
     @Override

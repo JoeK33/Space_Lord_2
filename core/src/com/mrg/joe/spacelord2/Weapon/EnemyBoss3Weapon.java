@@ -1,24 +1,25 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Enemy.EnemyBoss;
-import com.mrg.joe.spacelord2.GameConstants;
+import com.mrg.joe.spacelord2.Enemy.EnemyBoss3;
 
 import java.util.Iterator;
 
 /**
- * Created by Joe on 8/28/2015.
+ * Created by Joe on 9/17/2015.
  */
-public class EnemyBossWeapon extends Weapon {
+public class EnemyBoss3Weapon extends  Weapon {
 
+    private EnemyBoss3 enemy;
+    int projectile_size;
 
-    private EnemyBoss enemy;
-
-    public EnemyBossWeapon(EnemyBoss enemy){
+    public EnemyBoss3Weapon(EnemyBoss3 enemy){
+        Projectile p = new EnemyBallProjectile(new float[]{-200,-200});
+        projectile_size = (int)p.getHeight();
 
         this.enemy = enemy;
+
+
 
 
     }
@@ -32,10 +33,10 @@ public class EnemyBossWeapon extends Weapon {
 
 
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (3 * 1000000000L )) {
-                projectiles.add(new EnemyMgProjectile(enemy.getWeapon1Pos()));
-                projectiles.add(new EnemyMgProjectile(enemy.getWeapon2Pos()));
-                projectiles.add(new EnemyBallProjectile(enemy.getWeapon3Pos()));
+            if (System.nanoTime() > interval + ( 1000000000L )) {
+
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(),enemy.getY() - projectile_size}));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectile_size,enemy.getY() - projectile_size}));
                 interval = System.nanoTime();
             }
 

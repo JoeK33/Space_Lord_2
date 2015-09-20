@@ -21,7 +21,7 @@ public class EnemyBoss extends Enemy {
 
     public EnemyBoss(float x, float y, Behavior b) {
 
-        super(GameConstants.enemy_boss_health, x, y, new Texture("enemies/enemy_boss.png"), 5000, b);
+        super(GameConstants.enemy_boss_health, x, y, new Texture(Gdx.files.internal("enemies/enemy_boss.png")), 5000, b);
         this.weapon = new EnemyBossWeapon(this);
         super.weapon = this.weapon;
 

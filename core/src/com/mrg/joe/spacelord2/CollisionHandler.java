@@ -73,8 +73,11 @@ for(Weapon w: weapons){
             // remove enemy from list after it's weapon has finished its job
 
             if(e.getWeapon() == null){
+                player.addScore(e.getKillScore());
+                e.dispose();
                 it.remove();
             }else if (e.getWeapon().getProjectiles().isEmpty()){
+                player.addScore(e.getKillScore());
                 e.dispose();
                 it.remove();
             }
@@ -84,6 +87,7 @@ for(Weapon w: weapons){
         // remove enemies that move off screen
         if(e.getY() < -e.getHeight()){
             e.setAlive(false);
+            e.dispose();
             it.remove();
         }
         // update the survivors

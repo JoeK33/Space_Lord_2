@@ -23,7 +23,7 @@ public class Explosion {
 
     public Explosion(Player player) {
         this.player = player;
-        this.explodeSheet =  new Texture("explosion_sheet.png");
+        this.explodeSheet =  new Texture(Gdx.files.internal("explosion_sheet.png"));
         TextureRegion[][] tmp = TextureRegion.split(this.explodeSheet, this.explodeSheet.getWidth() / FRAME_COLS, this.explodeSheet.getHeight() / FRAME_ROWS);
         this.explodeFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
@@ -39,6 +39,7 @@ public class Explosion {
         this.explodeAnimation.setPlayMode(Animation.PlayMode.NORMAL);
 
     }
+
 
 
     public void draw(SpriteBatch batch) {

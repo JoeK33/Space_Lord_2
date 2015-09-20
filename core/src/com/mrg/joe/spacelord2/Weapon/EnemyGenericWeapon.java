@@ -28,7 +28,7 @@ public class EnemyGenericWeapon extends Weapon {
 
         if(this.isOn){
 
-            if((int)(Math.random() * 100) == 5) {
+            if((int)(Math.random() * 80) == 5) {
                 // creates new projectiles every interval in seconds
                 if (System.nanoTime() > interval + (5L * 1000000000L)) {
                     if((int)(Math.random() * 10) == 5) {

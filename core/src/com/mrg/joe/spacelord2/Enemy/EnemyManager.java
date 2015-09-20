@@ -95,8 +95,24 @@ public class EnemyManager {
         if (rowsDeployed < 5) {
             // deploy a new row
 
+            if(total_rows_deployed < 4) {
 
-            if(total_rows_deployed < 10) {
+                EnemyConfiguration config = new EnemyConfiguration(9);
+                configurations.add(config);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+                enemyList.addAll(config.getEnemyConfiguration());
+
+                EnemyConfiguration config3 = new EnemyConfiguration(2);
+                configurations.add(config3);
+                rowsDeployed++;
+                total_rows_deployed++;
+
+
+                enemyList.addAll(config3.getEnemyConfiguration());
+
+            }else    if(total_rows_deployed < 20 && total_rows_deployed >= 4) {
                 EnemyConfiguration config = new EnemyConfiguration(3);
                 configurations.add(config);
                 rowsDeployed++;
@@ -105,20 +121,6 @@ public class EnemyManager {
                 enemyList.addAll(config.getEnemyConfiguration());
 
                 EnemyConfiguration config3 = new EnemyConfiguration(1);
-                configurations.add(config3);
-                rowsDeployed++;
-                total_rows_deployed++;
-
-                enemyList.addAll(config3.getEnemyConfiguration());
-            }else    if(total_rows_deployed < 20 && total_rows_deployed >= 10) {
-                EnemyConfiguration config = new EnemyConfiguration(5);
-                configurations.add(config);
-                rowsDeployed++;
-                total_rows_deployed++;
-
-                enemyList.addAll(config.getEnemyConfiguration());
-
-                EnemyConfiguration config3 = new EnemyConfiguration(2);
                 configurations.add(config3);
                 rowsDeployed++;
                 total_rows_deployed++;

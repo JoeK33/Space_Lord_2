@@ -13,7 +13,7 @@ public class PlayerProjectile extends Projectile {
 
     public PlayerProjectile(Player player, int damage) {
 
-        super(player.getPlayerNosePosition(), damage, new Texture("weapons/laser.png"));
+        super(player.getPlayerNosePosition(), damage, new Texture(Gdx.files.internal("weapons/laser.png")));
 
         this.sprite.setX(this.getX() - this.sprite.getWidth()/2);
 
@@ -21,7 +21,7 @@ public class PlayerProjectile extends Projectile {
 
     public PlayerProjectile( int damage, float[] position) {
 
-        super(position, damage, new Texture("weapons/laser.png"));
+        super(position, damage, new Texture(Gdx.files.internal("weapons/laser.png")));
 
         this.sprite.setX(this.getX() - this.sprite.getWidth()/2);
 

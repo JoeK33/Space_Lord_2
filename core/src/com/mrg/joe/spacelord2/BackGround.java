@@ -42,7 +42,7 @@ public class BackGround {
             bg_scrollTimer = 0.0f;
 
         bg_sprite.setV(bg_scrollTimer);
-        bg_sprite.setV2(bg_scrollTimer-3);
+        bg_sprite.setV2(bg_scrollTimer-4);
 
 
     }

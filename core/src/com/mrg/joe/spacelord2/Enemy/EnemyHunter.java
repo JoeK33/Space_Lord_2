@@ -2,31 +2,32 @@ package com.mrg.joe.spacelord2.Enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Weapon.EnemyGenericWeapon;
+import com.mrg.joe.spacelord2.Weapon.EnemyMachineGunWeapon;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
 /**
- * Created by Joe on 8/28/2015.
+ * Created by Joe on 9/17/2015.
  */
-public class EnemyFighter extends Enemy {
-
+public class EnemyHunter extends Enemy{
     private Weapon weapon;
 
-    public EnemyFighter(float x, float y, Behavior b) {
+    public EnemyHunter( float x, float y, Behavior b) {
 
 
-        super(GameConstants.fighter_health, x, y,new Texture(Gdx.files.internal("enemies/enemy_fighter.png")), 100, b);
-        this.weapon = new EnemyGenericWeapon(this);
+        super(GameConstants.enemy_hunter_health, x, y,new Texture(Gdx.files.internal("enemies/enemy_hunter.png")), 50, b);
+        this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
 
-
     }
+
 
     @Override
     public void update(float delta){
         this.weapon.update(delta);
-     super.update(delta);
+        super.update(delta);
+    }
 
-}}
+
+}

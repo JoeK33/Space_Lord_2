@@ -27,7 +27,7 @@ public class HUD {
 
         this.player = player;
 
-        this.health = new Texture("health_hud_icon.png");
+        this.health = new Texture(Gdx.files.internal("health_hud_icon.png"));
         icon_gap = 30;
         font = new BitmapFont();
         font.getData().setScale(4,4);
@@ -71,7 +71,7 @@ public class HUD {
 
 
 
-            if(restart_display_timer > 3){
+            if(restart_display_timer > 2){
                 restart_displayed = true;
                 font3.draw(batch, restart, Gdx.graphics.getWidth() / 2 - layout2.width / 2, Gdx.graphics.getHeight() / 2 - (layout2.height * 2));
             }

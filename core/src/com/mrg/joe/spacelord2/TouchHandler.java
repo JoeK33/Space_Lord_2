@@ -22,7 +22,7 @@ public class TouchHandler implements InputProcessor {
     if(player.isAlive()) {
 
         // move player to touch x pos
-        player.setXPosition((float) screenX);
+        player.goTo(screenX, Gdx.graphics.getHeight() - screenY + (int)player.getHeight());
 
     }
 
@@ -45,7 +45,7 @@ public class TouchHandler implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if(player.isAlive()) {
 
-            player.setXPosition((float) screenX);
+            player.goTo(screenX,Gdx.graphics.getHeight() - screenY + (int)player.getHeight());
 
         }
         return true;

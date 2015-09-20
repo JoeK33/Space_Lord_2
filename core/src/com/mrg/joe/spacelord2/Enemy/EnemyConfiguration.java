@@ -88,7 +88,47 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBlaster(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBlaster((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
+            enemyList.add(new EnemyBlaster((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.TRACK_PLAYER));
+
+            e = null;
+        } else if (config == 6){
+
+            // single boss 2
+
+            Enemy e = new EnemyBoss2(-1000,-1000, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyBoss2((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
+
+            e = null;
+        } else if (config == 7){
+
+            // single hunter
+
+            Enemy e = new EnemyHunter(-1000,-1000, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyHunter((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.HUNT));
+
+            e = null;
+        }else if (config == 8){
+
+            // single boss 3
+
+            Enemy e = new EnemyBoss3(-1000,-1000, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyBoss3((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
+
+            e = null;
+        }else if (config == 9){
+
+            // single boss 4
+
+            Enemy e = new EnemyBoss4(-1000,-1000, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyBoss4((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
 
             e = null;
         }

@@ -1,6 +1,7 @@
 package com.mrg.joe.spacelord2.Weapon;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 
@@ -30,8 +31,32 @@ public class PlayerTripleLaserWeapon extends Weapon {
         // creates new projectiles every interval in seconds
         if(this.isOn) {
             if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
-                projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage,new float[] {player.getCenterX() - (player.getWidth()/4), player.getY() + player.getHeight()}));
-                projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage,new float[] {player.getCenterX() + (player.getWidth()/4), player.getY() + player.getHeight()}));
+                projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
+
+                // offset firing to make it look better
+                Timer timer = new Timer();
+                timer.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (player.isAlive()) {
+                            projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage, new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
+
+                        }
+
+                    }
+                }, 1f);
+
+                Timer timer2 = new Timer();
+                timer2.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (player.isAlive()) {
+                            projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage, player.getPlayerNosePosition()));
+
+                        }
+
+                    }
+                }, 2f);
 
 
                 interval = System.nanoTime();

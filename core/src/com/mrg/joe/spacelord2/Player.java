@@ -33,12 +33,15 @@ public class Player {
     private Explosion explosion;
     private boolean Alive;
 
+   private int goToX;
+    private int goToY;
+
 
 
 
     public Player(){
 
-        this.texture = new Texture("player.png");
+        this.texture = new Texture(Gdx.files.internal("player.png"));
         this.sprite = new Sprite(texture);
         this.Alive = true;
 
@@ -54,11 +57,15 @@ public class Player {
         this.weapons[3].turnOff();;
 
 
-        this.sprite.setPosition((Gdx.graphics.getWidth() / 2) - (this.sprite.getWidth() / 2), Gdx.graphics.getHeight() / 6);
+        this.sprite.setPosition((Gdx.graphics.getWidth() / 2) - (this.sprite.getWidth() / 2), Gdx.graphics.getHeight() / 5);
+        this.goToY = Gdx.graphics.getHeight() / 5;
+        this.goToX = (int)((Gdx.graphics.getWidth() / 2));
         this.color = this.sprite.getColor();
 
 
         this.health = 3;
+
+        this.explosion = new Explosion(this);
 
 
 
@@ -83,6 +90,46 @@ public class Player {
 
     public void update(float delta){
 
+        if(this.getCenterX() < this.goToX){
+            this.sprite.setX(this.sprite.getX() + (2000 * delta));
+
+        }
+
+        if(this.getCenterX() > this.goToX){
+            this.sprite.setX(this.sprite.getX() - (2000 * delta));
+
+        }
+
+        if(this.getY() > this.goToY){
+            this.sprite.setY(this.sprite.getY() - (2000 * delta));
+
+        }
+
+        if(this.getY() < this.goToY){
+            this.sprite.setY(this.sprite.getY() + (2000 * delta));
+
+        }
+
+
+        // keep player on screen
+        if(this.sprite.getX()+this.sprite.getWidth() > Gdx.graphics.getWidth()){
+            this.sprite.setPosition(Gdx.graphics.getWidth() - this.sprite.getWidth(), this.sprite.getY());
+        }
+
+        if(this.sprite.getX() < 0){
+            this.sprite.setPosition(0, this.sprite.getY());
+        }
+
+        if(this.sprite.getY() < 0){
+            this.sprite.setPosition(this.sprite.getX(), 0);
+        }
+
+        if(this.sprite.getY() >  Gdx.graphics.getHeight() / 4){
+            this.sprite.setPosition(this.sprite.getX(),  Gdx.graphics.getHeight() / 4);
+        }
+
+
+
         if(this.getHealth() <=0){
             this.Alive = false;
         }
@@ -99,17 +146,6 @@ public class Player {
         // update all player weapons
         for(Weapon w : weapons){
             w.update(delta);
-        }
-
-
-
-        // keep player on screen
-        if(this.sprite.getX()+this.sprite.getWidth() > Gdx.graphics.getWidth()){
-            this.sprite.setPosition(Gdx.graphics.getWidth() - this.sprite.getWidth(),this.sprite.getY());
-        }
-
-        if(this.sprite.getX() < 0){
-            this.sprite.setPosition(0, this.sprite.getY());
         }
 
 
@@ -270,14 +306,7 @@ public class Player {
         if(this.Alive) {
             this.sprite.draw(batch);
         }else {
-
-            if(this.explosion == null){
-                this.explosion = new Explosion(this);
-            }
-            this.sprite.setColor(Color.CLEAR);
-
             this.explosion.draw(batch);
-
         }
 
 
@@ -313,6 +342,15 @@ public class Player {
         }
         this.turnOnWeapon(0);
         this.score = 0;
+    }
+
+    public void goTo(int x, int y){
+
+        this.goToX = x;
+        this.goToY = y;
+
+
+
     }
 
 }

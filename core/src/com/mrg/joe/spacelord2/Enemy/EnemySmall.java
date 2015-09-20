@@ -1,5 +1,6 @@
 package com.mrg.joe.spacelord2.Enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Weapon.EnemyGenericWeapon;
@@ -14,7 +15,7 @@ public class EnemySmall extends Enemy {
     public EnemySmall( float x, float y, Behavior b) {
 
 
-        super(GameConstants.enemy_small_health, x, y,new Texture("enemies/enemy_small.png"), 50, b);
+        super(GameConstants.enemy_small_health, x, y,new Texture(Gdx.files.internal("enemies/enemy_small.png")), 50, b);
         this.weapon = new EnemyGenericWeapon(this);
         super.weapon = this.weapon;
 
