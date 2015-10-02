@@ -43,7 +43,7 @@ public class EnemyBlasterWeapon extends Weapon {
             if (System.nanoTime() > interval + (5 * 1000000000L )) {
 
 
-                projectiles.add(new EnemyBlasterProjectile(new float[]{enemy.getX() + enemy.getWidth() / 2 - proj_size / 2, enemy.getY() - proj_size}, enemy));
+                projectiles.add(new EnemyBlasterProjectile(new float[]{enemy.getX() + enemy.getWidth() / 2 - proj_size / 2, enemy.getY() - proj_size + 15}, enemy));
 
 
                 interval = System.nanoTime();

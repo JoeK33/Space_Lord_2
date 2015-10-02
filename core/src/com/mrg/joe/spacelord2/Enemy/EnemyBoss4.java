@@ -17,7 +17,7 @@ public class EnemyBoss4 extends Enemy{
 
     public EnemyBoss4(float x, float y, Behavior behavior) {
 
-        super(GameConstants.enemy_boss3_health, x, y, new Texture(Gdx.files.internal("enemies/enemy_boss4.png")), 5000, behavior);
+        super(GameConstants.enemy_boss4_health, x, y, new Texture(Gdx.files.internal("enemies/enemy_boss4.png")), 5000, behavior);
 
         // offsets for weapon spawns.
         this.weapon = new EnemyBoss4Weapon(this);

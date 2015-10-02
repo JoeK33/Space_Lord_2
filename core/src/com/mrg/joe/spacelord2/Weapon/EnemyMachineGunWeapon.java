@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.GameConstants;
+import com.mrg.joe.spacelord2.SpaceLord2;
 
 import java.util.Iterator;
 
@@ -36,7 +37,7 @@ private int small_projectile_width = 12;
         if(this.isOn){
 
         // creates new projectiles every interval in seconds
-        if ( System.nanoTime() > interval + (4L * 1000000000L +shot_offset )) {
+        if ( System.nanoTime() > interval + (2L * 1000000000L +shot_offset )) {
             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
 
             interval = System.nanoTime();
@@ -46,7 +47,7 @@ private int small_projectile_width = 12;
             timer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
-                    if(enemy.isAlive()) {
+                    if(enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
                         projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
                     }
 
@@ -58,7 +59,7 @@ private int small_projectile_width = 12;
                 @Override
                 public void run() {
 
-                    if(enemy.isAlive()) {
+                    if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
                         projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
                     }
                 }

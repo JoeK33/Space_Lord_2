@@ -22,6 +22,7 @@ public class HUD {
     private GlyphLayout layout2;
     private float restart_display_timer;
     private boolean restart_displayed;
+    private boolean paused;
 
     public HUD(Player player){
 
@@ -41,6 +42,8 @@ public class HUD {
         layout2 = new GlyphLayout();
 
         restart_display_timer = 0;
+
+        this.paused = false;
 
     }
 
@@ -82,6 +85,15 @@ public class HUD {
 
         }
 
+        if(paused){
+            String paused = "PAUSED";
+            layout1.setText(font2, paused);
+            font2.draw(batch, paused, Gdx.graphics.getWidth() / 2 - layout1.width / 2, Gdx.graphics.getHeight() / 2 - layout1.height / 2);
+            String restart = "Touch to resume";
+            layout2.setText(font3, restart);
+            font3.draw(batch, restart, Gdx.graphics.getWidth() / 2 - layout2.width / 2, Gdx.graphics.getHeight() / 2 - (layout2.height * 2));
+        }
+
 
 
 
@@ -91,6 +103,10 @@ public class HUD {
 
     public boolean isRestart_displayed(){
         return this.restart_displayed;
+    }
+
+    public boolean isPaused(){
+        return this.paused;
     }
 
     public void dispose(){
@@ -104,6 +120,15 @@ public class HUD {
     public void reset(){
         this.restart_display_timer = 0;
         this.restart_displayed = false;
+    }
+
+    public void pause(){
+        this.paused = true;
+
+    }
+
+    public void unpause(){
+        this.paused = false;
     }
 
 

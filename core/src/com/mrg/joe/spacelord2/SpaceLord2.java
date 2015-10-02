@@ -2,6 +2,7 @@ package com.mrg.joe.spacelord2;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
@@ -14,6 +15,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+/*
+Main loop here.  Game music from http://dreade.com/nosoap/
+
+*/
+
 
 public class SpaceLord2 extends ApplicationAdapter {
 	static SpriteBatch batch;
@@ -28,6 +35,7 @@ public class SpaceLord2 extends ApplicationAdapter {
 	private static CollisionHandler collisionHandler;
 	public static HUD hud;
 	private static PowerupHandler powerupHandler;
+	private Music music;
 
 
 
@@ -44,6 +52,10 @@ public class SpaceLord2 extends ApplicationAdapter {
 		collisionHandler = new CollisionHandler();
 		hud = new HUD(player);
 		powerupHandler = new PowerupHandler(player);
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/game_music.mp3"));
+		music.setLooping(true);
+		music.setVolume(1);
+		music.play();
 
 
 
@@ -52,6 +64,7 @@ public class SpaceLord2 extends ApplicationAdapter {
 
 		background = new BackGround();
 		Gdx.input.setInputProcessor(new TouchHandler(player));
+		Gdx.input.setCatchBackKey(true);
 
 
 
@@ -62,22 +75,24 @@ public class SpaceLord2 extends ApplicationAdapter {
 	@Override
 	public void render () {
 
-		float delta = Gdx.graphics.getDeltaTime();
-		// update here
-		background.update();
-		player.update(delta);
-		manager.update();
-		powerupHandler.update(delta);
-		powerupHandler.tryDeploy();
-
-		enemyList = manager.getEnemyList();
 
 
+			float delta = Gdx.graphics.getDeltaTime();
+			// update here
+
+		if(!SpaceLord2.hud.isPaused()) {
+			background.update();
+			player.update(delta);
+			manager.update();
+			powerupHandler.update(delta);
+
+			enemyList = manager.getEnemyList();
 
 
-		List enemyProjectiles = new ArrayList();
+			List enemyProjectiles = new ArrayList();
 
-		collisionHandler.handle(delta, player.getWeapons(), enemyProjectiles, enemyList, player);
+			collisionHandler.handle(delta, player.getWeapons(), enemyProjectiles, enemyList, player);
+		}
 
 
 
@@ -111,6 +126,9 @@ public class SpaceLord2 extends ApplicationAdapter {
 			Enemy e = (Enemy)it.next();
 			e.dispose();
 		}
+		music.dispose();
+		powerupHandler.dispose();
+
 
 	}
 
@@ -122,11 +140,15 @@ public class SpaceLord2 extends ApplicationAdapter {
 	public static void reset(){
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
+		batch.dispose();
 		batch = new SpriteBatch();
+		player.dispose();
 		player = new Player();
 		manager = new EnemyManager();
 		collisionHandler = new CollisionHandler();
+		hud.dispose();
 		hud = new HUD(player);
+		powerupHandler.dispose();
 		powerupHandler = new PowerupHandler(player);
 
 		Timer timer = new Timer();

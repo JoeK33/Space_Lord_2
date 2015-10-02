@@ -2,6 +2,7 @@ package com.mrg.joe.spacelord2.Weapon;
 
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.EnemyBoss4;
+import com.mrg.joe.spacelord2.SpaceLord2;
 
 import java.util.Iterator;
 
@@ -33,10 +34,9 @@ public class EnemyBoss4Weapon extends Weapon {
         if(this.isOn) {
 
             // creates new projectiles every interval in seconds
-            if ( System.nanoTime() > interval + (4L * 1000000000L +shot_offset )) {
+            if ( System.nanoTime() > interval + (3L * 1000000000L +shot_offset )) {
                 projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize - 130, enemy.getNosePos()[1] + 130}));
                 projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1]+ 130}));
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getNosePos()[0] - 12, enemy.getNosePos()[1]}));
 
                 interval = System.nanoTime();
 
@@ -45,7 +45,7 @@ public class EnemyBoss4Weapon extends Weapon {
                 timer.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        if(enemy.isAlive()) {
+                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
                             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize - 130, enemy.getNosePos()[1]+ 130}));
                             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1]+ 130}));
                         }
@@ -58,12 +58,23 @@ public class EnemyBoss4Weapon extends Weapon {
                     @Override
                     public void run() {
 
-                        if(enemy.isAlive()) {
+                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
                             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize - 130, enemy.getNosePos()[1]+ 130}));
                             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1]+ 130}));
                         }
                     }
                 }, .4f);
+
+                Timer timer3 = new Timer();
+                timer3.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+
+                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new EnemyBallProjectile(new float[]{enemy.getNosePos()[0] - 12, enemy.getNosePos()[1]}));
+                        }
+                    }
+                }, 1f);
 
 
         }}

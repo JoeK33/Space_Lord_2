@@ -2,6 +2,7 @@ package com.mrg.joe.spacelord2.Weapon;
 
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.EnemyBoss2;
+import com.mrg.joe.spacelord2.SpaceLord2;
 
 import java.util.Iterator;
 
@@ -36,7 +37,7 @@ public class EnemyBoss2Weapon extends Weapon {
         if(this.isOn){
 
             // creates new projectiles every interval in seconds
-            if ( System.nanoTime() > interval + (4L * 1000000000L) + shot_offset) {
+            if ( System.nanoTime() > interval + (2 * 1000000000L) + shot_offset) {
 
                 for (int i = 0; i < 3; i++){
 
@@ -50,7 +51,7 @@ public class EnemyBoss2Weapon extends Weapon {
                     timer.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        if(enemy.isAlive()) {
+                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
                             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI], enemy.getNosePos()[1]}));
                         }
 
@@ -63,7 +64,7 @@ public class EnemyBoss2Weapon extends Weapon {
                     @Override
                     public void run() {
 
-                        if(enemy.isAlive()) {
+                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
                             projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI1], enemy.getNosePos()[1]}));
                         }
                     }
@@ -75,7 +76,7 @@ public class EnemyBoss2Weapon extends Weapon {
                         @Override
                         public void run() {
 
-                            if(enemy.isAlive()) {
+                            if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
                                 projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI2], enemy.getNosePos()[1]}));
                             }
                         }

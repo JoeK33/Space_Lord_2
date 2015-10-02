@@ -1,6 +1,7 @@
 package com.mrg.joe.spacelord2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,10 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Powerups.PowerupType;
 import com.mrg.joe.spacelord2.Weapon.PlayerRocketWeapon;
 import com.mrg.joe.spacelord2.Weapon.PlayerShotgunWeapon;
+import com.mrg.joe.spacelord2.Weapon.PlayerSineWeapon;
 import com.mrg.joe.spacelord2.Weapon.PlayerTripleLaserWeapon;
 import com.mrg.joe.spacelord2.Weapon.PlayerWeapon;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
@@ -30,10 +33,14 @@ public class Player {
     private  Timer Shotguntimer;
     private  Timer Rockettimer;
     private  Timer Lasertimer;
+    private  Timer Sinetimer;
     private Explosion explosion;
     private boolean Alive;
-
-   private int goToX;
+    private Sound hitSound;
+    private Sound explosionSound;
+    private boolean explosionPlayed;
+    private long timerDelay;
+    private int goToX;
     private int goToY;
 
 
@@ -46,7 +53,7 @@ public class Player {
         this.Alive = true;
 
         // players weapons go here.
-        this.weapons = new Weapon[4];
+        this.weapons = new Weapon[5];
         this.weapons[0] = new PlayerWeapon(this);
        // this.weapons[0].turnOff();
         this.weapons[1] = new PlayerShotgunWeapon(this);
@@ -54,7 +61,9 @@ public class Player {
         this.weapons[2] = new PlayerRocketWeapon(this);
         this.weapons[2].turnOff();
         this.weapons[3] = new PlayerTripleLaserWeapon(this);
-        this.weapons[3].turnOff();;
+        this.weapons[3].turnOff();
+        this.weapons[4] = new PlayerSineWeapon(this);
+        this.weapons[4].turnOff();
 
 
         this.sprite.setPosition((Gdx.graphics.getWidth() / 2) - (this.sprite.getWidth() / 2), Gdx.graphics.getHeight() / 5);
@@ -66,6 +75,9 @@ public class Player {
         this.health = 3;
 
         this.explosion = new Explosion(this);
+
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/player_hit.mp3"));
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.mp3"));
 
 
 
@@ -89,6 +101,11 @@ public class Player {
     }
 
     public void update(float delta){
+
+        if(!this.isAlive() && !explosionPlayed){
+            explosionSound.play(.7f);
+            explosionPlayed = true;
+        }
 
         if(this.getCenterX() < this.goToX){
             this.sprite.setX(this.sprite.getX() + (2000 * delta));
@@ -177,6 +194,7 @@ public class Player {
 
     public void takeHit(){
         this.health--;
+        hitSound.play(.8f);
         sprite.setColor(256, 256, 256, 256);
 
         Gdx.app.log("Player", "health remaining" + this.health);
@@ -232,7 +250,7 @@ public class Player {
 
             if(Rockettimer == null) {
 
-                Rockettimer = new Timer();
+                this.Rockettimer = new Timer();
             }
 
 
@@ -254,7 +272,7 @@ public class Player {
 
             if(Lasertimer == null) {
 
-               Lasertimer = new Timer();
+               this.Lasertimer = new Timer();
             }
 
 
@@ -266,10 +284,30 @@ public class Player {
                 }
             }, 20f);
 
-        }
+        }else if(type == PowerupType.SINE){
+
+            this.weapons[4].turnOn();
+
+            if(Sinetimer != null){
+                Sinetimer.clear();
+            }
+
+            if(Sinetimer == null) {
+
+                this.Sinetimer = new Timer();
+            }
 
 
-    }
+            Sinetimer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    weapons[4].turnOff();
+
+                }
+            }, 20f);
+
+
+    }}
 
     public void setXPosition(Float f){
         this.sprite.setPosition(f, this.sprite.getY());
@@ -316,6 +354,8 @@ public class Player {
 
     public void dispose() {
         this.texture.dispose();
+        explosionSound.dispose();
+        hitSound.dispose();
 
     }
 
@@ -350,6 +390,47 @@ public class Player {
         this.goToY = y;
 
 
+
+    }
+
+    public void pausePowerupTimers(){
+
+        timerDelay = TimeUtils.nanosToMillis(TimeUtils.nanoTime());
+
+        if(Shotguntimer != null) {
+            Shotguntimer.stop();
+        }
+
+        if(Rockettimer != null) {
+            Rockettimer.stop();
+        }
+        if(Lasertimer != null) {
+            Lasertimer.stop();
+        }
+        if(Sinetimer != null) {
+            Sinetimer.stop();
+        }
+    }
+
+    public void resumePowerupTimers(){
+
+        if(Shotguntimer != null) {
+            Shotguntimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            Shotguntimer.start();
+        }
+
+        if(Rockettimer != null) {
+            Rockettimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            Rockettimer.start();
+        }
+        if(Lasertimer != null) {
+            Lasertimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            Lasertimer.start();
+        }
+        if(Sinetimer != null) {
+            Sinetimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            Sinetimer.start();
+        }
 
     }
 

@@ -1,9 +1,7 @@
 package com.mrg.joe.spacelord2.Enemy;
 
 import com.badlogic.gdx.Gdx;
-import com.mrg.joe.spacelord2.Enemy.Enemy;
-import com.mrg.joe.spacelord2.GameConstants;
-import com.mrg.joe.spacelord2.Player;
+
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,6 +9,27 @@ import java.util.List;
 
 /**
  * Created by Joe on 8/26/2015.
+ * These are the "rows" of enemies that stack onto the play area.  This is where they are initialized and configured.
+ *
+ * Config legend:
+ *
+ * 1: four fighters
+ * 2: 7 small enemies
+ * 3: 1 patrolling mg
+ * 4: boss 1 track player
+ * 5: 1 blaster tracking player
+ * 6: boss 2 patrol
+ * 7: 1 hunter
+ * 8: boss 3
+ * 9: boss 4
+ * 10: 2 wiggling mgs
+ * 11: 2 wiggling blasters
+ * 12: 3 wiggling fighters
+ * 13: 2 small enemies
+ * 14: 4 small enemies
+ * 15: 2 wiggling fighters
+ * 16: single centered wiggling mg
+ * 17: 3 small enemies
  */
 public class EnemyConfiguration {
 
@@ -34,7 +53,7 @@ public class EnemyConfiguration {
             // four fighters
             Enemy e = new EnemyFighter(-200,-200, Behavior.WIGGLE);
             rowHeight = e.getHeight();
-            float enemyOffset = (e.getWidth()/4) * 3;
+            float enemyOffset = (e.getWidth()/4) * 2;
             enemyList.add(new EnemyFighter((screen_width/8) * 1 - enemyOffset,this.row_y, Behavior.WIGGLE));
             enemyList.add(new EnemyFighter((screen_width/8) * 3 - enemyOffset,this.row_y, Behavior.WIGGLE));
             enemyList.add(new EnemyFighter((screen_width/8) * 5 - enemyOffset, this.row_y, Behavior.WIGGLE));
@@ -52,7 +71,7 @@ public class EnemyConfiguration {
             float enemyOffset = (e.getWidth()/4) * 3;
 
             for(int i = 1; i < 8; i++) {
-                Enemy enemy = new EnemySmall((screen_width / 8) * i - enemyOffset, this.row_y, Behavior.STATIONARY);
+                Enemy enemy = new EnemySmall((screen_width / 8) * i - enemyOffset, this.row_y, Behavior.WIGGLE);
                 enemyList.add(enemy);
             }
 
@@ -61,7 +80,7 @@ public class EnemyConfiguration {
 
         } else if (config == 3){
 
-            //single machine gun enemy
+            //single patrolling machine gun enemy
 
             Enemy e = new EnemyMg(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
@@ -98,7 +117,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBoss2(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBoss2((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
+            enemyList.add(new EnemyBoss2((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.TRACK_PLAYER));
 
             e = null;
         } else if (config == 7){
@@ -131,10 +150,113 @@ public class EnemyConfiguration {
             enemyList.add(new EnemyBoss4((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
 
             e = null;
+        }else if (config == 10){
+
+            //two wiggling machine gun enemies
+
+            Enemy e = new EnemyMg(-200,-200, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyMg(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyMg((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+
+            e = null;
+
+        }else if (config == 11){
+
+            //two wiggling blaster enemies
+
+            Enemy e = new EnemyBlaster(-200,-200, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyBlaster(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyBlaster((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+
+            e = null;
+
+        }else if (config == 12){
+
+            //three wiggling fighter enemies
+
+            Enemy e = new EnemyFighter(-200,-200, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyFighter(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter((Gdx.graphics.getWidth()/4) * 2 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+
+            e = null;
+
+        }else if (config == 13){
+
+            //two small enemies
+
+            Enemy e = new EnemySmall(-200,-200, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemySmall(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+
+            e = null;
+
+        }else if (config == 14){
+
+            // four small enemies
+
+            Enemy e = new EnemySmall(-200,-200, Behavior.WIGGLE);
+            rowHeight = e.getHeight();
+            float enemyOffset = (e.getWidth()/4) * 2;
+            enemyList.add(new EnemySmall((screen_width/8) * 1 - enemyOffset,this.row_y, Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((screen_width/8) * 3 - enemyOffset,this.row_y, Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((screen_width/8) * 5 - enemyOffset,this.row_y, Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((screen_width/8) * 7 - enemyOffset,this.row_y, Behavior.WIGGLE));
+
+            e = null;
+
+        }else if (config == 15){
+
+            //two wiggling fighter enemies
+
+            Enemy e = new EnemyFighter(-200,-200, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyFighter(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+
+            e = null;
+
+        }else if (config == 16){
+
+            //single centered wiggling mg
+
+            Enemy e = new EnemyMg(-200,-200, Behavior.PATROL);
+            rowHeight = e.getHeight();
+
+            enemyList.add(new EnemyMg(Gdx.graphics.getWidth()/2 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+
+
+            e = null;
+
+        }else if (config == 17){
+
+
+
+            // 3 small enemies
+
+            Enemy e = new EnemySmall(-200,-200, Behavior.WIGGLE);
+            rowHeight = e.getHeight();
+            float enemyOffset = (e.getWidth()/4) * 2;
+            enemyList.add(new EnemySmall((screen_width/4) * 1 - enemyOffset,this.row_y, Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((screen_width/4) * 2 - enemyOffset,this.row_y, Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((screen_width/4) * 3 - enemyOffset,this.row_y, Behavior.WIGGLE));
+
+            e = null;
+
         }
 
 
     }
+
 
 
 

@@ -85,13 +85,11 @@ public class Enemy {
 
         if(this.alive){
 
-            if(this.behavior == Behavior.STATIONARY){
 
-            }else
             if(this.behavior == Behavior.WIGGLE){
 
 
-                double wiggle = Math.sin(degrees) * (50*delta);
+                double wiggle = Math.cos(degrees) * (50*delta);
 
 
                 this.setPosition(this.getX() + ((float) (wiggle)), this.getY());

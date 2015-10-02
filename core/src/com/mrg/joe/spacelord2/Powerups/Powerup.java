@@ -30,6 +30,9 @@ public class Powerup {
         }else if(this.type == PowerupType.LASER){
 
             this.sprite = new Sprite(new Texture(Gdx.files.internal("minigun_pickup.png")));
+        }else if(this.type == PowerupType.SINE){
+
+            this.sprite = new Sprite(new Texture(Gdx.files.internal("sine_pickup.png")));
         }
 
     }

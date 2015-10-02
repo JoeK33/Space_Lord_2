@@ -1,6 +1,7 @@
 package com.mrg.joe.spacelord2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -9,7 +10,7 @@ import com.badlogic.gdx.InputProcessor;
 public class TouchHandler implements InputProcessor {
 
     private Player player;
-
+    private long interval;
     public TouchHandler(Player player){
         this.player = player;
 
@@ -22,7 +23,7 @@ public class TouchHandler implements InputProcessor {
     if(player.isAlive()) {
 
         // move player to touch x pos
-        player.goTo(screenX, Gdx.graphics.getHeight() - screenY + (int)player.getHeight());
+        player.goTo(screenX, Gdx.graphics.getHeight() - screenY + (int)player.getHeight()/2);
 
     }
 
@@ -30,6 +31,11 @@ public class TouchHandler implements InputProcessor {
             //restart game here
             SpaceLord2.reset();
 
+        }
+
+        if(SpaceLord2.hud.isPaused()){
+            SpaceLord2.hud.unpause();
+            SpaceLord2.player.resumePowerupTimers();
         }
 
         return true;
@@ -45,7 +51,7 @@ public class TouchHandler implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if(player.isAlive()) {
 
-            player.goTo(screenX,Gdx.graphics.getHeight() - screenY + (int)player.getHeight());
+            player.goTo(screenX,Gdx.graphics.getHeight() - screenY + (int)player.getHeight()/2);
 
         }
         return true;
@@ -54,6 +60,30 @@ public class TouchHandler implements InputProcessor {
     // unused input listners
     @Override
     public boolean keyDown(int keycode) {
+
+        // pause on back press
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+
+            if(!SpaceLord2.hud.isPaused()){
+                interval = System.nanoTime();
+
+            }
+
+            SpaceLord2.hud.pause();
+            SpaceLord2.player.pausePowerupTimers();
+
+
+
+            // wait a second before closing game if back pressed while paused
+
+            if(System.nanoTime() > (interval + (1000000000L)) && SpaceLord2.hud.isPaused()) {
+
+                     Gdx.app.exit();
+
+            }
+
+
+        }
         return false;
     }
     @Override

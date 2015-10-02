@@ -32,7 +32,7 @@ public class EnemyBossWeapon extends Weapon {
 
 
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (3 * 1000000000L )) {
+            if (System.nanoTime() > interval + (2 * 1000000000L )) {
                 projectiles.add(new EnemyMgProjectile(enemy.getWeapon1Pos()));
                 projectiles.add(new EnemyMgProjectile(enemy.getWeapon2Pos()));
                 projectiles.add(new EnemyBallProjectile(enemy.getWeapon3Pos()));

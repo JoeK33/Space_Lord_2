@@ -41,12 +41,12 @@ public class EnemyBlasterProjectile extends Projectile {
                 launched = true;
 
             }
-        }, 4f);
+        }, 3f);
 
         tex =new Texture(Gdx.files.internal("weapons/enemy_blaster_projectile.png"));
 
-        this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] -this.sprite.getX() + this.sprite.getWidth()/2;
-        this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - SpaceLord2.player.getHeight()/2 - this.sprite.getY();
+        this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] - (this.sprite.getX() + this.sprite.getWidth()/2);
+        this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - (this.sprite.getY());
         this.distance = (Math.sqrt((deltax * deltax) + (deltay * deltay)));
         velX = (deltax/distance);
         velY = (deltay/distance);
@@ -62,16 +62,16 @@ public class EnemyBlasterProjectile extends Projectile {
 
 
         if(!launched){
-            this.sprite.setPosition(enemy.getX() + enemy.getWidth()/2 - getProjectileHeight()/2, enemy.getY() - getProjectileHeight());
+            this.sprite.setPosition(enemy.getX() + enemy.getWidth()/2 - getProjectileHeight()/2, enemy.getY() - getProjectileHeight() + 15);
 
-            this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] -this.sprite.getX() + this.sprite.getWidth()/2;
-            this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - SpaceLord2.player.getHeight()/2 - this.sprite.getY();
+            this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] - (this.sprite.getX() + this.sprite.getWidth()/2);
+            this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - (this.sprite.getY());
             this.distance = (Math.sqrt((deltax * deltax) + (deltay * deltay)));
             velX = (deltax/distance);
             velY = (deltay/distance);
 
         }else {
-            this.sprite.setPosition((float)(this.getX() + ((velX) * (delta * GameConstants.projectile_speed))), (this.sprite.getY() + (float)(velY * (delta * GameConstants.projectile_speed))));
+            this.sprite.setPosition((float)(this.getX() + (velX * (delta * GameConstants.projectile_speed))), (float)(this.sprite.getY() + (velY * (delta * GameConstants.projectile_speed))));
 
             if (this.sprite.getY() < -200) {
                 this.remove();

@@ -7,10 +7,19 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.mrg.joe.spacelord2.SpaceLord2;
 
 public class AndroidLauncher extends AndroidApplication {
+
+
+
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new SpaceLord2(), config);
 	}
+
+
+
+
+
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
+import com.mrg.joe.spacelord2.SpaceLord2;
 
 import java.util.Iterator;
 
@@ -19,7 +20,7 @@ public class PlayerTripleLaserWeapon extends Weapon {
     public PlayerTripleLaserWeapon(Player player) {
 
         this.player = player;
-        this.damage = GameConstants.player_laser_damage;
+        this.damage = GameConstants.player_minigun_damage;
     }
 
 
@@ -31,15 +32,15 @@ public class PlayerTripleLaserWeapon extends Weapon {
         // creates new projectiles every interval in seconds
         if(this.isOn) {
             if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
-                projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
+                projectiles.add(new PlayerProjectile(GameConstants.player_minigun_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
                 // offset firing to make it look better
                 Timer timer = new Timer();
                 timer.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        if (player.isAlive()) {
-                            projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage, new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
+                        if (player.isAlive() && !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new PlayerProjectile(GameConstants.player_minigun_damage, new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
                         }
 
@@ -50,8 +51,8 @@ public class PlayerTripleLaserWeapon extends Weapon {
                 timer2.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        if (player.isAlive()) {
-                            projectiles.add(new PlayerProjectile(GameConstants.player_laser_damage, player.getPlayerNosePosition()));
+                        if (player.isAlive() && !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new PlayerProjectile(GameConstants.player_minigun_damage, player.getPlayerNosePosition()));
 
                         }
 
