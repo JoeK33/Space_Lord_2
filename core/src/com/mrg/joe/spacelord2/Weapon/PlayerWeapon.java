@@ -43,7 +43,7 @@ public class PlayerWeapon extends Weapon {
 
 
                 // remove projectiles that fly off screen
-                if ((p.getY() - p.getHeight()) > Gdx.graphics.getHeight()) {
+                if ((p.getY() - p.getHeight()) > GameConstants.GAME_HEIGHT) {
                     p.remove();
                     itr.remove();
 

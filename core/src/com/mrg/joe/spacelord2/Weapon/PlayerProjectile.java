@@ -33,7 +33,7 @@ public class PlayerProjectile extends Projectile {
         // projectile behaviors here
         this.sprite.setY(this.sprite.getY()+(delta * GameConstants.projectile_speed));
 
-        if(this.sprite.getY() > Gdx.graphics.getHeight()){
+        if(this.sprite.getY() > GameConstants.GAME_HEIGHT){
             this.remove();
         }
 

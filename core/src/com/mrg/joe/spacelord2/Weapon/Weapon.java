@@ -70,7 +70,7 @@ public class Weapon {
 
 
                 // remove projectiles that fly off screen
-                if ((p.getY() - p.getHeight()) > Gdx.graphics.getHeight() || (p.getY() < 0 - p.getHeight())) {
+                if ((p.getY() - p.getHeight()) > GameConstants.GAME_HEIGHT || (p.getY() < 0 - p.getHeight())) {
                     p.remove();
                     itr.remove();
 

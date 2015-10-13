@@ -1,14 +1,6 @@
 package com.mrg.joe.spacelord2.Enemy;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Timer;
-import com.mrg.joe.spacelord2.Enemy.Enemy;
-import com.mrg.joe.spacelord2.Enemy.EnemyConfiguration;
 import com.mrg.joe.spacelord2.GameConstants;
-import com.mrg.joe.spacelord2.Player;
-import com.mrg.joe.spacelord2.Weapon.EnemyBallProjectile;
-import com.mrg.joe.spacelord2.Weapon.EnemyMgProjectile;
-import com.mrg.joe.spacelord2.Weapon.Projectile;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -37,8 +29,8 @@ public class EnemyManager {
         rowsDeployed = 0;
 
 
-        float spawn_height = Gdx.graphics.getHeight() + 200;
-        front_row_y = Gdx.graphics.getHeight()/2;
+        float spawn_height = GameConstants.GAME_HEIGHT + 200;
+        front_row_y =GameConstants.GAME_HEIGHT/2;
         configurations = new LinkedList<EnemyConfiguration>();
 
         enemyList = new LinkedList<Enemy>();

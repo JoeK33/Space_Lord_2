@@ -3,6 +3,7 @@ package com.mrg.joe.spacelord2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Joe on 8/26/2015.
@@ -23,7 +24,11 @@ public class TouchHandler implements InputProcessor {
     if(player.isAlive()) {
 
         // move player to touch x pos
-        player.goTo(screenX, Gdx.graphics.getHeight() - screenY + (int)player.getHeight()/2);
+        Vector3 worldCoordinates = SpaceLord2.camera.unproject(new Vector3(screenX,screenY,0));
+
+        player.goTo((int) worldCoordinates.x,(int) worldCoordinates.y + (int) (player.getHeight()));
+
+
 
     }
 
@@ -34,7 +39,8 @@ public class TouchHandler implements InputProcessor {
         }
 
         if(SpaceLord2.hud.isPaused()){
-            SpaceLord2.hud.unpause();
+
+             SpaceLord2.hud.unpause();
             SpaceLord2.player.resumePowerupTimers();
         }
 
@@ -51,7 +57,11 @@ public class TouchHandler implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if(player.isAlive()) {
 
-            player.goTo(screenX,Gdx.graphics.getHeight() - screenY + (int)player.getHeight()/2);
+
+            Vector3 worldCoordinates = SpaceLord2.camera.unproject(new Vector3(screenX,screenY,0));
+
+            player.goTo((int) worldCoordinates.x, (int) worldCoordinates.y + (int) (player.getHeight()));
+
 
         }
         return true;
@@ -69,8 +79,11 @@ public class TouchHandler implements InputProcessor {
 
             }
 
+
+
             SpaceLord2.hud.pause();
             SpaceLord2.player.pausePowerupTimers();
+
 
 
 

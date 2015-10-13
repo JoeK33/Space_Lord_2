@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+
 
 /**
  * Created by Joe on 9/10/2015.
@@ -54,19 +54,19 @@ public class HUD {
 
         for(int i = 1; i <= player_health; i++) {
 
-            batch.draw(health, Gdx.graphics.getWidth() - (i * health.getWidth()) - (i * icon_gap), Gdx.graphics.getHeight() - health.getHeight() - icon_gap);
+            batch.draw(health, GameConstants.GAME_WIDTH - (i * health.getWidth()) - (i * icon_gap), GameConstants.GAME_HEIGHT - health.getHeight() - icon_gap);
 
         }
 
         CharSequence str = " " + Integer.toString(player.getScore());
 
-        font.draw(batch, str, 0, Gdx.graphics.getHeight() - font.getLineHeight()/2);
+        font.draw(batch, str, 0, GameConstants.GAME_HEIGHT - font.getLineHeight()/2);
 
 
         if(!player.isAlive()){
             String game_over = "GAME OVER";
             layout1.setText(font2, game_over);
-            font2.draw(batch, game_over, Gdx.graphics.getWidth() / 2 - layout1.width / 2, Gdx.graphics.getHeight() / 2 - layout1.height / 2);
+            font2.draw(batch, game_over, GameConstants.GAME_WIDTH / 2 - layout1.width / 2, GameConstants.GAME_HEIGHT / 2 - layout1.height / 2);
             String restart = "Touch to Restart";
             layout2.setText(font3, restart);
 
@@ -76,7 +76,7 @@ public class HUD {
 
             if(restart_display_timer > 2){
                 restart_displayed = true;
-                font3.draw(batch, restart, Gdx.graphics.getWidth() / 2 - layout2.width / 2, Gdx.graphics.getHeight() / 2 - (layout2.height * 2));
+                font3.draw(batch, restart,GameConstants.GAME_WIDTH / 2 - layout2.width / 2, GameConstants.GAME_HEIGHT / 2 - (layout2.height * 2));
             }
 
             restart_display_timer += Gdx.graphics.getDeltaTime();
@@ -88,10 +88,10 @@ public class HUD {
         if(paused){
             String paused = "PAUSED";
             layout1.setText(font2, paused);
-            font2.draw(batch, paused, Gdx.graphics.getWidth() / 2 - layout1.width / 2, Gdx.graphics.getHeight() / 2 - layout1.height / 2);
+            font2.draw(batch, paused, GameConstants.GAME_WIDTH / 2 - layout1.width / 2, ((GameConstants.GAME_HEIGHT / 3) * 2) - layout1.height / 2);
             String restart = "Touch to resume";
             layout2.setText(font3, restart);
-            font3.draw(batch, restart, Gdx.graphics.getWidth() / 2 - layout2.width / 2, Gdx.graphics.getHeight() / 2 - (layout2.height * 2));
+            font3.draw(batch, restart, GameConstants.GAME_WIDTH / 2 - layout2.width / 2, ((GameConstants.GAME_HEIGHT / 3) * 2) - (layout2.height * 2));
         }
 
 

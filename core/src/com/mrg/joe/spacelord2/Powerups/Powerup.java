@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.mrg.joe.spacelord2.GameConstants;
 
 /**
  * Created by Joe on 9/11/2015.
@@ -53,7 +54,7 @@ public class Powerup {
 
         if(this.sprite.getY() < 0 - this.sprite.getHeight()){
             this.deployed = false;
-            this.sprite.setPosition(0, Gdx.graphics.getHeight() + this.sprite.getHeight());
+            this.sprite.setPosition(0, GameConstants.GAME_HEIGHT + this.sprite.getHeight());
         }
 
 
@@ -75,14 +76,14 @@ public class Powerup {
 
         if(!deployed) {
 
-            this.sprite.setPosition((float) (Math.random() * (Gdx.graphics.getWidth() - this.sprite.getWidth())), Gdx.graphics.getHeight() + this.sprite.getHeight());
+            this.sprite.setPosition((float) (Math.random() * (GameConstants.GAME_WIDTH - this.sprite.getWidth())), GameConstants.GAME_HEIGHT + this.sprite.getHeight());
             this.deployed = true;
         }
     }
 
     public void remove(){
         this.deployed = false;
-        this.sprite.setPosition(0, Gdx.graphics.getHeight() + this.sprite.getHeight());
+        this.sprite.setPosition(0, GameConstants.GAME_HEIGHT + this.sprite.getHeight());
     }
 
 

@@ -1,6 +1,7 @@
 package com.mrg.joe.spacelord2.Enemy;
 
-import com.badlogic.gdx.Gdx;
+
+import com.mrg.joe.spacelord2.GameConstants;
 
 
 import java.util.Iterator;
@@ -41,8 +42,8 @@ public class EnemyConfiguration {
 
 
     public EnemyConfiguration(int config){
-        float spawn_height = Gdx.graphics.getHeight() + 200;
-        float screen_width = Gdx.graphics.getWidth();
+        float spawn_height = GameConstants.GAME_HEIGHT + 200;
+        float screen_width = GameConstants.GAME_WIDTH;
         enemyList = new LinkedList<Enemy>();
          this.setY(spawn_height);
 
@@ -84,7 +85,7 @@ public class EnemyConfiguration {
 
             Enemy e = new EnemyMg(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
-            float enemyX = (0 + (int)(Math.random() * ((Gdx.graphics.getWidth() - e.getWidth()) + 1)));
+            float enemyX = (0 + (int)(Math.random() * ((screen_width - e.getWidth()) + 1)));
             enemyList.add(new EnemyMg(enemyX,this.row_y,Behavior.PATROL));
 
             e = null;
@@ -97,7 +98,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBoss(-1000,-1000, Behavior.TRACK_PLAYER);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBoss((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y,Behavior.TRACK_PLAYER));
+            enemyList.add(new EnemyBoss((screen_width/2) - (e.getWidth()/2),this.row_y,Behavior.TRACK_PLAYER));
 
             e = null;
         }else if (config == 5){
@@ -107,7 +108,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBlaster(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBlaster((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.TRACK_PLAYER));
+            enemyList.add(new EnemyBlaster((screen_width/2) - (e.getWidth()/2),this.row_y, Behavior.TRACK_PLAYER));
 
             e = null;
         } else if (config == 6){
@@ -117,7 +118,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBoss2(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBoss2((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.TRACK_PLAYER));
+            enemyList.add(new EnemyBoss2((screen_width/2) - (e.getWidth()/2),this.row_y, Behavior.TRACK_PLAYER));
 
             e = null;
         } else if (config == 7){
@@ -127,7 +128,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyHunter(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyHunter((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.HUNT));
+            enemyList.add(new EnemyHunter((screen_width/2) - (e.getWidth()/2),this.row_y, Behavior.HUNT));
 
             e = null;
         }else if (config == 8){
@@ -137,7 +138,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBoss3(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBoss3((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
+            enemyList.add(new EnemyBoss3((screen_width/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
 
             e = null;
         }else if (config == 9){
@@ -147,7 +148,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBoss4(-1000,-1000, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBoss4((Gdx.graphics.getWidth()/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
+            enemyList.add(new EnemyBoss4((screen_width/2) - (e.getWidth()/2),this.row_y, Behavior.PATROL));
 
             e = null;
         }else if (config == 10){
@@ -157,8 +158,8 @@ public class EnemyConfiguration {
             Enemy e = new EnemyMg(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyMg(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
-            enemyList.add(new EnemyMg((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyMg(screen_width/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyMg((screen_width/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
 
             e = null;
 
@@ -169,8 +170,8 @@ public class EnemyConfiguration {
             Enemy e = new EnemyBlaster(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyBlaster(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
-            enemyList.add(new EnemyBlaster((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyBlaster(screen_width/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyBlaster((screen_width/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
 
             e = null;
 
@@ -181,9 +182,9 @@ public class EnemyConfiguration {
             Enemy e = new EnemyFighter(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyFighter(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
-            enemyList.add(new EnemyFighter((Gdx.graphics.getWidth()/4) * 2 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
-            enemyList.add(new EnemyFighter((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter(screen_width/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter((screen_width/4) * 2 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter((screen_width/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
 
             e = null;
 
@@ -194,8 +195,8 @@ public class EnemyConfiguration {
             Enemy e = new EnemySmall(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemySmall(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
-            enemyList.add(new EnemySmall((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemySmall(screen_width/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemySmall((screen_width/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
 
             e = null;
 
@@ -220,8 +221,8 @@ public class EnemyConfiguration {
             Enemy e = new EnemyFighter(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyFighter(Gdx.graphics.getWidth()/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
-            enemyList.add(new EnemyFighter((Gdx.graphics.getWidth()/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter(screen_width/4 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyFighter((screen_width/4) * 3 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
 
             e = null;
 
@@ -232,7 +233,7 @@ public class EnemyConfiguration {
             Enemy e = new EnemyMg(-200,-200, Behavior.PATROL);
             rowHeight = e.getHeight();
 
-            enemyList.add(new EnemyMg(Gdx.graphics.getWidth()/2 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
+            enemyList.add(new EnemyMg(screen_width/2 - e.getWidth()/2,this.row_y,Behavior.WIGGLE));
 
 
             e = null;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
+import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 import com.mrg.joe.spacelord2.SpaceLord2;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
@@ -65,7 +66,7 @@ public class Enemy {
 
     public void draw(SpriteBatch batch){
 
-        if(this.sprite.getY() < Gdx.graphics.getHeight()) {
+        if(this.sprite.getY() < GameConstants.GAME_HEIGHT) {
 
             if (alive) {
                 this.sprite.draw(batch);
@@ -125,9 +126,9 @@ public class Enemy {
                     this.goingLeft = false;
                 }
 
-                if(this.getX() + this.getWidth() > Gdx.graphics.getWidth()){
+                if(this.getX() + this.getWidth() > GameConstants.GAME_WIDTH){
                     this.goingLeft = true;
-                    this.setPosition(Gdx.graphics.getWidth() - this.getWidth(), this.getY());
+                    this.setPosition(GameConstants.GAME_WIDTH - this.getWidth(), this.getY());
                 }
 
             }else
@@ -144,7 +145,7 @@ public class Enemy {
                     this.goingLeft = false;
                 }
 
-                if (this.getX() + this.getWidth() > Gdx.graphics.getWidth()) {
+                if (this.getX() + this.getWidth() > GameConstants.GAME_WIDTH) {
                     this.goingLeft = true;
 
                 }
@@ -176,9 +177,9 @@ public class Enemy {
                 this.goingLeft = false;
             }
 
-            if(this.getX() + this.getWidth() > Gdx.graphics.getWidth()){
+            if(this.getX() + this.getWidth() > GameConstants.GAME_WIDTH){
                 this.goingLeft = true;
-                this.setPosition(Gdx.graphics.getWidth() - this.getWidth(), this.getY());
+                this.setPosition(GameConstants.GAME_WIDTH - this.getWidth(), this.getY());
             }
 
         }

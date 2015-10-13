@@ -17,7 +17,7 @@ public class GameConstants {
     public static final float projectile_creation_interval = .5f;
 
     public static final int fighter_health = 120;
-    public static final int enemy_small_health = 50;
+    public static final int enemy_small_health = 30;
     public static final int enemy_hunter_health = 100;
     public static final int enemy_mg_health = 100;
     public static final int enemy_boss_health = 750;
@@ -26,7 +26,12 @@ public class GameConstants {
     public static final int enemy_boss4_health = 750;
     public static final int enemy_blaster_health = 150;
 
+    // gap in pixels between enemy rows
     public static final float enemy_row_gap = 75;
+
+    public static final int GAME_WIDTH = 1080;
+    public static final int GAME_HEIGHT = 1920;
+
 
 
 

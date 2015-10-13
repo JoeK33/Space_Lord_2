@@ -19,8 +19,8 @@ public class BackGround {
     public BackGround(){
 
 
-        int screenHeight = Gdx.graphics.getHeight();
-        int screenWidth = Gdx.graphics.getWidth();
+        int screenHeight = GameConstants.GAME_HEIGHT;
+        int screenWidth = GameConstants.GAME_WIDTH;
 
         // this stuff is for the scrolling tiling space bg
         bg_spriteTexture = new Texture(Gdx.files.internal("space_tile.png"));

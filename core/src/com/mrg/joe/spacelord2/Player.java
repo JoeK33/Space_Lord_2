@@ -66,9 +66,9 @@ public class Player {
         this.weapons[4].turnOff();
 
 
-        this.sprite.setPosition((Gdx.graphics.getWidth() / 2) - (this.sprite.getWidth() / 2), Gdx.graphics.getHeight() / 5);
-        this.goToY = Gdx.graphics.getHeight() / 5;
-        this.goToX = (int)((Gdx.graphics.getWidth() / 2));
+        this.sprite.setPosition((GameConstants.GAME_WIDTH / 2) - (this.sprite.getWidth() / 2), GameConstants.GAME_HEIGHT / 5);
+        this.goToY = GameConstants.GAME_HEIGHT / 5;
+        this.goToX = ((GameConstants.GAME_WIDTH / 2));
         this.color = this.sprite.getColor();
 
 
@@ -129,8 +129,8 @@ public class Player {
 
 
         // keep player on screen
-        if(this.sprite.getX()+this.sprite.getWidth() > Gdx.graphics.getWidth()){
-            this.sprite.setPosition(Gdx.graphics.getWidth() - this.sprite.getWidth(), this.sprite.getY());
+        if(this.sprite.getX()+this.sprite.getWidth() > GameConstants.GAME_WIDTH){
+            this.sprite.setPosition(GameConstants.GAME_WIDTH - this.sprite.getWidth(), this.sprite.getY());
         }
 
         if(this.sprite.getX() < 0){
@@ -141,8 +141,8 @@ public class Player {
             this.sprite.setPosition(this.sprite.getX(), 0);
         }
 
-        if(this.sprite.getY() >  Gdx.graphics.getHeight() / 4){
-            this.sprite.setPosition(this.sprite.getX(),  Gdx.graphics.getHeight() / 4);
+        if(this.sprite.getY() >  GameConstants.GAME_HEIGHT / 4){
+            this.sprite.setPosition(this.sprite.getX(),  GameConstants.GAME_HEIGHT / 4);
         }
 
 

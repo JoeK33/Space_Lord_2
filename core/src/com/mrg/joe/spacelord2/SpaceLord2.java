@@ -1,10 +1,17 @@
 package com.mrg.joe.spacelord2;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Enemy.EnemyManager;
 import com.mrg.joe.spacelord2.Powerups.PowerupHandler;
@@ -22,7 +29,8 @@ Main loop here.  Game music from http://dreade.com/nosoap/
 */
 
 
-public class SpaceLord2 extends ApplicationAdapter {
+public class SpaceLord2 implements Screen {
+	final SpaceLord2Game game;
 	static SpriteBatch batch;
 
 	public static int screenWidth;
@@ -37,12 +45,17 @@ public class SpaceLord2 extends ApplicationAdapter {
 	private static PowerupHandler powerupHandler;
 	private Music music;
 
+	private Viewport viewport;
+	public static Camera camera;
+
 
 
 
 	
-	@Override
-	public void create () {
+	public SpaceLord2(SpaceLord2Game game){
+		this.game = game;
+
+
 
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
@@ -66,21 +79,45 @@ public class SpaceLord2 extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(new TouchHandler(player));
 		Gdx.input.setCatchBackKey(true);
 
+		/* camera = new PerspectiveCamera();
+		viewport = new FitViewport(1080, 1920, camera);
+
+		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		viewport.apply(); */
+
+
+		camera = new OrthographicCamera();
+		viewport = new FitViewport(GameConstants.GAME_WIDTH,GameConstants.GAME_HEIGHT,camera);
+		viewport.apply();
+
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+
 
 
 
 
 	}
 
+
 	@Override
-	public void render () {
+	public void show() {
 
+	}
 
+	@Override
+	public void render(float delta) {
 
-			float delta = Gdx.graphics.getDeltaTime();
-			// update here
+// needed to handle different resolution sizes
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+
 
 		if(!SpaceLord2.hud.isPaused()) {
+
+
+
+
 			background.update();
 			player.update(delta);
 			manager.update();
@@ -92,6 +129,8 @@ public class SpaceLord2 extends ApplicationAdapter {
 			List enemyProjectiles = new ArrayList();
 
 			collisionHandler.handle(delta, player.getWeapons(), enemyProjectiles, enemyList, player);
+
+
 		}
 
 
@@ -116,6 +155,30 @@ public class SpaceLord2 extends ApplicationAdapter {
 	}
 
 	@Override
+	public void resize(int width, int height){
+		viewport.update(width, height);
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+	}
+
+
+
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
+
+	}
+
+	@Override
 	public void dispose(){
 		// dispose of all graphic things
 		batch.dispose();
@@ -130,6 +193,7 @@ public class SpaceLord2 extends ApplicationAdapter {
 		powerupHandler.dispose();
 
 
+
 	}
 
 
@@ -138,8 +202,8 @@ public class SpaceLord2 extends ApplicationAdapter {
 	}
 
 	public static void reset(){
-		screenWidth = Gdx.graphics.getWidth();
-		screenHeight = Gdx.graphics.getHeight();
+		screenWidth = GameConstants.GAME_WIDTH;
+		screenHeight = GameConstants.GAME_HEIGHT;
 		batch.dispose();
 		batch = new SpriteBatch();
 		player.dispose();
@@ -163,6 +227,9 @@ public class SpaceLord2 extends ApplicationAdapter {
 
 
 	}
+
+
+
 
 
 }

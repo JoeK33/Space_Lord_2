@@ -67,7 +67,7 @@ public class PlayerRocketProjectile extends Projectile {
         }
 
 
-        if (this.sprite.getY() > Gdx.graphics.getHeight()) {
+        if (this.sprite.getY() > GameConstants.GAME_HEIGHT) {
             this.remove();
         }
 
