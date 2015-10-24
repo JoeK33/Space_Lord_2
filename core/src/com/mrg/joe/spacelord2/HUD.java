@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
+import java.text.NumberFormat;
+
 
 /**
  * Created by Joe on 9/10/2015.
@@ -24,6 +26,8 @@ public class HUD {
     private boolean restart_displayed;
     private boolean paused;
 
+
+
     public HUD(Player player){
 
         this.player = player;
@@ -37,6 +41,10 @@ public class HUD {
         font2.getData().setScale(5,5);
         font3 = new BitmapFont();
         font3.getData().setScale(4,4);
+
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font2.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font3.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         layout1 = new GlyphLayout();
         layout2 = new GlyphLayout();
@@ -58,7 +66,8 @@ public class HUD {
 
         }
 
-        CharSequence str = " " + Integer.toString(player.getScore());
+        // format score int to look better
+        CharSequence str = " " +  NumberFormat.getIntegerInstance().format(player.getScore());
 
         font.draw(batch, str, 0, GameConstants.GAME_HEIGHT - font.getLineHeight()/2);
 
@@ -74,7 +83,7 @@ public class HUD {
 
 
 
-            if(restart_display_timer > 2){
+            if(restart_display_timer > 1){
                 restart_displayed = true;
                 font3.draw(batch, restart,GameConstants.GAME_WIDTH / 2 - layout2.width / 2, GameConstants.GAME_HEIGHT / 2 - (layout2.height * 2));
             }
@@ -88,10 +97,10 @@ public class HUD {
         if(paused){
             String paused = "PAUSED";
             layout1.setText(font2, paused);
-            font2.draw(batch, paused, GameConstants.GAME_WIDTH / 2 - layout1.width / 2, ((GameConstants.GAME_HEIGHT / 3) * 2) - layout1.height / 2);
+            font2.draw(batch, paused, GameConstants.GAME_WIDTH / 2 - layout1.width / 2, ((GameConstants.GAME_HEIGHT / 10) * 7) - layout1.height / 2);
             String restart = "Touch to resume";
             layout2.setText(font3, restart);
-            font3.draw(batch, restart, GameConstants.GAME_WIDTH / 2 - layout2.width / 2, ((GameConstants.GAME_HEIGHT / 3) * 2) - (layout2.height * 2));
+            font3.draw(batch, restart, GameConstants.GAME_WIDTH / 2 - layout2.width / 2, ((GameConstants.GAME_HEIGHT / 10) * 7) - (layout2.height * 2));
         }
 
 
@@ -114,6 +123,7 @@ public class HUD {
         health.dispose();
         font.dispose();
         font2.dispose();
+        font3.dispose();
 
     }
 

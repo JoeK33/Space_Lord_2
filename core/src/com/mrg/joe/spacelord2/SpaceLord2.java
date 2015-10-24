@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import sun.rmi.runtime.Log;
+
 /*
 Main loop here.  Game music from http://dreade.com/nosoap/
 
@@ -44,16 +46,24 @@ public class SpaceLord2 implements Screen {
 	public static HUD hud;
 	private static PowerupHandler powerupHandler;
 	private Music music;
+	private MainMenuScreen menuScreen;
 
 	private Viewport viewport;
 	public static Camera camera;
+
+	private static ActionResolver resolver;
+	private static boolean scoreSubmited;
+	public static boolean toMenuPressed;
 
 
 
 
 	
-	public SpaceLord2(SpaceLord2Game game){
+	public SpaceLord2(SpaceLord2Game game, ActionResolver resolver, MainMenuScreen menuScreen){
 		this.game = game;
+		this.resolver = resolver;
+		this.menuScreen = menuScreen;
+
 
 
 
@@ -71,20 +81,10 @@ public class SpaceLord2 implements Screen {
 		music.play();
 
 
-
-
-
-
 		background = new BackGround();
 		Gdx.input.setInputProcessor(new TouchHandler(player));
 		Gdx.input.setCatchBackKey(true);
 
-		/* camera = new PerspectiveCamera();
-		viewport = new FitViewport(1080, 1920, camera);
-
-		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		viewport.apply(); */
 
 
 		camera = new OrthographicCamera();
@@ -97,7 +97,11 @@ public class SpaceLord2 implements Screen {
 
 
 
+
+
 	}
+
+
 
 
 	@Override
@@ -111,6 +115,12 @@ public class SpaceLord2 implements Screen {
 // needed to handle different resolution sizes
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
+
+		if(toMenuPressed){
+			this.game.setScreen(new MainMenuScreen(this.game, this.resolver));
+			toMenuPressed = false;
+			dispose();
+		}
 
 
 		if(!SpaceLord2.hud.isPaused()) {
@@ -131,6 +141,13 @@ public class SpaceLord2 implements Screen {
 			collisionHandler.handle(delta, player.getWeapons(), enemyProjectiles, enemyList, player);
 
 
+		}
+
+
+		// submits score once upon death.
+		if(!player.isAlive() && !scoreSubmited){
+			this.submitScore();
+			scoreSubmited = true;
 		}
 
 
@@ -159,6 +176,7 @@ public class SpaceLord2 implements Screen {
 		viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 	}
+
 
 
 
@@ -201,6 +219,11 @@ public class SpaceLord2 implements Screen {
 		return player;
 	}
 
+	public void submitScore(){
+		resolver.submitScore(this.player.getScore());
+		Gdx.app.log("SCORE:", Integer.toString(this.player.getScore()) + " SUBMITTED");
+	}
+
 	public static void reset(){
 		screenWidth = GameConstants.GAME_WIDTH;
 		screenHeight = GameConstants.GAME_HEIGHT;
@@ -225,10 +248,9 @@ public class SpaceLord2 implements Screen {
 		}, .5f);
 
 
+		scoreSubmited = false;
 
 	}
-
-
 
 
 

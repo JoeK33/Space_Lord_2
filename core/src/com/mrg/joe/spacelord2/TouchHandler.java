@@ -12,8 +12,11 @@ public class TouchHandler implements InputProcessor {
 
     private Player player;
     private long interval;
+
+
     public TouchHandler(Player player){
         this.player = player;
+
 
 
     }
@@ -87,11 +90,11 @@ public class TouchHandler implements InputProcessor {
 
 
 
-            // wait a second before closing game if back pressed while paused
+            // wait a bit before returning to menu if back pressed while paused
 
-            if(System.nanoTime() > (interval + (1000000000L)) && SpaceLord2.hud.isPaused()) {
+            if(System.nanoTime() > (interval + (100000000L)) && SpaceLord2.hud.isPaused()) {
 
-                     Gdx.app.exit();
+            SpaceLord2.toMenuPressed = true;
 
             }
 

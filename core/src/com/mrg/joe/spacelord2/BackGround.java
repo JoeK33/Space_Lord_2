@@ -16,7 +16,9 @@ public class BackGround {
 
 
 
+
     public BackGround(){
+
 
 
         int screenHeight = GameConstants.GAME_HEIGHT;
@@ -50,5 +52,6 @@ public class BackGround {
     public void dispose(){
         this.bg_spriteTexture.dispose();
     }
+
 
 }
