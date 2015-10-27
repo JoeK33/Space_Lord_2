@@ -3,6 +3,7 @@ package com.mrg.joe.spacelord2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -36,6 +37,8 @@ public class MainMenuScreen implements Screen {
     private Texture title;
     private BackGround backGround;
     private Table table;
+    private Sound launchSound;
+    private Sound buttonClick;
 
 
 
@@ -63,6 +66,14 @@ public class MainMenuScreen implements Screen {
 
 
         Gdx.input.setInputProcessor(stage);
+
+        launchSound = Gdx.audio.newSound(Gdx.files.internal("sounds/space.mp3"));
+
+
+
+
+
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button_click.mp3"));
 
 
 
@@ -105,6 +116,8 @@ public class MainMenuScreen implements Screen {
       //  leaderboardButton.setPosition(GameConstants.GAME_WIDTH / 4, GameConstants.GAME_HEIGHT / 2 - 400);
       //  stage.addActor(leaderboardButton);
 
+
+
         final TextButton signInButton = new TextButton("Sign In", textButtonStyle);
        table.add(signInButton);
         table.row();
@@ -123,6 +136,7 @@ public class MainMenuScreen implements Screen {
 
         playButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
+                buttonClick.play();
                 game.setScreen(new SpaceLord2(game, resolver, MainMenuScreen.this));
                 dispose();
 
@@ -132,12 +146,14 @@ public class MainMenuScreen implements Screen {
 
         leaderboardButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
+                buttonClick.play();
                 resolver.showLeaderboard();
             }
         });
 
         signInButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
+                buttonClick.play();
                 resolver.signIn();
 
             }
@@ -145,6 +161,9 @@ public class MainMenuScreen implements Screen {
 
 
 
+
+
+        launchSound.play();
     }
 
 
@@ -212,6 +231,8 @@ public class MainMenuScreen implements Screen {
         stage.dispose();
         skin.dispose();
         title.dispose();
+        buttonClick.dispose();
+        launchSound.dispose();
 
     }
 }

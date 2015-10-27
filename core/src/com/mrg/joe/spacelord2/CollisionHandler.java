@@ -2,6 +2,7 @@ package com.mrg.joe.spacelord2;
 
 import com.badlogic.gdx.Gdx;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
+import com.mrg.joe.spacelord2.Enemy.EnemyPools;
 import com.mrg.joe.spacelord2.Weapon.Projectile;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
@@ -13,7 +14,11 @@ import java.util.List;
  */
 public class CollisionHandler {
 
-    public CollisionHandler(){
+    private EnemyPools pools;
+
+    public CollisionHandler(EnemyPools pools){
+
+        this.pools = pools;
 
     }
 
@@ -31,12 +36,6 @@ public class CollisionHandler {
             enemyProjectiles.addAll(e.getWeapon().getProjectiles());
         }
 
-        // if player hits enemy, damage player and remove enemy
-
-        if(e.isColliding(player.getBoundingRectangle())){
-            it.remove();
-            player.takeHit();
-        }
 
 
 
@@ -60,35 +59,22 @@ for(Weapon w: weapons){
 
 
 
-
-
-
         // purge dead enemies
-        if(!e.isAlive()){
+        if(e.readyToRemove()){
 
-            if(e.getWeapon() != null) {
-                e.getWeapon().turnOff();
-            }
+            player.addScore(e.getKillScore());
+            pools.free(e);
+            it.remove();
 
-            // remove enemy from list after it's weapon has finished its job
-
-            if(e.getWeapon() == null){
-                player.addScore(e.getKillScore());
-                e.dispose();
-                it.remove();
-            }else if (e.getWeapon().getProjectiles().isEmpty()){
-                player.addScore(e.getKillScore());
-                e.dispose();
-                it.remove();
-            }
 
         }
 
         // remove enemies that move off screen
         if(e.getY() < -e.getHeight()){
             e.setAlive(false);
-            e.dispose();
+            pools.free(e);
             it.remove();
+
         }
         // update the survivors
         e.update(delta);

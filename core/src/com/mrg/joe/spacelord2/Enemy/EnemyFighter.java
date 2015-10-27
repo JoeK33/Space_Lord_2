@@ -14,10 +14,10 @@ public class EnemyFighter extends Enemy {
 
     private Weapon weapon;
 
-    public EnemyFighter(float x, float y, Behavior b) {
+    public EnemyFighter() {
 
 
-        super(GameConstants.fighter_health, x, y,new Texture(Gdx.files.internal("enemies/enemy_fighter.png")), 100, b);
+        super(GameConstants.fighter_health, -500, -500,new Texture(Gdx.files.internal("enemies/enemy_fighter.png")), 100);
         this.weapon = new EnemyGenericWeapon(this);
         super.weapon = this.weapon;
 

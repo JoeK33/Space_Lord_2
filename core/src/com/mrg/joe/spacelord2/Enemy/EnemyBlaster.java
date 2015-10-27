@@ -14,8 +14,8 @@ public class EnemyBlaster extends Enemy {
     private Weapon weapon;
     private boolean goingLeft;
 
-    public EnemyBlaster(float x, float y, Behavior b) {
-        super(GameConstants.enemy_blaster_health, x, y,new Texture(Gdx.files.internal("enemies/enemy_blaster.png")), 500, b);
+    public EnemyBlaster() {
+        super(GameConstants.enemy_blaster_health, -500, -500,new Texture(Gdx.files.internal("enemies/enemy_blaster.png")), 500);
 
         this.weapon = new EnemyBlasterWeapon(this);
         super.weapon = this.weapon;

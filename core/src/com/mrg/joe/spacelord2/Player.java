@@ -74,7 +74,7 @@ public class Player {
 
         this.health = 3;
 
-        this.explosion = new Explosion(this);
+        this.explosion = new Explosion(this.sprite);
 
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/player_hit.mp3"));
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.mp3"));
@@ -354,8 +354,9 @@ public class Player {
 
     public void dispose() {
         this.texture.dispose();
-        explosionSound.dispose();
-        hitSound.dispose();
+        this.explosionSound.dispose();
+        this.hitSound.dispose();
+        this.explosion.dispose();
 
     }
 

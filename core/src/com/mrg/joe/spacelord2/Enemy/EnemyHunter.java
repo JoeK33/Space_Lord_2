@@ -13,10 +13,10 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 public class EnemyHunter extends Enemy{
     private Weapon weapon;
 
-    public EnemyHunter( float x, float y, Behavior b) {
+    public EnemyHunter( ) {
 
 
-        super(GameConstants.enemy_hunter_health, x, y,new Texture(Gdx.files.internal("enemies/enemy_hunter.png")), 50, b);
+        super(GameConstants.enemy_hunter_health,-500, -500,new Texture(Gdx.files.internal("enemies/enemy_hunter.png")), 50);
         this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
 

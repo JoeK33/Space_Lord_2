@@ -1,12 +1,15 @@
 package com.mrg.joe.spacelord2.Enemy;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Timer;
+import com.mrg.joe.spacelord2.Explosion;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 import com.mrg.joe.spacelord2.SpaceLord2;
@@ -16,7 +19,7 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 /**
  * Created by Joe on 8/26/2015.
  */
-public class Enemy {
+public class Enemy implements Pool.Poolable{
     protected Sprite sprite;
     private int health;
     private Texture enemy_texture;
@@ -29,20 +32,27 @@ public class Enemy {
     private boolean advancing;
     private boolean goingLeft;
     private Player player;
+    private Explosion explosion;
+    private Sound deathSound;
+    private boolean explosionPlayed;
+    private int startingHealth;
 
 
 
-    public Enemy(int health, float x, float y, Texture texture, int score, Behavior behavior){
+    public Enemy(int health, float x, float y, Texture texture, int score){
 
         this.enemy_texture = texture;
         this.sprite = new Sprite(enemy_texture);
         this.color = this.sprite.getColor();
         this.health = health;
+        this.startingHealth = health;
         this.setPosition(x, y);
         this.alive = true;
         this.score = score;
-        this.behavior = behavior;
+        this.behavior = Behavior.WIGGLE;
         this.player = SpaceLord2.player;
+        this.explosion = new Explosion(this.sprite);
+        deathSound =  Gdx.audio.newSound(Gdx.files.internal("sounds/explosion3.wav"));
 
 
     }
@@ -70,7 +80,7 @@ public class Enemy {
 
             if (alive) {
                 this.sprite.draw(batch);
-            }
+            }else  this.explosion.draw(batch);
         }
 
             if (weapon != null) {
@@ -82,6 +92,11 @@ public class Enemy {
     public void update(float delta){
         if (this.health <= 0){
             this.alive = false;
+        }
+
+        if(!this.isAlive() && !explosionPlayed){
+            deathSound.play(.7f);
+            explosionPlayed = true;
         }
 
         if(this.alive){
@@ -192,9 +207,24 @@ public class Enemy {
 
 
 
+        } else  if(this.getWeapon() != null) {
+            this.getWeapon().turnOff();
         }
 
 
+    }
+
+    public boolean readyToRemove(){
+        if(!this.isAlive() && this.explosion.isFinished()){
+
+            if(this.weapon == null) {
+                return true;
+            }else if(getWeapon().getProjectiles().isEmpty()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean isAlive(){
@@ -259,7 +289,9 @@ public class Enemy {
     }
 
     public void dispose(){
-        enemy_texture.dispose();
+        this.enemy_texture.dispose();
+        this.deathSound.dispose();
+        this.explosion.dispose();
     }
 
     public float getHeight(){
@@ -285,4 +317,28 @@ public class Enemy {
         this.behavior = behavior;
     }
 
+    // changes death sound to one used for bosses
+    public void changeDeathSound(){
+        deathSound =  Gdx.audio.newSound(Gdx.files.internal("sounds/explosion7.wav"));
+    }
+
+    @Override
+    public void reset() {
+        this.health = startingHealth;
+        this.alive = true;
+        this.weapon.turnOn();
+        this.sprite.setY(GameConstants.GAME_HEIGHT + 200);
+        this.weapon.clear();
+    }
+
+    public void init(float posX, float posY, Behavior behavior) {
+        this.behavior = behavior;
+        this.sprite.setPosition(posX, posY);
+        this.health = startingHealth;
+        this.alive = true;
+        this.weapon.turnOn();
+        explosionPlayed = false;
+        this.explosion.resetTime();
+        degrees = 0;
+    }
 }

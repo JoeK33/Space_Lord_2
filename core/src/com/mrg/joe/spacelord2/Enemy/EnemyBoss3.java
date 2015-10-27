@@ -16,13 +16,14 @@ public class EnemyBoss3 extends Enemy {
     private Weapon weapon;
 
 
-    public EnemyBoss3(float x, float y, Behavior behavior) {
+    public EnemyBoss3() {
 
-        super(GameConstants.enemy_boss3_health, x, y, new Texture(Gdx.files.internal("enemies/enemy_boss3.png")), 5000, behavior);
+        super(GameConstants.enemy_boss3_health, -500, -500, new Texture(Gdx.files.internal("enemies/enemy_boss3.png")), 5000);
 
         // offsets for weapon spawns.
         this.weapon = new EnemyBoss3Weapon(this);
         super.weapon = this.weapon;
+        this.changeDeathSound();
 
 
     }

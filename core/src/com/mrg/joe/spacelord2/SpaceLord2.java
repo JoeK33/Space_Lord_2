@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Enemy.EnemyManager;
+import com.mrg.joe.spacelord2.Enemy.EnemyPools;
 import com.mrg.joe.spacelord2.Powerups.PowerupHandler;
 import com.mrg.joe.spacelord2.Weapon.Projectile;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
@@ -39,7 +40,7 @@ public class SpaceLord2 implements Screen {
 	public static int screenHeight;
 
 	public static Player player;
-	private List<Enemy> enemyList;
+	private static List<Enemy> enemyList;
 	private BackGround background;
 	private static EnemyManager manager;
 	private static CollisionHandler collisionHandler;
@@ -47,6 +48,7 @@ public class SpaceLord2 implements Screen {
 	private static PowerupHandler powerupHandler;
 	private Music music;
 	private MainMenuScreen menuScreen;
+	private static EnemyPools enemyPools;
 
 	private Viewport viewport;
 	public static Camera camera;
@@ -71,8 +73,9 @@ public class SpaceLord2 implements Screen {
 		screenHeight = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
 		player = new Player();
-		manager = new EnemyManager();
-		collisionHandler = new CollisionHandler();
+		enemyPools = new EnemyPools();
+		manager = new EnemyManager(enemyPools);
+		collisionHandler = new CollisionHandler(enemyPools);
 		hud = new HUD(player);
 		powerupHandler = new PowerupHandler(player);
 		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/game_music.mp3"));
@@ -209,6 +212,7 @@ public class SpaceLord2 implements Screen {
 		}
 		music.dispose();
 		powerupHandler.dispose();
+		enemyPools.dispose();
 
 
 
@@ -225,14 +229,22 @@ public class SpaceLord2 implements Screen {
 	}
 
 	public static void reset(){
+
+		for(Enemy e: enemyList){
+			enemyPools.free(e);
+		}
+
+		enemyList.clear();
+
+
 		screenWidth = GameConstants.GAME_WIDTH;
 		screenHeight = GameConstants.GAME_HEIGHT;
 		batch.dispose();
 		batch = new SpriteBatch();
 		player.dispose();
 		player = new Player();
-		manager = new EnemyManager();
-		collisionHandler = new CollisionHandler();
+		manager = new EnemyManager(enemyPools);
+		collisionHandler = new CollisionHandler(enemyPools);
 		hud.dispose();
 		hud = new HUD(player);
 		powerupHandler.dispose();
