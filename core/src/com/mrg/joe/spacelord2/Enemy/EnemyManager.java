@@ -1,10 +1,7 @@
 package com.mrg.joe.spacelord2.Enemy;
 
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.Pools;
 import com.mrg.joe.spacelord2.GameConstants;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -26,7 +23,7 @@ public class EnemyManager {
     private int total_rows_deployed;
     private boolean bossOut;
     private float interval;
-    private EnemyListLoader enemyListLoader;
+    private EnemyConfigPicker enemyListLoader;
     private EnemyPools pools;
 
 
@@ -49,7 +46,7 @@ public class EnemyManager {
 
         interval = System.nanoTime();
 
-        enemyListLoader = new EnemyListLoader(pools);
+        enemyListLoader = new EnemyConfigPicker(pools);
 
 
 

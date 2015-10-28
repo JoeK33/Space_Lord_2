@@ -1,13 +1,10 @@
 package com.mrg.joe.spacelord2;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -16,15 +13,10 @@ import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Enemy.EnemyManager;
 import com.mrg.joe.spacelord2.Enemy.EnemyPools;
 import com.mrg.joe.spacelord2.Powerups.PowerupHandler;
-import com.mrg.joe.spacelord2.Weapon.Projectile;
-import com.mrg.joe.spacelord2.Weapon.Weapon;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-
-import sun.rmi.runtime.Log;
 
 /*
 Main loop here.  Game music from http://dreade.com/nosoap/
@@ -47,7 +39,6 @@ public class SpaceLord2 implements Screen {
 	public static HUD hud;
 	private static PowerupHandler powerupHandler;
 	private Music music;
-	private MainMenuScreen menuScreen;
 	private static EnemyPools enemyPools;
 
 	private Viewport viewport;
@@ -57,14 +48,18 @@ public class SpaceLord2 implements Screen {
 	private static boolean scoreSubmited;
 	public static boolean toMenuPressed;
 
+	private Assets assets;
+
+
 
 
 
 	
-	public SpaceLord2(SpaceLord2Game game, ActionResolver resolver, MainMenuScreen menuScreen){
+	public SpaceLord2(SpaceLord2Game game, ActionResolver resolver){
 		this.game = game;
 		this.resolver = resolver;
-		this.menuScreen = menuScreen;
+		assets = new Assets();
+		assets.load();
 
 
 
@@ -72,8 +67,8 @@ public class SpaceLord2 implements Screen {
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
-		player = new Player();
-		enemyPools = new EnemyPools();
+		player = new Player(assets);
+		enemyPools = new EnemyPools(assets, player);
 		manager = new EnemyManager(enemyPools);
 		collisionHandler = new CollisionHandler(enemyPools);
 		hud = new HUD(player);
@@ -85,7 +80,7 @@ public class SpaceLord2 implements Screen {
 
 
 		background = new BackGround();
-		Gdx.input.setInputProcessor(new TouchHandler(player));
+		Gdx.input.setInputProcessor(new TouchHandler(player, this));
 		Gdx.input.setCatchBackKey(true);
 
 
@@ -110,6 +105,7 @@ public class SpaceLord2 implements Screen {
 	@Override
 	public void show() {
 
+
 	}
 
 	@Override
@@ -118,6 +114,7 @@ public class SpaceLord2 implements Screen {
 // needed to handle different resolution sizes
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
+		assets.manager.update();
 
 		if(toMenuPressed){
 			this.game.setScreen(new MainMenuScreen(this.game, this.resolver));
@@ -191,7 +188,8 @@ public class SpaceLord2 implements Screen {
 
 	@Override
 	public void resume() {
-
+		assets.load();
+		
 	}
 
 	@Override
@@ -213,7 +211,7 @@ public class SpaceLord2 implements Screen {
 		music.dispose();
 		powerupHandler.dispose();
 		enemyPools.dispose();
-
+		assets.dispose();
 
 
 	}
@@ -228,7 +226,7 @@ public class SpaceLord2 implements Screen {
 		Gdx.app.log("SCORE:", Integer.toString(this.player.getScore()) + " SUBMITTED");
 	}
 
-	public static void reset(){
+	public void reset(){
 
 		for(Enemy e: enemyList){
 			enemyPools.free(e);
@@ -242,7 +240,10 @@ public class SpaceLord2 implements Screen {
 		batch.dispose();
 		batch = new SpriteBatch();
 		player.dispose();
-		player = new Player();
+		player = new Player(assets);
+
+		// enemies need a reference to the new player to track them, so here they are provided with one
+		enemyPools.changePlayer(player);
 		manager = new EnemyManager(enemyPools);
 		collisionHandler = new CollisionHandler(enemyPools);
 		hud.dispose();
@@ -254,7 +255,7 @@ public class SpaceLord2 implements Screen {
 		timer.scheduleTask(new Timer.Task() {
 			@Override
 			public void run() {
-				Gdx.input.setInputProcessor(new TouchHandler(player));
+				Gdx.input.setInputProcessor(new TouchHandler(player, SpaceLord2.this));
 
 			}
 		}, .5f);

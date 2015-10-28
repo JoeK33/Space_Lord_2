@@ -1,10 +1,7 @@
 package com.mrg.joe.spacelord2.Powerups;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Interpolation;
-import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 
 /**
@@ -22,18 +19,18 @@ public class PowerupHandler {
         this.player = player;
 
         powerups = new Powerup[number_of_powerups];
-        powerups[0] = new Powerup(PowerupType.HEALTH);
-        powerups[1] = new Powerup(PowerupType.SHOTGUN);
-        powerups[2] = new Powerup(PowerupType.ROCKETS);
-        powerups[3] = new Powerup(PowerupType.LASER);
-        powerups[4] = new Powerup(PowerupType.SINE);
+        powerups[0] = new Powerup(PowerupType.HEALTH, player.assets);
+        powerups[1] = new Powerup(PowerupType.SHOTGUN, player.assets);
+        powerups[2] = new Powerup(PowerupType.ROCKETS, player.assets);
+        powerups[3] = new Powerup(PowerupType.LASER, player.assets);
+        powerups[4] = new Powerup(PowerupType.SINE, player.assets);
 
         for(Powerup p: powerups){
 
             p.remove();
         }
 
-        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickup_sound.mp3"));
+        sound = player.assets.manager.get("sounds/pickup_sound.mp3", Sound.class);
 
         this.deploy();
         this.interval = System.nanoTime();

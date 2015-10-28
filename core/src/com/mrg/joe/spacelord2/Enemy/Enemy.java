@@ -1,6 +1,5 @@
 package com.mrg.joe.spacelord2.Enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Explosion;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
-import com.mrg.joe.spacelord2.SpaceLord2;
+import com.mrg.joe.spacelord2.Assets;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
 
@@ -36,25 +35,39 @@ public class Enemy implements Pool.Poolable{
     private Sound deathSound;
     private boolean explosionPlayed;
     private int startingHealth;
+    public Assets assets;
 
 
 
-    public Enemy(int health, float x, float y, Texture texture, int score){
+    public Enemy(int health, int score){
 
-        this.enemy_texture = texture;
-        this.sprite = new Sprite(enemy_texture);
-        this.color = this.sprite.getColor();
+
         this.health = health;
         this.startingHealth = health;
-        this.setPosition(x, y);
         this.alive = true;
         this.score = score;
-        this.behavior = Behavior.WIGGLE;
-        this.player = SpaceLord2.player;
-        this.explosion = new Explosion(this.sprite);
-        deathSound =  Gdx.audio.newSound(Gdx.files.internal("sounds/explosion3.wav"));
 
 
+
+
+    }
+
+    // makes a sprite from the texture in the manager
+    public void makeSprite(Assets manager, String filepath){
+        this.assets = manager;
+
+        this.enemy_texture = manager.manager.get(filepath, Texture.class);
+        this.sprite = new Sprite(enemy_texture);
+        this.color = this.sprite.getColor();
+
+
+        // need assets to make the explosion and sound so we make it here instead of in the constructor
+        this.explosion = new Explosion(this.sprite, this.assets);
+        deathSound = assets.manager.get("sounds/explosion3.wav", Sound.class);
+    }
+
+    public void changePlayer(Player player){
+        this.player = player;
     }
 
     public int getHealth(){
@@ -95,7 +108,7 @@ public class Enemy implements Pool.Poolable{
         }
 
         if(!this.isAlive() && !explosionPlayed){
-            deathSound.play(.7f);
+            deathSound.play(.5f);
             explosionPlayed = true;
         }
 
@@ -289,7 +302,7 @@ public class Enemy implements Pool.Poolable{
     }
 
     public void dispose(){
-        this.enemy_texture.dispose();
+
         this.deathSound.dispose();
         this.explosion.dispose();
     }
@@ -319,26 +332,27 @@ public class Enemy implements Pool.Poolable{
 
     // changes death sound to one used for bosses
     public void changeDeathSound(){
-        deathSound =  Gdx.audio.newSound(Gdx.files.internal("sounds/explosion7.wav"));
+        deathSound =  assets.manager.get("sounds/explosion7.wav", Sound.class);
     }
 
     @Override
     public void reset() {
         this.health = startingHealth;
         this.alive = true;
-        this.weapon.turnOn();
         this.sprite.setY(GameConstants.GAME_HEIGHT + 200);
         this.weapon.clear();
     }
 
     public void init(float posX, float posY, Behavior behavior) {
-        this.behavior = behavior;
+
         this.sprite.setPosition(posX, posY);
         this.health = startingHealth;
-        this.alive = true;
         this.weapon.turnOn();
         explosionPlayed = false;
         this.explosion.resetTime();
         degrees = 0;
+        this.behavior = behavior;
     }
+
+
 }

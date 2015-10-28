@@ -12,10 +12,12 @@ public class TouchHandler implements InputProcessor {
 
     private Player player;
     private long interval;
+    private SpaceLord2 spaceLord2;
 
 
-    public TouchHandler(Player player){
+    public TouchHandler(Player player, SpaceLord2 spaceLord2){
         this.player = player;
+        this.spaceLord2 = spaceLord2;
 
 
 
@@ -37,7 +39,7 @@ public class TouchHandler implements InputProcessor {
 
         if(SpaceLord2.hud.isRestart_displayed()){
             //restart game here
-            SpaceLord2.reset();
+            spaceLord2.reset();
 
         }
 

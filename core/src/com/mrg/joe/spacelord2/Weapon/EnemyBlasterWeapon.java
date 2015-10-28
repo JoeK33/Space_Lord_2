@@ -1,9 +1,6 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
-import com.mrg.joe.spacelord2.GameConstants;
 
 import java.util.Iterator;
 

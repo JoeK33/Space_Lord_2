@@ -1,8 +1,7 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.mrg.joe.spacelord2.GameConstants;
+import com.mrg.joe.spacelord2.Assets;
 
 /**
  * Created by Joe on 8/28/2015.
@@ -11,9 +10,9 @@ public class EnemyMgProjectile extends Projectile {
 
 
 
-    public EnemyMgProjectile(float[] pos) {
+    public EnemyMgProjectile(float[] pos, Assets manager) {
 
-        super(pos, 1, new Texture(Gdx.files.internal("weapons/enemy_mg_laser.png")));
+        super(pos, 1, manager,"weapons/enemy_mg_laser.png");
     }
 
     @Override

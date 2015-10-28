@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mrg.joe.spacelord2.GameConstants;
+import com.mrg.joe.spacelord2.SpaceLord2;
 import com.mrg.joe.spacelord2.Weapon.EnemyMachineGunWeapon;
 import com.mrg.joe.spacelord2.Weapon.Weapon;
 
@@ -19,14 +20,13 @@ public class EnemyMg extends Enemy{
     public EnemyMg() {
 
 
-        super(GameConstants.enemy_mg_health, -500, -500, new Texture(Gdx.files.internal("enemies/enemy_mg.png")), 250);
+        super(GameConstants.enemy_mg_health, 250);
         this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
 
 
 
     }
-
 
 
 
@@ -37,7 +37,6 @@ this.weapon.update(delta);
 
 
     }
-
 
 
 }

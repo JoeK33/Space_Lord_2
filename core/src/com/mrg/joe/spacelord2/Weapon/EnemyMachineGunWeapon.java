@@ -1,10 +1,7 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
-import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.SpaceLord2;
 
 import java.util.Iterator;
@@ -38,7 +35,7 @@ private int small_projectile_width = 12;
 
         // creates new projectiles every interval in seconds
         if ( System.nanoTime() > interval + (2L * 1000000000L +shot_offset )) {
-            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
+            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
 
             interval = System.nanoTime();
 
@@ -48,7 +45,7 @@ private int small_projectile_width = 12;
                 @Override
                 public void run() {
                     if(enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
+                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
                     }
 
                 }
@@ -60,7 +57,7 @@ private int small_projectile_width = 12;
                 public void run() {
 
                     if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
+                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
                     }
                 }
             }, 1f);

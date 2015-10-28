@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import sun.rmi.runtime.Log;
-
 /**
  * Created by Joe on 9/15/2015.
  */
@@ -24,18 +22,18 @@ public class Explosion {
     private float stateTime;
 
 
-    public Explosion(Sprite sprite) {
+    public Explosion(Sprite sprite, Assets manager) {
         this.sprite = sprite;
 
         int pick = (int) (3 * Math.random());
 
 
         if(pick == 0){
-            this.explodeSheet =  new Texture(Gdx.files.internal("explosion_sheet3.png"));
+            this.explodeSheet =   manager.manager.get("explosion_sheet.png");
         }else if(pick == 1){
-            this.explodeSheet =  new Texture(Gdx.files.internal("explosion_sheet2.png"));
+            this.explodeSheet =   manager.manager.get("explosion_sheet2.png");
         }else if(pick == 2){
-            this.explodeSheet =  new Texture(Gdx.files.internal("explosion_sheet.png"));
+            this.explodeSheet =  manager.manager.get("explosion_sheet3.png");
         }
 
 
@@ -73,7 +71,7 @@ public class Explosion {
     }
 
     public void dispose(){
-        this.explodeSheet.dispose();
+
     }
 
     public boolean isFinished(){

@@ -18,15 +18,23 @@ public class EnemyBoss2 extends Enemy {
 
     public EnemyBoss2() {
 
-        super(GameConstants.enemy_boss2_health, -500, -500, new Texture(Gdx.files.internal("enemies/enemy_boss2.png")), 5000);
+        super(GameConstants.enemy_boss2_health, 5000);
 
-                    // offsets for weapon spawns.
-        this.weapon = new EnemyBoss2Weapon(this,185,302,420);
-        super.weapon = this.weapon;
-        this.changeDeathSound();
+
+
 
 
     }
+
+    public void create(){
+
+
+        // offsets for weapon spawns.
+        this.weapon = new EnemyBoss2Weapon(this,185,302,420);
+        super.weapon = this.weapon;
+        this.changeDeathSound();
+    }
+
 
     @Override
     public void update(float delta) {

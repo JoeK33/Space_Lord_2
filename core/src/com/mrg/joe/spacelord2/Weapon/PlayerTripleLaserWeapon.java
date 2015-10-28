@@ -32,7 +32,7 @@ public class PlayerTripleLaserWeapon extends Weapon {
         // creates new projectiles every interval in seconds
         if(this.isOn) {
             if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
-                projectiles.add(new PlayerProjectile(GameConstants.player_minigun_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
+                projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
                 // offset firing to make it look better
                 Timer timer = new Timer();
@@ -40,7 +40,7 @@ public class PlayerTripleLaserWeapon extends Weapon {
                     @Override
                     public void run() {
                         if (player.isAlive() && !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new PlayerProjectile(GameConstants.player_minigun_damage, new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
+                            projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
                         }
 
@@ -52,7 +52,7 @@ public class PlayerTripleLaserWeapon extends Weapon {
                     @Override
                     public void run() {
                         if (player.isAlive() && !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new PlayerProjectile(GameConstants.player_minigun_damage, player.getPlayerNosePosition()));
+                            projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, player.getPlayerNosePosition()));
 
                         }
 

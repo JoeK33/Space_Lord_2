@@ -20,10 +20,10 @@ public class GameConstants {
     public static final int enemy_small_health = 20;
     public static final int enemy_hunter_health = 100;
     public static final int enemy_mg_health = 100;
-    public static final int enemy_boss_health = 750;
-    public static final int enemy_boss2_health = 750;
-    public static final int enemy_boss3_health = 750;
-    public static final int enemy_boss4_health = 750;
+    public static final int enemy_boss_health = 1000;
+    public static final int enemy_boss2_health = 1000;
+    public static final int enemy_boss3_health = 1000;
+    public static final int enemy_boss4_health = 1000;
     public static final int enemy_blaster_health = 150;
 
     // gap in pixels between enemy rows

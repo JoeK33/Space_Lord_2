@@ -1,6 +1,5 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.GameConstants;
@@ -14,12 +13,14 @@ public class PlayerRocketProjectile extends Projectile {
 
     private ProjectilePosition position;
     private boolean advancing;
+    private Player player;
 
 
     public PlayerRocketProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(), GameConstants.player_rocket_damage, new Texture(Gdx.files.internal("weapons/player_rocket_projectile.png")));
+        super(player.getPlayerNosePosition(), GameConstants.player_rocket_damage,player.assets,"weapons/player_rocket_projectile.png");
         this.position = position;
+        this.player = player;
 
         if (this.position == ProjectilePosition.LEFT_ROCKET) {
 
@@ -74,7 +75,7 @@ public class PlayerRocketProjectile extends Projectile {
     }
 
     private void changeTexture(){
-        this.sprite.setTexture(new Texture(Gdx.files.internal("weapons/player_rocket_projectile_fired.png")));
+        this.sprite.setTexture(player.assets.manager.get("weapons/player_rocket_projectile_fired.png", Texture.class));
     }
 
 

@@ -16,7 +16,7 @@ public class EnemyHunter extends Enemy{
     public EnemyHunter( ) {
 
 
-        super(GameConstants.enemy_hunter_health,-500, -500,new Texture(Gdx.files.internal("enemies/enemy_hunter.png")), 50);
+        super(GameConstants.enemy_hunter_health, 200);
         this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
 

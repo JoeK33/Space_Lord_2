@@ -41,7 +41,7 @@ public class EnemyBoss2Weapon extends Weapon {
 
                 for (int i = 0; i < 3; i++){
 
-                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[i], enemy.getNosePos()[1]}));
+                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[i], enemy.getNosePos()[1]}, enemy.assets));
 
                 interval = System.nanoTime();
 
@@ -52,7 +52,7 @@ public class EnemyBoss2Weapon extends Weapon {
                     @Override
                     public void run() {
                         if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI], enemy.getNosePos()[1]}));
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI], enemy.getNosePos()[1]}, enemy.assets));
                         }
 
                     }
@@ -65,7 +65,7 @@ public class EnemyBoss2Weapon extends Weapon {
                     public void run() {
 
                         if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI1], enemy.getNosePos()[1]}));
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI1], enemy.getNosePos()[1]}, enemy.assets));
                         }
                     }
                 }, .4f);
@@ -77,7 +77,7 @@ public class EnemyBoss2Weapon extends Weapon {
                         public void run() {
 
                             if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI2], enemy.getNosePos()[1]}));
+                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI2], enemy.getNosePos()[1]}, enemy.assets));
                             }
                         }
                     }, .6f);

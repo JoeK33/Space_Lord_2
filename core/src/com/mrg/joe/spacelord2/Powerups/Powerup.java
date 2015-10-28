@@ -1,11 +1,11 @@
 package com.mrg.joe.spacelord2.Powerups;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.mrg.joe.spacelord2.GameConstants;
+import com.mrg.joe.spacelord2.Assets;
 
 /**
  * Created by Joe on 9/11/2015.
@@ -16,24 +16,24 @@ public class Powerup {
     private Sprite sprite;
     private boolean deployed;
 
-    public Powerup(PowerupType type){
+    public Powerup(PowerupType type, Assets assets){
         this.type = type;
 
         if(this.type == PowerupType.HEALTH){
+            this.sprite = new Sprite(assets.manager.get("health_pickup.png", Texture.class));
 
-            this.sprite = new Sprite(new Texture(Gdx.files.internal("health_pickup.png")));
         } else if(this.type == PowerupType.SHOTGUN){
+            this.sprite = new Sprite(assets.manager.get("shotgun_pickup.png", Texture.class));
 
-            this.sprite = new Sprite(new Texture(Gdx.files.internal("shotgun_pickup.png")));
         }else if(this.type == PowerupType.ROCKETS){
+            this.sprite = new Sprite(assets.manager.get("rocket_pickup.png", Texture.class));
 
-            this.sprite = new Sprite(new Texture(Gdx.files.internal("rocket_pickup.png")));
         }else if(this.type == PowerupType.LASER){
+            this.sprite = new Sprite(assets.manager.get("minigun_pickup.png", Texture.class));
 
-            this.sprite = new Sprite(new Texture(Gdx.files.internal("minigun_pickup.png")));
         }else if(this.type == PowerupType.SINE){
+            this.sprite = new Sprite(assets.manager.get("sine_pickup.png", Texture.class));
 
-            this.sprite = new Sprite(new Texture(Gdx.files.internal("sine_pickup.png")));
         }
 
     }

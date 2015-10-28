@@ -22,6 +22,8 @@ android {
     apply plugin: 'com.google.gms.google-services'
 
 
+    buildTypes {
+    }
 }
 
 // called every time gradle gets executed, takes the native dependencies of
@@ -124,7 +126,8 @@ idea {
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services:8.1.0'
+    // compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.google.android.gms:play-services-identity:8.1.0'
+    compile 'com.google.android.gms:play-services-games:8.1.0'
     compile project(':BaseGameUtils')
-
 }

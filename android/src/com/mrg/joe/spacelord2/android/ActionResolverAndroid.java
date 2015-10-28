@@ -36,7 +36,16 @@ public class ActionResolverAndroid implements ActionResolver {
         }
 
     @Override
+    public void showAchievements() {
+        launcher.showAchievements();
+    }
+
+    @Override
     public void signIn() {
         launcher.signIn();
+    }
+
+    public boolean signedIn(){
+        return launcher.signedIn();
     }
 }

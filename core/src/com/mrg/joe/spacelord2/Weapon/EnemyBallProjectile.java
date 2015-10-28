@@ -1,9 +1,8 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.SpaceLord2;
+import com.mrg.joe.spacelord2.Assets;
 
 /**
  * Created by Joe on 8/30/2015.
@@ -11,20 +10,17 @@ import com.mrg.joe.spacelord2.SpaceLord2;
 public class EnemyBallProjectile extends Projectile {
 
 
-    private float deltax;
-    private float deltay;
-    private double distance;
     private double velX;
     private double velY;
 
 
-    public EnemyBallProjectile(float[] pos) {
-        super(pos, 1, new Texture(Gdx.files.internal("weapons/enemy_ball_projectile.png")));
-        this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] - (this.sprite.getX() + this.sprite.getWidth()/2);
-        this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - (this.sprite.getY());
-        this.distance = (Math.sqrt((deltax * deltax) + (deltay * deltay)));
-        velX = (deltax/distance);
-        velY = (deltay/distance);
+    public EnemyBallProjectile(float[] pos, Assets manager) {
+        super(pos, 1, manager,"weapons/enemy_ball_projectile.png");
+        float deltax = SpaceLord2.player.getPlayerNosePosition()[0] - (this.sprite.getX() + this.sprite.getWidth() / 2);
+        float deltay = SpaceLord2.player.getPlayerNosePosition()[1] - (this.sprite.getY());
+        double distance = (Math.sqrt((deltax * deltax) + (deltay * deltay)));
+        velX = (deltax / distance);
+        velY = (deltay / distance);
     }
 
     @Override

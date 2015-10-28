@@ -7,5 +7,7 @@ public interface ActionResolver {
 
     void submitScore(int score);
     void showLeaderboard();
+    void showAchievements();
     void signIn();
+    boolean signedIn();
 }

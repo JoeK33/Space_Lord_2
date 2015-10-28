@@ -1,8 +1,6 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.GameConstants;
@@ -28,7 +26,7 @@ public class EnemyBlasterProjectile extends Projectile {
     public EnemyBlasterProjectile(float[] pos, Enemy enemy) {
 
 
-        super(pos, 1, new Texture(Gdx.files.internal("weapons/enemy_blaster_projectile.png")));
+        super(pos, 1, enemy.assets,"weapons/enemy_blaster_projectile.png");
 
         this.enemy = enemy;
 
@@ -43,7 +41,7 @@ public class EnemyBlasterProjectile extends Projectile {
             }
         }, 3f);
 
-        tex =new Texture(Gdx.files.internal("weapons/enemy_blaster_projectile.png"));
+        tex =enemy.assets.manager.get("weapons/enemy_blaster_projectile.png");
 
         this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] - (this.sprite.getX() + this.sprite.getWidth()/2);
         this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - (this.sprite.getY());

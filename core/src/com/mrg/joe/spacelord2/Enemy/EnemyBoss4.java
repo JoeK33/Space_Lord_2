@@ -17,21 +17,25 @@ public class EnemyBoss4 extends Enemy{
 
     public EnemyBoss4() {
 
-        super(GameConstants.enemy_boss4_health, -500, -500, new Texture(Gdx.files.internal("enemies/enemy_boss4.png")), 5000);
+        super(GameConstants.enemy_boss4_health, 5000);
 
-        // offsets for weapon spawns.
+
+
+
+    }
+
+    public void create(){
+
         this.weapon = new EnemyBoss4Weapon(this);
         super.weapon = this.weapon;
         this.changeDeathSound();
-
-
     }
 
     @Override
     public void update(float delta) {
 
         super.update(delta);
-        if(this.getHealth() < 100){
+        if(this.getHealth() < 2500){
             this.changeBehavior(Behavior.TRACK_PLAYER);
         }
 

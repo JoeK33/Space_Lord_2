@@ -12,13 +12,12 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 public class EnemyBlaster extends Enemy {
 
     private Weapon weapon;
-    private boolean goingLeft;
+
 
     public EnemyBlaster() {
-        super(GameConstants.enemy_blaster_health, -500, -500,new Texture(Gdx.files.internal("enemies/enemy_blaster.png")), 500);
+        super(GameConstants.enemy_blaster_health, 500);
 
-        this.weapon = new EnemyBlasterWeapon(this);
-        super.weapon = this.weapon;
+
     }
 
 
@@ -27,6 +26,12 @@ public class EnemyBlaster extends Enemy {
         this.weapon.update(delta);
         super.update(delta);
 
+
+    }
+
+    public void create(){
+        this.weapon = new EnemyBlasterWeapon(this);
+        super.weapon = this.weapon;
 
     }
 

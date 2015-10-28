@@ -1,10 +1,6 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.mrg.joe.spacelord2.Enemy.Enemy;
 import com.mrg.joe.spacelord2.Enemy.EnemyBoss;
-import com.mrg.joe.spacelord2.GameConstants;
 
 import java.util.Iterator;
 
@@ -33,9 +29,9 @@ public class EnemyBossWeapon extends Weapon {
 
             // creates new projectiles every interval in seconds
             if (System.nanoTime() > interval + (2 * 1000000000L )) {
-                projectiles.add(new EnemyMgProjectile(enemy.getWeapon1Pos()));
-                projectiles.add(new EnemyMgProjectile(enemy.getWeapon2Pos()));
-                projectiles.add(new EnemyBallProjectile(enemy.getWeapon3Pos()));
+                projectiles.add(new EnemyMgProjectile(enemy.getWeapon1Pos(), enemy.assets));
+                projectiles.add(new EnemyMgProjectile(enemy.getWeapon2Pos(), enemy.assets));
+                projectiles.add(new EnemyBallProjectile(enemy.getWeapon3Pos(), enemy.assets));
                 interval = System.nanoTime();
             }
 

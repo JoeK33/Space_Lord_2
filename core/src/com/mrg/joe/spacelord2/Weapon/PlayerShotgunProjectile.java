@@ -1,7 +1,5 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 
@@ -15,7 +13,7 @@ public class PlayerShotgunProjectile extends Projectile {
 
     public PlayerShotgunProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(),  GameConstants.player_shotgun_damage, new Texture(Gdx.files.internal("weapons/player_shotgun_projectile.png")));
+        super(player.getPlayerNosePosition(),  GameConstants.player_shotgun_damage, player.assets, "weapons/player_shotgun_projectile.png");
         this.position = position;
 
 

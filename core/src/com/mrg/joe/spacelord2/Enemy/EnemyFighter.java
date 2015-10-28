@@ -17,7 +17,7 @@ public class EnemyFighter extends Enemy {
     public EnemyFighter() {
 
 
-        super(GameConstants.fighter_health, -500, -500,new Texture(Gdx.files.internal("enemies/enemy_fighter.png")), 100);
+        super(GameConstants.fighter_health, 100);
         this.weapon = new EnemyGenericWeapon(this);
         super.weapon = this.weapon;
 

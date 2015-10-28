@@ -1,6 +1,5 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.mrg.joe.spacelord2.Enemy.EnemyBoss;
 import com.mrg.joe.spacelord2.Enemy.EnemyBoss3;
 
 import java.util.Iterator;
@@ -14,7 +13,7 @@ public class EnemyBoss3Weapon extends  Weapon {
     int projectile_size;
 
     public EnemyBoss3Weapon(EnemyBoss3 enemy){
-        Projectile p = new EnemyBallProjectile(new float[]{-200,-200});
+        Projectile p = new EnemyBallProjectile(new float[]{-200,-200}, enemy.assets);
         projectile_size = (int)p.getHeight();
 
         this.enemy = enemy;
@@ -35,8 +34,8 @@ public class EnemyBoss3Weapon extends  Weapon {
             // creates new projectiles every interval in seconds
             if (System.nanoTime() > interval + ( 1000000000L )) {
 
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(),enemy.getY() - projectile_size}));
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectile_size,enemy.getY() - projectile_size}));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(),enemy.getY() - projectile_size}, enemy.assets));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectile_size,enemy.getY() - projectile_size}, enemy.assets));
                 interval = System.nanoTime();
             }
 

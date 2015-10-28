@@ -32,7 +32,7 @@ public class HUD {
 
         this.player = player;
 
-        this.health = new Texture(Gdx.files.internal("health_hud_icon.png"));
+        this.health = player.assets.manager.get("health_hud_icon.png");
         icon_gap = 30;
         font = new BitmapFont();
         font.getData().setScale(4,4);
@@ -120,7 +120,6 @@ public class HUD {
 
     public void dispose(){
 
-        health.dispose();
         font.dispose();
         font2.dispose();
         font3.dispose();

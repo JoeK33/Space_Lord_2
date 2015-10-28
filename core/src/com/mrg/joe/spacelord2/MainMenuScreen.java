@@ -10,9 +10,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -39,6 +36,7 @@ public class MainMenuScreen implements Screen {
     private Table table;
     private Sound launchSound;
     private Sound buttonClick;
+    final TextButton signInButton;
 
 
 
@@ -55,7 +53,7 @@ public class MainMenuScreen implements Screen {
         backGround = new BackGround();
 
         table = new Table();
-        table.defaults().width(400).padBottom(100);
+        table.defaults().width(600).padBottom(100);
 
 
 
@@ -85,7 +83,7 @@ public class MainMenuScreen implements Screen {
 
         // Generate a 1x1 white texture and store it in the skin named "white".
         Pixmap pixmap = new Pixmap(100, 100, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.GREEN);
+        pixmap.setColor(Color.GRAY);
         pixmap.fill();
 
         skin.add("white", new Texture(pixmap));
@@ -107,23 +105,21 @@ public class MainMenuScreen implements Screen {
         final TextButton playButton = new TextButton("Play",textButtonStyle);
        table.add(playButton);
         table.row();
-     //  playButton.setPosition(GameConstants.GAME_WIDTH / 4, GameConstants.GAME_HEIGHT / 2);
-       // stage.addActor(playButton);
 
         final TextButton leaderboardButton = new TextButton("Leaderboard", textButtonStyle);
         table.add(leaderboardButton);
         table.row();
-      //  leaderboardButton.setPosition(GameConstants.GAME_WIDTH / 4, GameConstants.GAME_HEIGHT / 2 - 400);
-      //  stage.addActor(leaderboardButton);
 
-
-
-        final TextButton signInButton = new TextButton("Sign In", textButtonStyle);
-       table.add(signInButton);
+        final TextButton achievementButton = new TextButton("Achievements", textButtonStyle);
+        table.add(achievementButton);
         table.row();
-     //   signInButton.setPosition(GameConstants.GAME_WIDTH / 4, GameConstants.GAME_HEIGHT / 2 - 800);
-      //  stage.addActor(signInButton);
 
+       signInButton = new TextButton("Sign In", textButtonStyle);
+        if(!resolver.signedIn()) {
+
+            table.add(signInButton);
+            table.row();
+        }
 
 
         table.setPosition(GameConstants.GAME_WIDTH / 3, (GameConstants.GAME_HEIGHT / 5) * 2);
@@ -137,7 +133,7 @@ public class MainMenuScreen implements Screen {
         playButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 buttonClick.play();
-                game.setScreen(new SpaceLord2(game, resolver, MainMenuScreen.this));
+                game.setScreen(new SpaceLord2(game, resolver));
                 dispose();
 
             }
@@ -146,18 +142,32 @@ public class MainMenuScreen implements Screen {
 
         leaderboardButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                buttonClick.play();
                 resolver.showLeaderboard();
             }
         });
 
-        signInButton.addListener(new ChangeListener() {
+        achievementButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                buttonClick.play();
-                resolver.signIn();
-
+                resolver.showAchievements();
             }
         });
+
+
+
+        if(!resolver.signedIn() && signInButton != null) {
+            signInButton.addListener(new ChangeListener() {
+                public void changed(ChangeEvent event, Actor actor) {
+                    buttonClick.play();
+                    resolver.signIn();
+
+                }
+            });
+
+        }
+
+
+
+
 
 
 
@@ -180,6 +190,10 @@ public class MainMenuScreen implements Screen {
         // quit game if back pressed on main menu
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             Gdx.app.exit();
+        }
+
+        if(resolver.signedIn() && signInButton != null){
+            table.removeActor(signInButton);
         }
 
 

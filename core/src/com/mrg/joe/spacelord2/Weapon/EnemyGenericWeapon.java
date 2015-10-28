@@ -32,7 +32,7 @@ public class EnemyGenericWeapon extends Weapon {
                 // creates new projectiles every interval in seconds
                 if (System.nanoTime() > interval + (4L * 1000000000L)) {
                     if((int)(Math.random() * 10) == 5) {
-                    projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}));
+                    projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
 
                     interval = System.nanoTime();
                 }

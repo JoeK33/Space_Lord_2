@@ -78,13 +78,12 @@ public class AndroidLauncher extends AndroidApplication implements
 
 	// Request code to use when launching the resolution activity
 	private static final int REQUEST_RESOLVE_ERROR = 1001;
-	// Unique tag for the error dialog fragment
-	private static final String DIALOG_ERROR = "dialog_error";
+
 
 
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
-		Toast.makeText(this.getContext(), result.toString(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this.getContext(), result.toString(), Toast.LENGTH_SHORT).show();
 		if (mResolvingConnectionFailure) {
 			// Already resolving
 			return;
@@ -148,12 +147,12 @@ public class AndroidLauncher extends AndroidApplication implements
 
 	@Override
 	public void onConnected(Bundle bundle) {
-		Toast.makeText(this.getContext(), "Connected", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this.getContext(), "Connected", Toast.LENGTH_SHORT).show();
 
 
 	}
 
-	private boolean signedIn() {
+	public boolean signedIn() {
 		return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
 	}
 
@@ -163,8 +162,33 @@ public class AndroidLauncher extends AndroidApplication implements
 	public void submitScore(final int score) {
 
 
-				if (signedIn()) {
-					Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.LEADERBOARD_ID), score);
+
+
+
+		if (signedIn()) {
+
+
+			Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.LEADERBOARD_ID), score);
+
+			if(score >= 10000){
+				Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_id_1));
+			}
+
+			if(score >= 20000){
+				Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_id_2));
+			}
+
+			if(score >= 30000){
+				Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_id_3));
+			}
+
+			if(score >= 40000){
+				Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_id_4));
+			}
+
+			if(score >= 50000){
+				Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_id_5));
+			}
 
 				}
 
@@ -193,5 +217,29 @@ public class AndroidLauncher extends AndroidApplication implements
 			}
 		});
 
+
+
+
+}
+	public void showAchievements() {
+
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+
+
+				if (signedIn()) {
+
+					startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+							2);
+
+
+				} else {
+					BaseGameUtils.makeSimpleDialog(AndroidLauncher.this, getString(R.string.achievements_not_available)).show();
+				}
+
+
+			}
+		});
 
 }}

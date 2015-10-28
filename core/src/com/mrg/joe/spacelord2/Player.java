@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.Powerups.PowerupType;
@@ -42,13 +40,15 @@ public class Player {
     private long timerDelay;
     private int goToX;
     private int goToY;
+    public Assets assets;
 
 
 
 
-    public Player(){
+    public Player(Assets assets){
+        this.assets = assets;
 
-        this.texture = new Texture(Gdx.files.internal("player.png"));
+        this.texture = assets.manager.get("player.png");
         this.sprite = new Sprite(texture);
         this.Alive = true;
 
@@ -74,10 +74,10 @@ public class Player {
 
         this.health = 3;
 
-        this.explosion = new Explosion(this.sprite);
+        this.explosion = new Explosion(this.sprite, this.assets);
 
-        hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/player_hit.mp3"));
-        explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.mp3"));
+        hitSound = assets.manager.get("sounds/player_hit.mp3", Sound.class);
+        explosionSound = assets.manager.get("sounds/explosion.mp3", Sound.class);
 
 
 
@@ -353,10 +353,8 @@ public class Player {
     }
 
     public void dispose() {
-        this.texture.dispose();
-        this.explosionSound.dispose();
-        this.hitSound.dispose();
-        this.explosion.dispose();
+
+
 
     }
 
