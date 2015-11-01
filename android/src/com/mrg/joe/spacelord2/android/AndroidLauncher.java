@@ -135,8 +135,10 @@ public class AndroidLauncher extends AndroidApplication implements
         // send in locally stored high score on connection.  this way if a player sets a high score while not connected it still reaches the leaderboard eventually
         SharedPreferences prefs = getSharedPreferences("preferences", MODE_PRIVATE);
         int score = prefs.getInt("highscore", 0);
-        submitScore(score);
 
+        if(score > 0) {
+            submitScore(score);
+        }
 
     }
 
