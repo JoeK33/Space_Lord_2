@@ -13,41 +13,31 @@ public class PlayerShotgunProjectile extends Projectile {
 
     public PlayerShotgunProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(),  GameConstants.player_shotgun_damage, player.assets, "weapons/player_shotgun_projectile.png");
+        super(player.getPlayerNosePosition(), GameConstants.player_shotgun_damage, player.assets, "weapons/player_shotgun_projectile.png");
         this.position = position;
 
 
-        this.sprite.setX(this.getX() - this.sprite.getWidth()/2);
+        this.sprite.setX(this.getX() - this.sprite.getWidth() / 2);
     }
 
     @Override
-    public void update(float delta){
+    public void update(float delta) {
         // projectile behaviors here
         this.sprite.setY(this.sprite.getY() + (delta * GameConstants.projectile_speed));
 
-
-        if(this.position == ProjectilePosition.FAR_LEFT){
-
+        // 4 porrible shots from the shotgun
+        if (this.position == ProjectilePosition.FAR_LEFT) {
             this.sprite.setX(this.sprite.getX() - (100 * delta));
-
-        }else if (this.position == ProjectilePosition.INNER_LEFT){
-
+        } else if (this.position == ProjectilePosition.INNER_LEFT) {
             this.sprite.setX(this.sprite.getX() - (50 * delta));
-
-        }else if (this.position == ProjectilePosition.INNER_RIGHT){
-
+        } else if (this.position == ProjectilePosition.INNER_RIGHT) {
             this.sprite.setX(this.sprite.getX() + (50 * delta));
-
-        }else if (this.position == ProjectilePosition.FAR_RIGHT){
-
+        } else if (this.position == ProjectilePosition.FAR_RIGHT) {
             this.sprite.setX(this.sprite.getX() + (100 * delta));
-
         }
 
 
-
-
-        if(this.sprite.getY() > GameConstants.GAME_HEIGHT){
+        if (this.sprite.getY() > GameConstants.GAME_HEIGHT) {
             this.remove();
         }
 

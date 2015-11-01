@@ -14,10 +14,8 @@ public class EnemyGenericWeapon extends Weapon {
 
     private Enemy enemy;
 
-    public EnemyGenericWeapon(Enemy enemy){
-
+    public EnemyGenericWeapon(Enemy enemy) {
         this.enemy = enemy;
-
 
     }
 
@@ -25,26 +23,24 @@ public class EnemyGenericWeapon extends Weapon {
     @Override
     public void update(float delta) {
 
+        if (this.isOn) {
 
-        if(this.isOn){
-
-            if((int)(Math.random() * 70) == 5) {
+            if ((int) (Math.random() * 70) == 5) {
                 // creates new projectiles every interval in seconds
                 if (System.nanoTime() > interval + (4L * 1000000000L)) {
-                    if((int)(Math.random() * 10) == 5) {
-                    projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                    if ((int) (Math.random() * 10) == 5) {
+                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
 
-                    interval = System.nanoTime();
+                        interval = System.nanoTime();
+                    }
                 }
             }
-
-        }}
+        }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
-
 
                 // remove projectiles that fly off screen
                 if ((p.getY() + p.getHeight()) < 0) {

@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Assets;
+import com.mrg.joe.spacelord2.GameConstants;
 
 /**
  * Created by Joe on 8/26/2015.
+ * Base class for both player and enemy projectiles
  */
 public class Projectile {
 
@@ -18,8 +19,7 @@ public class Projectile {
     private int damage;
 
 
-
-    public Projectile(float[] pos, int damage, Assets manager, String projectile_texture_filepath){
+    public Projectile(float[] pos, int damage, Assets manager, String projectile_texture_filepath) {
 
         this.manager = manager;
         this.sprite = new Sprite(manager.manager.get(projectile_texture_filepath, Texture.class));
@@ -29,39 +29,39 @@ public class Projectile {
 
     }
 
-    public void update(float delta){
+    public void update(float delta) {
         // projectile behaviors here
-        this.sprite.setY(this.sprite.getY()+ (delta * GameConstants.projectile_speed));
+        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.projectile_speed));
 
-        if(this.sprite.getY() > GameConstants.GAME_HEIGHT){
+        if (this.sprite.getY() > GameConstants.GAME_HEIGHT) {
             this.remove();
         }
 
     }
 
-    public float getY(){
+    public float getY() {
         return this.sprite.getY();
     }
 
-    public float getX(){
+    public float getX() {
         return this.sprite.getX();
     }
 
-    public float getHeight(){
+    public float getHeight() {
         return this.sprite.getHeight();
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         this.sprite.draw(batch);
     }
 
-    public int getDamage(){
+    public int getDamage() {
         return this.damage;
     }
 
-    public boolean isColliding(Rectangle rect){
+    public boolean isColliding(Rectangle rect) {
 
-        if(rect.overlaps(this.sprite.getBoundingRectangle())){
+        if (rect.overlaps(this.sprite.getBoundingRectangle())) {
             this.sprite.setColor(Color.CLEAR);
             return true;
         }
@@ -69,20 +69,18 @@ public class Projectile {
         return false;
     }
 
-    public Rectangle getBoundingRectangle(){
+    public Rectangle getBoundingRectangle() {
         return this.sprite.getBoundingRectangle();
     }
 
-    public float getCenterX(){
-        return this.getX() + this.sprite.getWidth()/2;
+    public float getCenterX() {
+        return this.getX() + this.sprite.getWidth() / 2;
     }
 
-    public void remove(){
+    public void remove() {
         // move projectile away so it does not make multiple "hits"
         this.sprite.setX(0 - this.sprite.getWidth() - 5);
     }
-
-
 
 
 }

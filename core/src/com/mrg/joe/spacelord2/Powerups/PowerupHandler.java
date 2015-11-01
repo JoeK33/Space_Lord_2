@@ -6,6 +6,7 @@ import com.mrg.joe.spacelord2.Player;
 
 /**
  * Created by Joe on 9/11/2015.
+ *  Deploys powerups somewhat randomly.  deployed at a maximum 1 every 5 seconds.
  */
 public class PowerupHandler {
 
@@ -100,9 +101,6 @@ public class PowerupHandler {
                 }
     }
 
-    public void dispose(){
-        this.sound.dispose();
-    }
 
 
 

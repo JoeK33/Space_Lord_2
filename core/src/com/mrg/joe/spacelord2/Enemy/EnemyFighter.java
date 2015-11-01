@@ -27,6 +27,7 @@ public class EnemyFighter extends Enemy {
     @Override
     public void update(float delta){
         this.weapon.update(delta);
-     super.update(delta);
+        super.update(delta);
 
-}}
+    }
+}

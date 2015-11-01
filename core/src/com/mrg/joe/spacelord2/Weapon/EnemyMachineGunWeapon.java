@@ -11,64 +11,55 @@ import java.util.Iterator;
  */
 public class EnemyMachineGunWeapon extends Weapon {
 
-private int small_projectile_width = 12;
+    private int small_projectile_width = 12;
 
     private Enemy enemy;
     private int shot_offset;
 
-
-    public EnemyMachineGunWeapon(Enemy enemy){
+    public EnemyMachineGunWeapon(Enemy enemy) {
 
         this.enemy = enemy;
-        shot_offset = (int)(Math.random() * 10) * 100000;
-
-
-
+        shot_offset = (int) (Math.random() * 10) * 100000;
     }
-
 
     @Override
     public void update(float delta) {
 
+        if (this.isOn) {
+            // creates new projectiles every interval in seconds
+            if (System.nanoTime() > interval + (2L * 1000000000L + shot_offset)) {
+                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
 
-        if(this.isOn){
-
-        // creates new projectiles every interval in seconds
-        if ( System.nanoTime() > interval + (2L * 1000000000L +shot_offset )) {
-            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
-
-            interval = System.nanoTime();
+                interval = System.nanoTime();
 
 
-            Timer timer = new Timer();
-            timer.scheduleTask(new Timer.Task() {
-                @Override
-                public void run() {
-                    if(enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                Timer timer = new Timer();
+                timer.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                        }
                     }
+                }, .5f);
 
-                }
-            }, .5f);
+                Timer timer2 = new Timer();
+                timer2.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
 
-            Timer timer2 = new Timer();
-            timer2.scheduleTask(new Timer.Task() {
-                @Override
-                public void run() {
-
-                    if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                        if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                        }
                     }
-                }
-            }, 1f);
-
-        }}
+                }, 1f);
+            }
+        }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
-
 
                 // remove projectiles that fly off screen
                 if ((p.getY() + p.getHeight()) < 0) {

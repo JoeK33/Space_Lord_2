@@ -1,6 +1,5 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 
@@ -24,15 +23,13 @@ public class PlayerRocketWeapon extends Weapon {
     public void update(float delta) {
 
 
-        if(this.isOn) {
+        if (this.isOn) {
 
             // creates new projectiles every interval in seconds
             if (System.nanoTime() > interval + (2 * GameConstants.projectile_creation_interval * 1000000000)) {
 
                 projectiles.add(new PlayerRocketProjectile(this.player, ProjectilePosition.LEFT_ROCKET));
-
                 projectiles.add(new PlayerRocketProjectile(this.player, ProjectilePosition.RIGHT_ROCKET));
-
 
                 interval = System.nanoTime();
             }
@@ -40,11 +37,10 @@ public class PlayerRocketWeapon extends Weapon {
         }
 
 
-
         // update projectiles
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
 
@@ -54,8 +50,6 @@ public class PlayerRocketWeapon extends Weapon {
                     itr.remove();
 
                 }
-
-
 
             }
 

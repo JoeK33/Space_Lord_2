@@ -14,29 +14,24 @@ public class EnemyBoss4Weapon extends Weapon {
     int projectile_Halfsize;
     int shot_offset;
 
-    public EnemyBoss4Weapon(EnemyBoss4 enemy){
-        Projectile p = new EnemyBallProjectile(new float[]{-200,-200}, enemy.assets);
-        projectile_Halfsize = (int)p.getHeight()/2;
+    public EnemyBoss4Weapon(EnemyBoss4 enemy) {
+        Projectile p = new EnemyBallProjectile(new float[]{-200, -200}, enemy.assets);
+        projectile_Halfsize = (int) p.getHeight() / 2;
 
         this.enemy = enemy;
-        shot_offset = (int)(Math.random() * 10) * 100000;
-
-
-
+        shot_offset = (int) (Math.random() * 10) * 100000;
 
     }
-
-
 
     @Override
     public void update(float delta) {
 
-        if(this.isOn) {
+        if (this.isOn) {
 
             // creates new projectiles every interval in seconds
-            if ( System.nanoTime() > interval + (3L * 1000000000L +shot_offset )) {
-                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0]  - 130, enemy.getNosePos()[1] + 130}, enemy.assets));
-                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1]+ 130}, enemy.assets));
+            if (System.nanoTime() > interval + (3L * 1000000000L + shot_offset)) {
+                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - 130, enemy.getNosePos()[1] + 130}, enemy.assets));
+                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1] + 130}, enemy.assets));
 
                 interval = System.nanoTime();
 
@@ -45,9 +40,9 @@ public class EnemyBoss4Weapon extends Weapon {
                 timer.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - 130, enemy.getNosePos()[1]+ 130}, enemy.assets));
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1]+ 130}, enemy.assets));
+                        if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - 130, enemy.getNosePos()[1] + 130}, enemy.assets));
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1] + 130}, enemy.assets));
                         }
 
                     }
@@ -58,9 +53,9 @@ public class EnemyBoss4Weapon extends Weapon {
                     @Override
                     public void run() {
 
-                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - 130, enemy.getNosePos()[1]+ 130}, enemy.assets));
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1]+ 130}, enemy.assets));
+                        if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - 130, enemy.getNosePos()[1] + 130}, enemy.assets));
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - projectile_Halfsize + 130, enemy.getNosePos()[1] + 130}, enemy.assets));
                         }
                     }
                 }, .4f);
@@ -70,18 +65,19 @@ public class EnemyBoss4Weapon extends Weapon {
                     @Override
                     public void run() {
 
-                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
+                        if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
                             projectiles.add(new EnemyBallProjectile(new float[]{enemy.getNosePos()[0] - 12, enemy.getNosePos()[1]}, enemy.assets));
                         }
                     }
                 }, 1f);
 
 
-        }}
+            }
+        }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
 

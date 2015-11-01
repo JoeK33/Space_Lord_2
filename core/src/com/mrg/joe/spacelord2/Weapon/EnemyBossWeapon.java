@@ -12,23 +12,19 @@ public class EnemyBossWeapon extends Weapon {
 
     private EnemyBoss enemy;
 
-    public EnemyBossWeapon(EnemyBoss enemy){
-
+    public EnemyBossWeapon(EnemyBoss enemy) {
         this.enemy = enemy;
 
-
     }
-
-
 
     @Override
     public void update(float delta) {
 
-        if(this.isOn) {
+        if (this.isOn) {
 
 
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (2 * 1000000000L )) {
+            if (System.nanoTime() > interval + (2 * 1000000000L)) {
                 projectiles.add(new EnemyMgProjectile(enemy.getWeapon1Pos(), enemy.assets));
                 projectiles.add(new EnemyMgProjectile(enemy.getWeapon2Pos(), enemy.assets));
                 projectiles.add(new EnemyBallProjectile(enemy.getWeapon3Pos(), enemy.assets));
@@ -38,8 +34,8 @@ public class EnemyBossWeapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
 

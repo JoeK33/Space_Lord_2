@@ -1,6 +1,5 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
@@ -18,7 +17,6 @@ public class PlayerTripleLaserWeapon extends Weapon {
 
 
     public PlayerTripleLaserWeapon(Player player) {
-
         this.player = player;
         this.damage = GameConstants.player_minigun_damage;
     }
@@ -28,9 +26,8 @@ public class PlayerTripleLaserWeapon extends Weapon {
     public void update(float delta) {
 
 
-
         // creates new projectiles every interval in seconds
-        if(this.isOn) {
+        if (this.isOn) {
             if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
                 projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
@@ -58,29 +55,21 @@ public class PlayerTripleLaserWeapon extends Weapon {
 
                     }
                 }, 2f);
-
-
                 interval = System.nanoTime();
             }
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
-
 
                 // remove projectiles that fly off screen
                 if ((p.getY() - p.getHeight()) > GameConstants.GAME_HEIGHT) {
                     p.remove();
                     itr.remove();
-
                 }
-
-
             }
-
         }
     }
-
 }

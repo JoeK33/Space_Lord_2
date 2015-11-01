@@ -8,24 +8,24 @@ import java.util.Iterator;
 
 /**
  * Created by Joe on 9/17/2015.  Offset is the offset from the bottom left of the sprite to place the weapon.
+ * This boss fires just like a row of mg enemies
  */
 public class EnemyBoss2Weapon extends Weapon {
 
     private int small_projectile_width = 12;
 
-
-
     private EnemyBoss2 enemy;
     private int[] offset;
     private int shot_offset;
-    public EnemyBoss2Weapon(EnemyBoss2 enemy, int offset1, int offset2, int offset3){
+
+    public EnemyBoss2Weapon(EnemyBoss2 enemy, int offset1, int offset2, int offset3) {
 
         this.enemy = enemy;
         offset = new int[3];
         this.offset[0] = offset1;
         this.offset[1] = offset2;
         this.offset[2] = offset3;
-        shot_offset = (int)(Math.random() * 10) * 100000;
+        shot_offset = (int) (Math.random() * 10) * 100000;
 
 
     }
@@ -33,42 +33,41 @@ public class EnemyBoss2Weapon extends Weapon {
     @Override
     public void update(float delta) {
 
-
-        if(this.isOn){
+        if (this.isOn) {
 
             // creates new projectiles every interval in seconds
-            if ( System.nanoTime() > interval + (2 * 1000000000L) + shot_offset) {
+            if (System.nanoTime() > interval + (2 * 1000000000L) + shot_offset) {
 
-                for (int i = 0; i < 3; i++){
+                for (int i = 0; i < 3; i++) {
 
-                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[i], enemy.getNosePos()[1]}, enemy.assets));
+                    projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[i], enemy.getNosePos()[1]}, enemy.assets));
 
-                interval = System.nanoTime();
+                    interval = System.nanoTime();
 
 
-                Timer timer = new Timer();
+                    Timer timer = new Timer();
                     final int finalI = i;
                     timer.scheduleTask(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI], enemy.getNosePos()[1]}, enemy.assets));
+                        @Override
+                        public void run() {
+                            if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
+                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI], enemy.getNosePos()[1]}, enemy.assets));
+                            }
+
                         }
+                    }, .2f);
 
-                    }
-                }, .2f);
-
-                Timer timer2 = new Timer();
+                    Timer timer2 = new Timer();
                     final int finalI1 = i;
                     timer2.scheduleTask(new Timer.Task() {
-                    @Override
-                    public void run() {
+                        @Override
+                        public void run() {
 
-                        if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI1], enemy.getNosePos()[1]}, enemy.assets));
+                            if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
+                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI1], enemy.getNosePos()[1]}, enemy.assets));
+                            }
                         }
-                    }
-                }, .4f);
+                    }, .4f);
 
                     Timer timer3 = new Timer();
                     final int finalI2 = i;
@@ -76,17 +75,19 @@ public class EnemyBoss2Weapon extends Weapon {
                         @Override
                         public void run() {
 
-                            if(enemy.isAlive()&& !SpaceLord2.hud.isPaused()) {
+                            if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
                                 projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI2], enemy.getNosePos()[1]}, enemy.assets));
                             }
                         }
                     }, .6f);
 
-            }}}
+                }
+            }
+        }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
 

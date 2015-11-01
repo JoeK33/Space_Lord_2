@@ -33,8 +33,4 @@ public class GameConstants {
     public static final int GAME_HEIGHT = 1920;
 
 
-
-
-
-
 }

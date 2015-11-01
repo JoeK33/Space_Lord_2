@@ -20,9 +20,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
  * Created by Joe on 10/5/2015.
+ * <p/>
+ * Main menu screen.  This is what the player sees upon first opening the game.  Has buttons for sign in, play, leaderboards, and achievements.
+ *
  *
  * Thanks to sadaf noor for the menu tutorial and sample code http://www.sadafnoor.com/blog/how-to-create-simple-menu-in-libgdx/
- *
  */
 public class MainMenuScreen implements Screen {
 
@@ -30,14 +32,14 @@ public class MainMenuScreen implements Screen {
     final SpaceLord2Game game;
     private Stage stage;
     private Skin skin;
-    private  ActionResolver resolver;
+    private ActionResolver resolver;
     private Texture title;
     private BackGround backGround;
     private Table table;
     private Sound launchSound;
     private Sound buttonClick;
     final TextButton signInButton;
-
+    private boolean launchSoundPlayed;
 
 
     public MainMenuScreen(final SpaceLord2Game game, final ActionResolver resolver) {
@@ -56,11 +58,7 @@ public class MainMenuScreen implements Screen {
         table.defaults().width(600).padBottom(100);
 
 
-
-
-
-        stage = new Stage(new FitViewport(GameConstants.GAME_WIDTH,GameConstants.GAME_HEIGHT));
-
+        stage = new Stage(new FitViewport(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT));
 
 
         Gdx.input.setInputProcessor(stage);
@@ -68,27 +66,15 @@ public class MainMenuScreen implements Screen {
         launchSound = Gdx.audio.newSound(Gdx.files.internal("sounds/space.mp3"));
 
 
-
-
-
         buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button_click.mp3"));
 
 
-
-
-        // A skin can be loaded via JSON or defined programmatically, either is fine. Using a skin is optional but strongly
-        // recommended solely for the convenience of getting a texture, region, etc as a drawable, tinted drawable, etc.
         skin = new Skin();
         skin.add("default", game.font);
-
-        // Generate a 1x1 white texture and store it in the skin named "white".
         Pixmap pixmap = new Pixmap(100, 100, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
-
         skin.add("white", new Texture(pixmap));
-
-
 
         // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -102,8 +88,8 @@ public class MainMenuScreen implements Screen {
         skin.add("default", textButtonStyle);
 
         // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
-        final TextButton playButton = new TextButton("Play",textButtonStyle);
-       table.add(playButton);
+        final TextButton playButton = new TextButton("Play", textButtonStyle);
+        table.add(playButton);
         table.row();
 
         final TextButton leaderboardButton = new TextButton("Leaderboard", textButtonStyle);
@@ -114,20 +100,16 @@ public class MainMenuScreen implements Screen {
         table.add(achievementButton);
         table.row();
 
-       signInButton = new TextButton("Sign In", textButtonStyle);
-        if(!resolver.signedIn()) {
+        signInButton = new TextButton("Sign In", textButtonStyle);
 
-            table.add(signInButton);
-            table.row();
-        }
+
+        table.add(signInButton);
+        table.row();
 
 
         table.setPosition(GameConstants.GAME_WIDTH / 3, (GameConstants.GAME_HEIGHT / 5) * 2);
 
         stage.addActor(table);
-
-
-
 
 
         playButton.addListener(new ChangeListener() {
@@ -152,30 +134,16 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        signInButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                buttonClick.play();
+                resolver.signIn();
+
+            }
+        });
 
 
-        if(!resolver.signedIn() && signInButton != null) {
-            signInButton.addListener(new ChangeListener() {
-                public void changed(ChangeEvent event, Actor actor) {
-                    buttonClick.play();
-                    resolver.signIn();
-
-                }
-            });
-
-        }
-
-
-
-
-
-
-
-
-
-        launchSound.play();
     }
-
 
 
     @Override
@@ -186,14 +154,24 @@ public class MainMenuScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        if (!launchSoundPlayed) {
+            launchSound.play();
+            launchSoundPlayed = true;
+        }
+
 
         // quit game if back pressed on main menu
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             Gdx.app.exit();
         }
 
-        if(resolver.signedIn() && signInButton != null){
-            table.removeActor(signInButton);
+        // don't show sign in button if signed in
+        if (resolver.signedIn() && signInButton != null) {
+            signInButton.setVisible(false);
+        }
+
+        if (!resolver.signedIn() && signInButton != null) {
+            signInButton.setVisible(true);
         }
 
 
@@ -205,19 +183,15 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();
 
         backGround.draw(game.batch);
-     //   game.font.draw(game.batch, "Welcome to Space Lord 2!!! ", Gdx.graphics.getWidth() / 2 - 100, Gdx.graphics.getHeight() / 2);
         game.batch.draw(title, 0, GameConstants.GAME_HEIGHT - title.getHeight());
-        table.draw(game.batch,1);
+        table.draw(game.batch, 1);
         game.batch.end();
-
 
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
     }
-
-
 
 
     @Override

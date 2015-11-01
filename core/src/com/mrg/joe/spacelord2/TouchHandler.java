@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Joe on 8/26/2015.
+ * Handles game input.  Player goes to where you touch.
  */
 public class TouchHandler implements InputProcessor {
 
@@ -15,10 +16,9 @@ public class TouchHandler implements InputProcessor {
     private SpaceLord2 spaceLord2;
 
 
-    public TouchHandler(Player player, SpaceLord2 spaceLord2){
+    public TouchHandler(Player player, SpaceLord2 spaceLord2) {
         this.player = player;
         this.spaceLord2 = spaceLord2;
-
 
 
     }
@@ -26,26 +26,25 @@ public class TouchHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if(player.isAlive()) {
+        if (player.isAlive()) {
 
-        // move player to touch x pos
-        Vector3 worldCoordinates = SpaceLord2.camera.unproject(new Vector3(screenX,screenY,0));
+            // move player to touch x pos.  Adjust for screen size via camera
+            Vector3 worldCoordinates = SpaceLord2.camera.unproject(new Vector3(screenX, screenY, 0));
 
-        player.goTo((int) worldCoordinates.x,(int) worldCoordinates.y + (int) (player.getHeight()));
+            player.goTo((int) worldCoordinates.x, (int) worldCoordinates.y + (int) (player.getHeight()));
 
 
+        }
 
-    }
-
-        if(SpaceLord2.hud.isRestart_displayed()){
+        if (SpaceLord2.hud.isRestart_displayed()) {
             //restart game here
             spaceLord2.reset();
 
         }
 
-        if(SpaceLord2.hud.isPaused()){
+        if (SpaceLord2.hud.isPaused()) {
 
-             SpaceLord2.hud.unpause();
+            SpaceLord2.hud.unpause();
             SpaceLord2.player.resumePowerupTimers();
         }
 
@@ -60,10 +59,10 @@ public class TouchHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if(player.isAlive()) {
+        if (player.isAlive()) {
 
 
-            Vector3 worldCoordinates = SpaceLord2.camera.unproject(new Vector3(screenX,screenY,0));
+            Vector3 worldCoordinates = SpaceLord2.camera.unproject(new Vector3(screenX, screenY, 0));
 
             player.goTo((int) worldCoordinates.x, (int) worldCoordinates.y + (int) (player.getHeight()));
 
@@ -72,50 +71,42 @@ public class TouchHandler implements InputProcessor {
         return true;
     }
 
-    // unused input listners
+
     @Override
     public boolean keyDown(int keycode) {
 
         // pause on back press
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
 
-            if(!SpaceLord2.hud.isPaused()){
+            if (!SpaceLord2.hud.isPaused()) {
                 interval = System.nanoTime();
-
             }
-
-
-
             SpaceLord2.hud.pause();
             SpaceLord2.player.pausePowerupTimers();
-
-
-
-
             // wait a bit before returning to menu if back pressed while paused
-
-            if(System.nanoTime() > (interval + (100000000L)) && SpaceLord2.hud.isPaused()) {
-
-            SpaceLord2.toMenuPressed = true;
-
+            if (System.nanoTime() > (interval + (100000000L)) && SpaceLord2.hud.isPaused()) {
+                SpaceLord2.toMenuPressed = true;
             }
-
-
         }
         return false;
     }
+
+    // unused input listners
     @Override
     public boolean keyUp(int keycode) {
         return false;
     }
+
     @Override
     public boolean keyTyped(char character) {
         return false;
     }
+
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
     }
+
     @Override
     public boolean scrolled(int amount) {
         return false;

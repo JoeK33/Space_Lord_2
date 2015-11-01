@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Created by Joe on 9/15/2015.
+ * The explosion that happens when something is destroyed.  Sounds are controlled by the thing that is destroyed but the
+ * actual explosion animation is randomly 1 of 3 possible animations.
  */
 public class Explosion {
 
@@ -56,6 +58,7 @@ public class Explosion {
 
 
     public void draw(SpriteBatch batch) {
+        // explosion is centered on the thing that is exploding's center
 
         if(!this.explodeAnimation.isAnimationFinished(this.stateTime)) {
             this.stateTime += Gdx.graphics.getDeltaTime();
@@ -65,12 +68,7 @@ public class Explosion {
                     this.sprite.getY() + this.sprite.getHeight()/2 - ((this.explodeSheet.getHeight() / FRAME_ROWS) / 2)
             );
 
-            // Gdx.app.log("Explosion", "draw!");
         }
-
-    }
-
-    public void dispose(){
 
     }
 

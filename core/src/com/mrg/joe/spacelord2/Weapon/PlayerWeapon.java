@@ -1,18 +1,16 @@
 package com.mrg.joe.spacelord2.Weapon;
 
-import com.badlogic.gdx.Gdx;
 import com.mrg.joe.spacelord2.GameConstants;
 import com.mrg.joe.spacelord2.Player;
 
 import java.util.Iterator;
 
 /**
- * Created by Joe on 8/28/2015.
+ * Created by Joe on 8/28/2015. Default weapon
  */
 public class PlayerWeapon extends Weapon {
 
     private Player player;
-
 
 
     public PlayerWeapon(Player player) {
@@ -21,14 +19,12 @@ public class PlayerWeapon extends Weapon {
         this.damage = GameConstants.player_laser_damage;
     }
 
-
     @Override
     public void update(float delta) {
 
 
-
         // creates new projectiles every interval in seconds
-        if(this.isOn) {
+        if (this.isOn) {
             if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
                 projectiles.add(new PlayerProjectile(this.player, GameConstants.player_laser_damage));
 
@@ -37,8 +33,8 @@ public class PlayerWeapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
 
@@ -48,12 +44,12 @@ public class PlayerWeapon extends Weapon {
                     itr.remove();
 
                 }
-                           }
-
-
             }
 
+
         }
+
     }
+}
 
 

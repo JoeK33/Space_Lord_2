@@ -1,7 +1,7 @@
 package com.mrg.joe.spacelord2.Weapon;
 
 /**
- * Created by Joe on 9/10/2015.
+ * Created by Joe on 9/10/2015. used for shotgun and rocket projectiles
  */
 public enum ProjectilePosition {
 

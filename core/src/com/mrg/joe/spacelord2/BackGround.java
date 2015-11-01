@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Created by Joe on 8/26/2015.
+ * Scrolling space background
  */
 public class BackGround {
 
@@ -15,16 +16,12 @@ public class BackGround {
     private float bg_scrollTimer = 0.0f;
 
 
-
-
-    public BackGround(){
-
+    public BackGround() {
 
 
         int screenHeight = GameConstants.GAME_HEIGHT;
         int screenWidth = GameConstants.GAME_WIDTH;
 
-        // this stuff is for the scrolling tiling space bg
         bg_spriteTexture = new Texture(Gdx.files.internal("space_tile.png"));
         bg_spriteTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         bg_sprite = new Sprite(bg_spriteTexture, 0, 0, screenWidth, screenHeight);
@@ -32,24 +29,24 @@ public class BackGround {
         this.update();
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         bg_sprite.draw(batch);
     }
 
-    public void update(){
+    public void update() {
 
-        bg_scrollTimer+= Gdx.graphics.getDeltaTime();
+        bg_scrollTimer += Gdx.graphics.getDeltaTime();
 
-        if(bg_scrollTimer>1.0f)
+        if (bg_scrollTimer > 1.0f)
             bg_scrollTimer = 0.0f;
 
         bg_sprite.setV(bg_scrollTimer);
-        bg_sprite.setV2(bg_scrollTimer-4f);
+        bg_sprite.setV2(bg_scrollTimer - 4f);
 
 
     }
 
-    public void dispose(){
+    public void dispose() {
         this.bg_spriteTexture.dispose();
     }
 

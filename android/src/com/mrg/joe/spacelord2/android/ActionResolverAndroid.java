@@ -1,7 +1,7 @@
 package com.mrg.joe.spacelord2.android;
 
 import android.content.Context;
-import android.os.Handler;
+
 import com.mrg.joe.spacelord2.ActionResolver;
 
 /**
@@ -13,7 +13,6 @@ public class ActionResolverAndroid implements ActionResolver {
     AndroidLauncher launcher;
 
     public ActionResolverAndroid(Context context, AndroidLauncher launcher) {
-
         this.context = context;
         this.launcher = launcher;
     }
@@ -21,19 +20,13 @@ public class ActionResolverAndroid implements ActionResolver {
 
     @Override
     public void submitScore(int score) {
-
-
-                launcher.submitScore(score);
-
-
+        launcher.submitScore(score);
     }
 
-        @Override
+    @Override
     public void showLeaderboard() {
-
-
-            launcher.showLeaderboard();
-        }
+        launcher.showLeaderboard();
+    }
 
     @Override
     public void showAchievements() {
@@ -45,7 +38,7 @@ public class ActionResolverAndroid implements ActionResolver {
         launcher.signIn();
     }
 
-    public boolean signedIn(){
+    public boolean signedIn() {
         return launcher.signedIn();
     }
 }

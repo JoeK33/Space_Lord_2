@@ -7,43 +7,37 @@ import java.util.Iterator;
 /**
  * Created by Joe on 9/17/2015.
  */
-public class EnemyBoss3Weapon extends  Weapon {
+public class EnemyBoss3Weapon extends Weapon {
 
     private EnemyBoss3 enemy;
     int projectile_size;
 
-    public EnemyBoss3Weapon(EnemyBoss3 enemy){
-        Projectile p = new EnemyBallProjectile(new float[]{-200,-200}, enemy.assets);
-        projectile_size = (int)p.getHeight();
+    public EnemyBoss3Weapon(EnemyBoss3 enemy) {
+        Projectile p = new EnemyBallProjectile(new float[]{-200, -200}, enemy.assets);
+        projectile_size = (int) p.getHeight();
 
         this.enemy = enemy;
-
-
-
-
     }
-
-
 
     @Override
     public void update(float delta) {
 
-        if(this.isOn) {
+        if (this.isOn) {
 
 
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + ( 1000000000L )) {
+            if (System.nanoTime() > interval + (1000000000L)) {
 
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(),enemy.getY() - projectile_size}, enemy.assets));
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectile_size,enemy.getY() - projectile_size}, enemy.assets));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(), enemy.getY() - projectile_size}, enemy.assets));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectile_size, enemy.getY() - projectile_size}, enemy.assets));
                 interval = System.nanoTime();
             }
 
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
-                Projectile p = (Projectile)itr.next();
+            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+                Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
 

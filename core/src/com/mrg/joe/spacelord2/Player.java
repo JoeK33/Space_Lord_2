@@ -19,6 +19,9 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 
 /**
  * Created by Joe on 8/26/2015.
+ *
+ * This is the player.  Controls all the player's weapons and the timers that govern them.  Controls player movement and restricts where they can move
+ * in the field of play.
  */
 public class Player {
 
@@ -28,10 +31,10 @@ public class Player {
     private int health;
     private Color color;
     private int score;
-    private  Timer Shotguntimer;
-    private  Timer Rockettimer;
-    private  Timer Lasertimer;
-    private  Timer Sinetimer;
+    private Timer Shotguntimer;
+    private Timer Rockettimer;
+    private Timer Lasertimer;
+    private Timer Sinetimer;
     private Explosion explosion;
     private boolean Alive;
     private Sound hitSound;
@@ -43,9 +46,7 @@ public class Player {
     public Assets assets;
 
 
-
-
-    public Player(Assets assets){
+    public Player(Assets assets) {
         this.assets = assets;
 
         this.texture = assets.manager.get("player.png");
@@ -55,7 +56,7 @@ public class Player {
         // players weapons go here.
         this.weapons = new Weapon[5];
         this.weapons[0] = new PlayerWeapon(this);
-       // this.weapons[0].turnOff();
+        // this.weapons[0].turnOff();
         this.weapons[1] = new PlayerShotgunWeapon(this);
         this.weapons[1].turnOff();
         this.weapons[2] = new PlayerRocketWeapon(this);
@@ -71,7 +72,7 @@ public class Player {
         this.goToX = ((GameConstants.GAME_WIDTH / 2));
         this.color = this.sprite.getColor();
 
-
+        // player starts with 3 health
         this.health = 3;
 
         this.explosion = new Explosion(this.sprite, this.assets);
@@ -80,80 +81,78 @@ public class Player {
         explosionSound = assets.manager.get("sounds/explosion.mp3", Sound.class);
 
 
-
-
     }
 
-    public float[] getPlayerNosePosition(){
+    public float[] getPlayerNosePosition() {
 
         float[] nose_pos = new float[2];
-        nose_pos[0] = this.getX() + this.getWidth()/2;
+        nose_pos[0] = this.getX() + this.getWidth() / 2;
         nose_pos[1] = this.getY() + this.getHeight();
-        return  nose_pos;
+        return nose_pos;
     }
 
-    // scale rectangle a bit to make hit detection better.
-    public Rectangle getBoundingRectangle(){
+    // scale rectangle a bit to make hit detection more forgiving.
+    public Rectangle getBoundingRectangle() {
 
         Rectangle rectangle = this.sprite.getBoundingRectangle();
-        rectangle.setSize(this.sprite.getWidth(), (this.sprite.getHeight()/4) * 3);
+        rectangle.setSize(this.sprite.getWidth(), (this.sprite.getHeight() / 4) * 3);
         return rectangle;
     }
 
-    public void update(float delta){
+    public void update(float delta) {
 
-        if(!this.isAlive() && !explosionPlayed){
+        if (!this.isAlive() && !explosionPlayed) {
             explosionSound.play(.7f);
             explosionPlayed = true;
         }
 
-        if(this.getCenterX() < this.goToX){
+        if (this.getCenterX() < this.goToX) {
             this.sprite.setX(this.sprite.getX() + (2000 * delta));
 
         }
 
-        if(this.getCenterX() > this.goToX){
+        if (this.getCenterX() > this.goToX) {
             this.sprite.setX(this.sprite.getX() - (2000 * delta));
 
         }
 
-        if(this.getY() > this.goToY){
+        if (this.getY() > this.goToY) {
             this.sprite.setY(this.sprite.getY() - (2000 * delta));
 
         }
 
-        if(this.getY() < this.goToY){
+        if (this.getY() < this.goToY) {
             this.sprite.setY(this.sprite.getY() + (2000 * delta));
 
         }
 
 
         // keep player on screen
-        if(this.sprite.getX()+this.sprite.getWidth() > GameConstants.GAME_WIDTH){
+        if (this.sprite.getX() + this.sprite.getWidth() > GameConstants.GAME_WIDTH) {
             this.sprite.setPosition(GameConstants.GAME_WIDTH - this.sprite.getWidth(), this.sprite.getY());
         }
 
-        if(this.sprite.getX() < 0){
+        if (this.sprite.getX() < 0) {
             this.sprite.setPosition(0, this.sprite.getY());
         }
 
-        if(this.sprite.getY() < 0){
+        if (this.sprite.getY() < 0) {
             this.sprite.setPosition(this.sprite.getX(), 0);
         }
 
-        if(this.sprite.getY() >  GameConstants.GAME_HEIGHT / 4){
-            this.sprite.setPosition(this.sprite.getX(),  GameConstants.GAME_HEIGHT / 4);
+        if (this.sprite.getY() > GameConstants.GAME_HEIGHT / 4) {
+            this.sprite.setPosition(this.sprite.getX(), GameConstants.GAME_HEIGHT / 4);
         }
 
 
-
-        if(this.getHealth() <=0){
+        if (this.getHealth() <= 0) {
             this.Alive = false;
         }
 
-        if(!this.Alive){
+        // make weapons stop firing when player dies
+        if (!this.Alive) {
 
-            for(Weapon w:weapons){
+            for (Weapon w : weapons) {
                 w.turnOff();
             }
 
@@ -161,38 +160,33 @@ public class Player {
         }
 
         // update all player weapons
-        for(Weapon w : weapons){
+        for (Weapon w : weapons) {
             w.update(delta);
         }
 
 
-
-
-
-
-
     }
 
-    public void turnOffWeapon(int weaponSlot){
+    public void turnOffWeapon(int weaponSlot) {
 
-        if(weaponSlot <= weapons.length && weaponSlot >= 0) {
+        if (weaponSlot <= weapons.length && weaponSlot >= 0) {
 
             this.weapons[weaponSlot].turnOff();
         }
     }
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return this.Alive;
     }
 
-    public void turnOnWeapon(int weaponSlot){
+    public void turnOnWeapon(int weaponSlot) {
 
-        if(weaponSlot <= weapons.length && weaponSlot >= 0) {
+        if (weaponSlot <= weapons.length && weaponSlot >= 0) {
             this.weapons[weaponSlot].turnOn();
         }
     }
 
-    public void takeHit(){
+    public void takeHit() {
         this.health--;
         hitSound.play(.8f);
         sprite.setColor(256, 256, 256, 256);
@@ -211,21 +205,23 @@ public class Player {
 
     }
 
-    public void Powerup(PowerupType type){
 
-        if(type == PowerupType.HEALTH){
+    // timers for the powerup weapons
+    public void Powerup(PowerupType type) {
 
-            if(this.health < 4) {
+        if (type == PowerupType.HEALTH) {
+
+            if (this.health < 4) {
                 this.health++;
             }
-        } else if(type == PowerupType.SHOTGUN){
+        } else if (type == PowerupType.SHOTGUN) {
             this.weapons[1].turnOn();
 
-            if(Shotguntimer != null){
+            if (Shotguntimer != null) {
                 Shotguntimer.clear();
             }
 
-            if(Shotguntimer == null) {
+            if (Shotguntimer == null) {
 
                 Shotguntimer = new Timer();
             }
@@ -239,16 +235,15 @@ public class Player {
             }, 20f);
 
 
-
-        }else if(type == PowerupType.ROCKETS){
+        } else if (type == PowerupType.ROCKETS) {
 
             this.weapons[2].turnOn();
 
-            if(Rockettimer != null){
+            if (Rockettimer != null) {
                 Rockettimer.clear();
             }
 
-            if(Rockettimer == null) {
+            if (Rockettimer == null) {
 
                 this.Rockettimer = new Timer();
             }
@@ -262,21 +257,21 @@ public class Player {
                 }
             }, 20f);
 
-        }else if(type == PowerupType.LASER){
+        } else if (type == PowerupType.LASER) {
 
             this.weapons[3].turnOn();
 
-            if(Lasertimer != null){
-               Lasertimer.clear();
+            if (Lasertimer != null) {
+                Lasertimer.clear();
             }
 
-            if(Lasertimer == null) {
+            if (Lasertimer == null) {
 
-               this.Lasertimer = new Timer();
+                this.Lasertimer = new Timer();
             }
 
 
-           Lasertimer.scheduleTask(new Timer.Task() {
+            Lasertimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[3].turnOff();
@@ -284,15 +279,15 @@ public class Player {
                 }
             }, 20f);
 
-        }else if(type == PowerupType.SINE){
+        } else if (type == PowerupType.SINE) {
 
             this.weapons[4].turnOn();
 
-            if(Sinetimer != null){
+            if (Sinetimer != null) {
                 Sinetimer.clear();
             }
 
-            if(Sinetimer == null) {
+            if (Sinetimer == null) {
 
                 this.Sinetimer = new Timer();
             }
@@ -307,126 +302,110 @@ public class Player {
             }, 20f);
 
 
-    }}
-
-    public void setXPosition(Float f){
-        this.sprite.setPosition(f, this.sprite.getY());
+        }
     }
 
-    public float getX(){
+    public float getX() {
         return this.sprite.getX();
     }
 
-    public float getCenterX(){
-        return this.getWidth()/2 + this.getX();
+    public float getCenterX() {
+        return this.getWidth() / 2 + this.getX();
     }
 
-    public float getY(){
+    public float getY() {
         return this.sprite.getY();
     }
 
-    public float getHeight(){
+    public float getHeight() {
         return this.sprite.getHeight();
     }
 
-    public float getWidth(){
+    public float getWidth() {
         return this.sprite.getWidth();
     }
 
-    public Weapon[] getWeapons(){
+    public Weapon[] getWeapons() {
         return this.weapons;
     }
 
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
 
 
-        if(this.Alive) {
+        if (this.Alive) {
             this.sprite.draw(batch);
-        }else {
+        } else {
             this.explosion.draw(batch);
         }
 
 
-        for(Weapon w:weapons)
-        w.draw(batch);
+        for (Weapon w : weapons)
+            w.draw(batch);
     }
 
-    public void dispose() {
 
 
-
-    }
-
-    public int getHealth(){
+    public int getHealth() {
         return this.health;
     }
 
-    public int getScore(){
+    public int getScore() {
         return this.score;
     }
 
-    public void addScore(int i){
-        if(this.Alive) {
+    public void addScore(int i) {
+        if (this.Alive) {
             this.score += i;
         }
     }
 
-    public void  reset(){
-        this.health = 3;
-        this.Alive = true;
-        for(Weapon w:weapons){
-            w.turnOff();
-            w.clear();
-        }
-        this.turnOnWeapon(0);
-        this.score = 0;
-    }
-
-    public void goTo(int x, int y){
+    public void goTo(int x, int y) {
 
         this.goToX = x;
         this.goToY = y;
 
 
-
     }
 
-    public void pausePowerupTimers(){
+    // used for pausing the game.
+    public void pausePowerupTimers() {
 
         timerDelay = TimeUtils.nanosToMillis(TimeUtils.nanoTime());
 
-        if(Shotguntimer != null) {
+        if (Shotguntimer != null) {
             Shotguntimer.stop();
         }
 
-        if(Rockettimer != null) {
+        if (Rockettimer != null) {
             Rockettimer.stop();
         }
-        if(Lasertimer != null) {
+        if (Lasertimer != null) {
             Lasertimer.stop();
         }
-        if(Sinetimer != null) {
+        if (Sinetimer != null) {
             Sinetimer.stop();
         }
     }
 
-    public void resumePowerupTimers(){
+    // resumes power up timers.  time paused must be added to the timer otherwise it will have kept running
+    //  in its own thread while the game was paused.
+    public void resumePowerupTimers() {
 
-        if(Shotguntimer != null) {
+        if (Shotguntimer != null) {
             Shotguntimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
             Shotguntimer.start();
         }
 
-        if(Rockettimer != null) {
+        if (Rockettimer != null) {
             Rockettimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
             Rockettimer.start();
         }
-        if(Lasertimer != null) {
+        if (Lasertimer != null) {
             Lasertimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
             Lasertimer.start();
         }
-        if(Sinetimer != null) {
+        if (Sinetimer != null) {
             Sinetimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
             Sinetimer.start();
         }

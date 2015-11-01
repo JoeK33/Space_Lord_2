@@ -14,40 +14,34 @@ public class PlayerSineProjectile extends Projectile {
 
     public PlayerSineProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(),  GameConstants.player_sine_damage, player.assets,"weapons/player_shotgun_projectile.png");
-
-
+        // used same texture as shotgun
+        super(player.getPlayerNosePosition(), GameConstants.player_sine_damage, player.assets, "weapons/player_shotgun_projectile.png");
         this.position = position;
-        this.sprite.setX(this.getX() - this.sprite.getWidth()/2);
+        this.sprite.setX(this.getX() - this.sprite.getWidth() / 2);
     }
 
     @Override
-    public void update(float delta){
+    public void update(float delta) {
         // projectile behaviors here
         this.sprite.setY(this.sprite.getY() + (delta * GameConstants.projectile_speed));
-        double wiggle = Math.cos(degrees) * (600*delta);
+        double wiggle = Math.cos(degrees) * (600 * delta);
 
-        if(this.position == ProjectilePosition.FAR_LEFT) {
+        if (this.position == ProjectilePosition.FAR_LEFT) {
 
 
             this.sprite.setX(this.getX() + ((float) (wiggle)));
-        } else if(this.position == ProjectilePosition.FAR_RIGHT) {
+        } else if (this.position == ProjectilePosition.FAR_RIGHT) {
 
             this.sprite.setX(this.getX() - ((float) (wiggle)));
         }
 
-        degrees+= .05f;
-
-        if (degrees > 360){
+        degrees += .05f;
+        if (degrees > 360) {
             degrees = 0;
         }
 
 
-
-
-
-
-        if(this.sprite.getY() > GameConstants.GAME_HEIGHT){
+        if (this.sprite.getY() > GameConstants.GAME_HEIGHT) {
             this.remove();
         }
 
