@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
@@ -29,8 +30,6 @@ public class SpaceLord2 implements Screen {
 
 	final SpaceLord2Game game;
 	static SpriteBatch batch;
-	public static int screenWidth;
-	public static int screenHeight;
 	public static Player player;
 	private static List<Enemy> enemyList;
 	private BackGround background;
@@ -57,8 +56,6 @@ public class SpaceLord2 implements Screen {
 
 		prefs = Gdx.app.getPreferences("preferences");
 
-		screenWidth = Gdx.graphics.getWidth();
-		screenHeight = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
 		player = new Player(assets);
 		enemyPools = new EnemyPools(assets, player);
@@ -128,6 +125,8 @@ public class SpaceLord2 implements Screen {
 			this.submitScore();
 			scoreSubmited = true;
 		}
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		// draw here
 		batch.begin();
 		background.draw(batch);
@@ -203,8 +202,6 @@ public class SpaceLord2 implements Screen {
 		enemyList.clear();
 
 
-		screenWidth = GameConstants.GAME_WIDTH;
-		screenHeight = GameConstants.GAME_HEIGHT;
 		batch.dispose();
 		batch = new SpriteBatch();
 		player = new Player(assets);

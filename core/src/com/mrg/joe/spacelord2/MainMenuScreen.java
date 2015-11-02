@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 /**
@@ -40,6 +43,8 @@ public class MainMenuScreen implements Screen {
     private Sound buttonClick;
     final TextButton signInButton;
     private boolean launchSoundPlayed;
+    private Camera camera;
+    private Viewport viewport;
 
 
     public MainMenuScreen(final SpaceLord2Game game, final ActionResolver resolver) {
@@ -142,6 +147,11 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(GameConstants.GAME_WIDTH,GameConstants.GAME_HEIGHT,camera);
+        viewport.apply();
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+
 
     }
 
@@ -153,6 +163,9 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
 
         if (!launchSoundPlayed) {
             launchSound.play();
@@ -175,7 +188,7 @@ public class MainMenuScreen implements Screen {
         }
 
 
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backGround.update();
 
@@ -196,7 +209,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
     }
 
     @Override
