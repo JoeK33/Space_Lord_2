@@ -16,7 +16,7 @@ public class PlayerWeapon extends Weapon {
     public PlayerWeapon(Player player) {
 
         this.player = player;
-        this.damage = GameConstants.player_laser_damage;
+        this.damage = GameConstants.PLAYER_LASER_DAMAGE;
     }
 
     @Override
@@ -25,15 +25,15 @@ public class PlayerWeapon extends Weapon {
 
         // creates new projectiles every interval in seconds
         if (this.isOn) {
-            if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
-                projectiles.add(new PlayerProjectile(this.player, GameConstants.player_laser_damage));
+            if (System.nanoTime() > interval + (GameConstants.PROJECTILE_CREATION_INTERVAL * 1000000000)) {
+                projectiles.add(new PlayerProjectile(this.player, GameConstants.PLAYER_LASER_DAMAGE));
 
                 interval = System.nanoTime();
             }
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

@@ -36,7 +36,7 @@ public class TouchHandler implements InputProcessor {
 
         }
 
-        if (SpaceLord2.hud.isRestart_displayed()) {
+        if (SpaceLord2.hud.isRestartDisplayed()) {
             //restart game here
             spaceLord2.reset();
 

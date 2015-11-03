@@ -16,7 +16,7 @@ public class EnemyMgProjectile extends Projectile {
     @Override
     public void update(float delta) {
         // projectile behaviors here
-        this.sprite.setY(this.sprite.getY() - (delta * GameConstants.projectile_speed));
+        this.sprite.setY(this.sprite.getY() - (delta * GameConstants.PROJECTILE_SPEED));
 
         if (this.sprite.getY() < -20) {
             this.remove();

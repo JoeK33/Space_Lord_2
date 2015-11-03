@@ -13,7 +13,7 @@ public class PlayerShotgunProjectile extends Projectile {
 
     public PlayerShotgunProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(), GameConstants.player_shotgun_damage, player.assets, "weapons/player_shotgun_projectile.png");
+        super(player.getPlayerNosePosition(), GameConstants.PLAYER_SHOTGUN_DAMAGE, player.assets, "weapons/player_shotgun_projectile.png");
         this.position = position;
 
 
@@ -23,7 +23,7 @@ public class PlayerShotgunProjectile extends Projectile {
     @Override
     public void update(float delta) {
         // projectile behaviors here
-        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.projectile_speed));
+        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.PROJECTILE_SPEED));
 
         // 4 porrible shots from the shotgun
         if (this.position == ProjectilePosition.FAR_LEFT) {

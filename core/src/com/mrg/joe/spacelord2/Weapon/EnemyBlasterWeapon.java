@@ -11,7 +11,7 @@ public class EnemyBlasterWeapon extends Weapon {
 
 
     private Enemy enemy;
-    private float proj_size;
+    private float projSize;
 
 
     public EnemyBlasterWeapon(Enemy enemy) {
@@ -19,7 +19,7 @@ public class EnemyBlasterWeapon extends Weapon {
         this.enemy = enemy;
 
         // even sided projectile
-        proj_size = 100;
+        projSize = 100;
 
     }
 
@@ -30,13 +30,14 @@ public class EnemyBlasterWeapon extends Weapon {
         if (this.isOn) {
             // creates new projectiles every interval in seconds
             if (System.nanoTime() > interval + (5 * 1000000000L)) {
-                projectiles.add(new EnemyBlasterProjectile(new float[]{enemy.getX() + enemy.getWidth() / 2 - proj_size / 2, enemy.getY() - proj_size + 15}, enemy));
+                projectiles.add(new EnemyBlasterProjectile(new float[]{enemy.getX() + enemy.getWidth() / 2 - projSize / 2,
+                        enemy.getY() - projSize + 15}, enemy));
                 interval = System.nanoTime();
             }
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 EnemyBlasterProjectile p = (EnemyBlasterProjectile) itr.next();
                 p.update(delta);
 

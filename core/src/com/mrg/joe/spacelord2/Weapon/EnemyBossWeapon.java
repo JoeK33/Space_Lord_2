@@ -34,7 +34,7 @@ public class EnemyBossWeapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

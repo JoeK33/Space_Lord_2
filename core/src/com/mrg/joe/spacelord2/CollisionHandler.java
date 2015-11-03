@@ -27,7 +27,7 @@ public class CollisionHandler {
 
 
         // iterate over all player projectles in play
-        for (Iterator it = enemyList.iterator(); it.hasNext(); ) {
+        for (Iterator it = enemyList.iterator(); it.hasNext();) {
             Enemy e = (Enemy) it.next();
 
             // add the projectiles from an enemy's weapon to the master list
@@ -39,7 +39,7 @@ public class CollisionHandler {
             for (Weapon w : weapons) {
                 List projectiles = w.getProjectiles();
 
-                for (Iterator ite = projectiles.iterator(); ite.hasNext(); ) {
+                for (Iterator ite = projectiles.iterator(); ite.hasNext();) {
                     Projectile p = (Projectile) ite.next();
 
                     // if a player shot hits an enemy, damage the enemy and remove the shot
@@ -81,7 +81,7 @@ public class CollisionHandler {
 
         // go over enemy projectiles to check player hit
         if (player.isAlive()) {
-            for (Iterator i = enemyProjectiles.iterator(); i.hasNext(); ) {
+            for (Iterator i = enemyProjectiles.iterator(); i.hasNext();) {
                 Projectile p = (Projectile) i.next();
                 if (p.isColliding(player.getBoundingRectangle())) {
                     p.remove();

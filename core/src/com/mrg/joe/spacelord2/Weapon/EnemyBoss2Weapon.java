@@ -12,11 +12,11 @@ import java.util.Iterator;
  */
 public class EnemyBoss2Weapon extends Weapon {
 
-    private int small_projectile_width = 12;
+    private int smallProjectileWidth = 12;
 
     private EnemyBoss2 enemy;
     private int[] offset;
-    private int shot_offset;
+    private int shotOffset;
 
     public EnemyBoss2Weapon(EnemyBoss2 enemy, int offset1, int offset2, int offset3) {
 
@@ -25,7 +25,7 @@ public class EnemyBoss2Weapon extends Weapon {
         this.offset[0] = offset1;
         this.offset[1] = offset2;
         this.offset[2] = offset3;
-        shot_offset = (int) (Math.random() * 10) * 100000;
+        shotOffset = (int) (Math.random() * 10) * 100000;
 
 
     }
@@ -36,11 +36,12 @@ public class EnemyBoss2Weapon extends Weapon {
         if (this.isOn) {
 
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (2 * 1000000000L) + shot_offset) {
+            if (System.nanoTime() > interval + (2 * 1000000000L) + shotOffset) {
 
                 for (int i = 0; i < 3; i++) {
 
-                    projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[i], enemy.getNosePos()[1]}, enemy.assets));
+                    projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - smallProjectileWidth + offset[i],
+                            enemy.getNosePos()[1]}, enemy.assets));
 
                     interval = System.nanoTime();
 
@@ -51,7 +52,8 @@ public class EnemyBoss2Weapon extends Weapon {
                         @Override
                         public void run() {
                             if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI], enemy.getNosePos()[1]}, enemy.assets));
+                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - smallProjectileWidth + offset[finalI],
+                                        enemy.getNosePos()[1]}, enemy.assets));
                             }
 
                         }
@@ -64,7 +66,8 @@ public class EnemyBoss2Weapon extends Weapon {
                         public void run() {
 
                             if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI1], enemy.getNosePos()[1]}, enemy.assets));
+                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - smallProjectileWidth + offset[finalI1],
+                                        enemy.getNosePos()[1]}, enemy.assets));
                             }
                         }
                     }, .4f);
@@ -76,7 +79,8 @@ public class EnemyBoss2Weapon extends Weapon {
                         public void run() {
 
                             if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - small_projectile_width + offset[finalI2], enemy.getNosePos()[1]}, enemy.assets));
+                                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getX() - smallProjectileWidth + offset[finalI2],
+                                        enemy.getNosePos()[1]}, enemy.assets));
                             }
                         }
                     }, .6f);
@@ -86,7 +90,7 @@ public class EnemyBoss2Weapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

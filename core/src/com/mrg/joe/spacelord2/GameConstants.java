@@ -3,31 +3,35 @@ package com.mrg.joe.spacelord2;
 /**
  * Created by Joe on 8/26/2015.
  */
-public class GameConstants {
+public final class GameConstants {
 
-    public static final int projectile_speed = 500;
-    public static final int player_laser_damage = 10;
-    public static final int player_minigun_damage = 5;
-    public static final int player_shotgun_damage = 5;
-    public static final int player_rocket_damage = 20;
-    public static final int player_sine_damage = 2;
+    private GameConstants() {
+        //not called
+    }
+
+    public static final int PROJECTILE_SPEED = 500;
+    public static final int PLAYER_LASER_DAMAGE = 10;
+    public static final int PLAYER_MINIGUN_DAMAGE = 5;
+    public static final int PLAYER_SHOTGUN_DAMAGE = 5;
+    public static final int PLAYER_ROCKET_DAMAGE = 20;
+    public static final int PLAYER_SINE_DAMAGE = 2;
 
 
     // in seconds
-    public static final float projectile_creation_interval = .5f;
+    public static final float PROJECTILE_CREATION_INTERVAL = .5f;
 
-    public static final int fighter_health = 120;
-    public static final int enemy_small_health = 20;
-    public static final int enemy_hunter_health = 100;
-    public static final int enemy_mg_health = 100;
-    public static final int enemy_boss_health = 1000;
-    public static final int enemy_boss2_health = 1000;
-    public static final int enemy_boss3_health = 1000;
-    public static final int enemy_boss4_health = 1000;
-    public static final int enemy_blaster_health = 150;
+    public static final int FIGHTER_HEALTH = 120;
+    public static final int ENEMY_SMALL_HEALTH = 20;
+    public static final int ENEMY_HUNTER_HEALTH = 100;
+    public static final int ENEMY_MG_HEALTH = 100;
+    public static final int ENEMY_BOSS_HEALTH = 1000;
+    public static final int ENEMY_BOSS_2_HEALTH = 1000;
+    public static final int ENEMY_BOSS_3_HEALTH = 1000;
+    public static final int ENEMY_BOSS_4_HEALTH = 1000;
+    public static final int ENEMY_BLASTER_HEALTH = 150;
 
     // gap in pixels between enemy rows
-    public static final float enemy_row_gap = 75;
+    public static final float ENEMY_ROW_GAP = 75;
 
     public static final int GAME_WIDTH = 1080;
     public static final int GAME_HEIGHT = 1920;

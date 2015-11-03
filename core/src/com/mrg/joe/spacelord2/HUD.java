@@ -18,15 +18,15 @@ public class HUD {
 
     private Player player;
     private Texture health;
-    private float icon_gap;
+    private float iconGap;
     private BitmapFont font;
     private BitmapFont font2;
     private GlyphLayout layout1;
     private GlyphLayout layout2;
     private GlyphLayout layout3;
     private GlyphLayout layout4;
-    private float restart_display_timer;
-    private boolean restart_displayed;
+    private float restartDisplayTimer;
+    private boolean restartDisplayed;
     private boolean paused;
     private Preferences preferences;
 
@@ -37,7 +37,7 @@ public class HUD {
         this.player = player;
 
         this.health = player.assets.manager.get("health_hud_icon.png");
-        icon_gap = 30;
+        iconGap = 30;
         font = new BitmapFont();
         font.getData().setScale(4, 4);
 
@@ -55,7 +55,7 @@ public class HUD {
         layout4 = new GlyphLayout();
 
 
-        restart_display_timer = 0;
+        restartDisplayTimer = 0;
 
         this.paused = false;
 
@@ -64,12 +64,13 @@ public class HUD {
 
     public void draw(Batch batch) {
 
-        int player_health = player.getHealth();
+        int playerHealth = player.getHealth();
 
-        for (int i = 1; i <= player_health; i++) {
+        for (int i = 1; i <= playerHealth; i++) {
 
-            batch.draw(health, GameConstants.GAME_WIDTH - (i * health.getWidth()) - (i * icon_gap), GameConstants.GAME_HEIGHT - health.getHeight() - icon_gap);
-
+            batch.draw(health,
+                    GameConstants.GAME_WIDTH - (i * health.getWidth()) - (i * iconGap),
+                    GameConstants.GAME_HEIGHT - health.getHeight() - iconGap);
         }
 
         // format score int to look better
@@ -79,28 +80,37 @@ public class HUD {
 
         // display score and previous high score when killed.
         if (!player.isAlive()) {
-            String game_over = "GAME OVER";
-            layout1.setText(font2, game_over);
+            String gameOver = "GAME OVER";
+            layout1.setText(font2, gameOver);
 
-            font2.draw(batch, game_over, GameConstants.GAME_WIDTH / 2 - layout1.width / 2, GameConstants.GAME_HEIGHT / 2 - layout1.height / 2);
+            font2.draw(batch, gameOver,
+                    GameConstants.GAME_WIDTH / 2 - layout1.width / 2,
+                    GameConstants.GAME_HEIGHT / 2 - layout1.height / 2);
+
             String restart = "Touch to Restart";
             layout2.setText(font, restart);
 
             String score = "Score: " + NumberFormat.getIntegerInstance().format(player.getScore());
             layout3.setText(font, score);
-            font.draw(batch, score, GameConstants.GAME_WIDTH / 2 - layout3.width / 2, GameConstants.GAME_HEIGHT / 2 - layout3.height * 5);
+            font.draw(batch, score,
+                    GameConstants.GAME_WIDTH / 2 - layout3.width / 2,
+                    GameConstants.GAME_HEIGHT / 2 - layout3.height * 5);
 
-            String high_score = "Your High Score: " + NumberFormat.getIntegerInstance().format(preferences.getInteger("highscore", 0));
-            layout4.setText(font, high_score);
-            font.draw(batch, high_score, GameConstants.GAME_WIDTH / 2 - layout4.width / 2, GameConstants.GAME_HEIGHT / 2 - layout4.height * 7);
+            String highScore = "Your High Score: " + NumberFormat.getIntegerInstance().format(preferences.getInteger("highscore", 0));
+            layout4.setText(font, highScore);
+            font.draw(batch, highScore,
+                    GameConstants.GAME_WIDTH / 2 - layout4.width / 2,
+                    GameConstants.GAME_HEIGHT / 2 - layout4.height * 7);
 
 
-            if (restart_display_timer > 1) {
-                restart_displayed = true;
-                font.draw(batch, restart, GameConstants.GAME_WIDTH / 2 - layout2.width / 2, GameConstants.GAME_HEIGHT / 2 - (layout2.height * 2));
+            if (restartDisplayTimer > 1) {
+                restartDisplayed = true;
+                font.draw(batch, restart,
+                        GameConstants.GAME_WIDTH / 2 - layout2.width / 2,
+                        GameConstants.GAME_HEIGHT / 2 - (layout2.height * 2));
             }
 
-            restart_display_timer += Gdx.graphics.getDeltaTime();
+            restartDisplayTimer += Gdx.graphics.getDeltaTime();
 
 
         }
@@ -108,17 +118,19 @@ public class HUD {
         if (paused) {
             String paused = "PAUSED";
             layout1.setText(font2, paused);
-            font2.draw(batch, paused, GameConstants.GAME_WIDTH / 2 - layout1.width / 2, ((GameConstants.GAME_HEIGHT / 10) * 7) - layout1.height / 2);
+            font2.draw(batch, paused, GameConstants.GAME_WIDTH / 2 - layout1.width / 2,
+                    ((GameConstants.GAME_HEIGHT / 10) * 7) - layout1.height / 2);
             String restart = "Touch to resume";
             layout2.setText(font, restart);
-            font.draw(batch, restart, GameConstants.GAME_WIDTH / 2 - layout2.width / 2, ((GameConstants.GAME_HEIGHT / 10) * 7) - (layout2.height * 2));
+            font.draw(batch, restart, GameConstants.GAME_WIDTH / 2 - layout2.width / 2,
+                    ((GameConstants.GAME_HEIGHT / 10) * 7) - (layout2.height * 2));
         }
 
 
     }
 
-    public boolean isRestart_displayed() {
-        return this.restart_displayed;
+    public boolean isRestartDisplayed() {
+        return this.restartDisplayed;
     }
 
     public boolean isPaused() {
@@ -133,8 +145,8 @@ public class HUD {
     }
 
     public void reset() {
-        this.restart_display_timer = 0;
-        this.restart_displayed = false;
+        this.restartDisplayTimer = 0;
+        this.restartDisplayed = false;
     }
 
     public void pause() {

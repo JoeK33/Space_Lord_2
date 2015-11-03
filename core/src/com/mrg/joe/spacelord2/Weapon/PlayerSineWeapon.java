@@ -15,7 +15,7 @@ public class PlayerSineWeapon extends Weapon {
     public PlayerSineWeapon(Player player) {
 
         this.player = player;
-        this.damage = GameConstants.player_shotgun_damage;
+        this.damage = GameConstants.PLAYER_SHOTGUN_DAMAGE;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PlayerSineWeapon extends Weapon {
 
         if (this.isOn) {
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000) / 2) {
+            if (System.nanoTime() > interval + (GameConstants.PROJECTILE_CREATION_INTERVAL * 1000000000) / 2) {
                 projectiles.add(new PlayerSineProjectile(this.player, ProjectilePosition.FAR_LEFT));
                 projectiles.add(new PlayerSineProjectile(this.player, ProjectilePosition.FAR_RIGHT));
                 interval = System.nanoTime();
@@ -32,7 +32,7 @@ public class PlayerSineWeapon extends Weapon {
 
         // update projectiles
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

@@ -15,7 +15,7 @@ public class EnemyBoss2 extends Enemy {
 
     public EnemyBoss2() {
 
-        super(GameConstants.enemy_boss2_health, 5000);
+        super(GameConstants.ENEMY_BOSS_2_HEALTH, 5000);
     }
 
     public void create() {

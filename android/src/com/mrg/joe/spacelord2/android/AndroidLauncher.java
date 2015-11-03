@@ -59,7 +59,7 @@ public class AndroidLauncher extends AndroidApplication implements
 
     }
 
-    private static int RC_SIGN_IN = 9001;
+
 
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
@@ -67,7 +67,7 @@ public class AndroidLauncher extends AndroidApplication implements
 
     // Request code to use when launching the resolution activity
     private static final int REQUEST_RESOLVE_ERROR = 1001;
-
+    private static final int RC_SIGN_IN = 9001;
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
@@ -113,8 +113,8 @@ public class AndroidLauncher extends AndroidApplication implements
             mResolvingConnectionFailure = false;
             if (resultCode == RESULT_OK) {
                 // Make sure the app is not already connected or attempting to connect
-                if (!mGoogleApiClient.isConnecting() &&
-                        !mGoogleApiClient.isConnected()) {
+                if (!mGoogleApiClient.isConnecting()
+                        && !mGoogleApiClient.isConnected()) {
                     mGoogleApiClient.connect();
                 }
             }
@@ -132,11 +132,12 @@ public class AndroidLauncher extends AndroidApplication implements
     @Override
     public void onConnected(Bundle bundle) {
 
-        // send in locally stored high score on connection.  this way if a player sets a high score while not connected it still reaches the leaderboard eventually
+        // send in locally stored high score on connection.
+        // this way if a player sets a high score while not connected it still reaches the leaderboard eventually
         SharedPreferences prefs = getSharedPreferences("preferences", MODE_PRIVATE);
         int score = prefs.getInt("highscore", 0);
 
-        if(score > 0) {
+        if (score > 0) {
             submitScore(score);
         }
 

@@ -10,11 +10,11 @@ import java.util.Iterator;
 public class EnemyBoss3Weapon extends Weapon {
 
     private EnemyBoss3 enemy;
-    int projectile_size;
+    int projectileSize;
 
     public EnemyBoss3Weapon(EnemyBoss3 enemy) {
         Projectile p = new EnemyBallProjectile(new float[]{-200, -200}, enemy.assets);
-        projectile_size = (int) p.getHeight();
+        projectileSize = (int) p.getHeight();
 
         this.enemy = enemy;
     }
@@ -28,15 +28,17 @@ public class EnemyBoss3Weapon extends Weapon {
             // creates new projectiles every interval in seconds
             if (System.nanoTime() > interval + (1000000000L)) {
 
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(), enemy.getY() - projectile_size}, enemy.assets));
-                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectile_size, enemy.getY() - projectile_size}, enemy.assets));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX(), enemy.getY() - projectileSize}, enemy.assets));
+                projectiles.add(new EnemyBallProjectile(new float[]{enemy.getX() + enemy.getWidth() - projectileSize,
+                        enemy.getY() - projectileSize}, enemy.assets));
+
                 interval = System.nanoTime();
             }
 
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

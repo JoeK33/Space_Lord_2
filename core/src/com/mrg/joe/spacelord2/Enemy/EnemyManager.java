@@ -17,19 +17,18 @@ public class EnemyManager {
     private List<Enemy> enemyList;
     private List<Enemy> enemyPlayList;
     private int rowsDeployed;
-    private float front_row_y;
+    private float frontRowY;
     private LinkedList<EnemyConfiguration> configurations;
-    private LinkedList<EnemyConfiguration> loadedConfigurations;
-    private int total_rows_deployed;
+    private int totalRowsDeployed;
     private boolean bossOut;
     private float interval;
     private EnemyConfigPicker enemyListLoader;
 
     public EnemyManager(EnemyPools pools) {
         rowsDeployed = 0;
-        total_rows_deployed = 0;
+        totalRowsDeployed = 0;
         // enemies can only go half way down the screen
-        front_row_y = GameConstants.GAME_HEIGHT / 2;
+        frontRowY = GameConstants.GAME_HEIGHT / 2;
         configurations = new LinkedList<EnemyConfiguration>();
         enemyList = new LinkedList<Enemy>();
         configurations = new LinkedList<EnemyConfiguration>();
@@ -62,18 +61,18 @@ public class EnemyManager {
             if (!bossOut) {
 
                 // get a row based on the number of rows that has already been completed
-                EnemyConfiguration config = enemyListLoader.getConfig(total_rows_deployed);
+                EnemyConfiguration config = enemyListLoader.getConfig(totalRowsDeployed);
                 // add all the newly introduced enemies to the master list.
                 this.enemyList.addAll(config.getList());
                 this.configurations.add(config);
 
                 // bosses are every 20 rows
-                if (total_rows_deployed % 20 == 0 && total_rows_deployed > 1) {
+                if (totalRowsDeployed % 20 == 0 && totalRowsDeployed > 1) {
                     bossOut = true;
                 }
 
                 rowsDeployed++;
-                total_rows_deployed++;
+                totalRowsDeployed++;
             }
 
         }
@@ -83,36 +82,34 @@ public class EnemyManager {
 
             // controls the movement of enemies
 
-            for (ListIterator i = configurations.listIterator(); i.hasNext(); ) {
+            for (ListIterator i = configurations.listIterator(); i.hasNext();) {
 
-                EnemyConfiguration prev_config = null;
+                EnemyConfiguration prevConfig = null;
 
 
                 if (i.hasPrevious()) {
-                    prev_config = (EnemyConfiguration) i.previous();
+                    prevConfig = (EnemyConfiguration) i.previous();
                     i.next();
                 }
 
                 EnemyConfiguration config = (EnemyConfiguration) i.next();
 
                 // if this row is the first row, move it forward until it is halfway down the screen.
-                if (configurations.getFirst().equals(config) && config.getRowY() > front_row_y) {
+                if (configurations.getFirst().equals(config) && config.getRowY() > frontRowY) {
 
                     config.advanceRow();
 
                     // if there is a gap between this row and the one in front, move forward until the gap is closed.
-                } else if (i.hasPrevious() && prev_config != null && (config.getRowY() > prev_config.getRowY() + prev_config.getRowHeight() + GameConstants.enemy_row_gap)) {
-
+                } else if (i.hasPrevious() && prevConfig != null
+                        && (config.getRowY() > prevConfig.getRowY() + prevConfig.getRowHeight() + GameConstants.ENEMY_ROW_GAP)) {
                     config.advanceRow();
-
                 } else config.stopRow();
 
 
             }
 
             // controls the removal of dead rows and enemies
-            for (ListIterator i = configurations.listIterator(); i.hasNext(); ) {
-
+            for (ListIterator i = configurations.listIterator(); i.hasNext();) {
                 EnemyConfiguration config = (EnemyConfiguration) i.next();
                 config.update();
 

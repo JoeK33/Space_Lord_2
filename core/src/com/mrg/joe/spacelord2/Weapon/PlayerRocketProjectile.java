@@ -19,7 +19,7 @@ public class PlayerRocketProjectile extends Projectile {
 
     public PlayerRocketProjectile(Player player, ProjectilePosition position) {
 
-        super(player.getPlayerNosePosition(), GameConstants.player_rocket_damage, player.assets, "weapons/player_rocket_projectile.png");
+        super(player.getPlayerNosePosition(), GameConstants.PLAYER_ROCKET_DAMAGE, player.assets, "weapons/player_rocket_projectile.png");
         this.position = position;
         this.player = player;
 
@@ -42,7 +42,7 @@ public class PlayerRocketProjectile extends Projectile {
         // projectile behaviors here
         if (advancing) {
             // rockets going towards enemy
-            this.sprite.setY((this.sprite.getY() + (delta * 2 * GameConstants.projectile_speed)));
+            this.sprite.setY((this.sprite.getY() + (delta * 2 * GameConstants.PROJECTILE_SPEED)));
         } else {
             // rockets moving sideways away from player
             if (this.position == ProjectilePosition.LEFT_ROCKET) {

@@ -11,15 +11,15 @@ import java.util.Iterator;
  */
 public class EnemyMachineGunWeapon extends Weapon {
 
-    private int small_projectile_width = 12;
+    private int smallProjectileWidth = 12;
 
     private Enemy enemy;
-    private int shot_offset;
+    private int shotOffset;
 
     public EnemyMachineGunWeapon(Enemy enemy) {
 
         this.enemy = enemy;
-        shot_offset = (int) (Math.random() * 10) * 100000;
+        shotOffset = (int) (Math.random() * 10) * 100000;
     }
 
     @Override
@@ -27,8 +27,9 @@ public class EnemyMachineGunWeapon extends Weapon {
 
         if (this.isOn) {
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (2L * 1000000000L + shot_offset)) {
-                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+            if (System.nanoTime() > interval + (2L * 1000000000L + shotOffset)) {
+                projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - smallProjectileWidth,
+                        enemy.getNosePos()[1]}, enemy.assets));
 
                 interval = System.nanoTime();
 
@@ -38,7 +39,8 @@ public class EnemyMachineGunWeapon extends Weapon {
                     @Override
                     public void run() {
                         if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - smallProjectileWidth,
+                                    enemy.getNosePos()[1]}, enemy.assets));
                         }
                     }
                 }, .5f);
@@ -49,7 +51,8 @@ public class EnemyMachineGunWeapon extends Weapon {
                     public void run() {
 
                         if (enemy.isAlive() && !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                            projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - smallProjectileWidth,
+                                    enemy.getNosePos()[1]}, enemy.assets));
                         }
                     }
                 }, 1f);
@@ -57,7 +60,7 @@ public class EnemyMachineGunWeapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

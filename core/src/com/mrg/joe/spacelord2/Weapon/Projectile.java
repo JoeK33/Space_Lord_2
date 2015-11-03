@@ -19,10 +19,10 @@ public class Projectile {
     private int damage;
 
 
-    public Projectile(float[] pos, int damage, Assets manager, String projectile_texture_filepath) {
+    public Projectile(float[] pos, int damage, Assets manager, String projectileTextureFilepath) {
 
         this.manager = manager;
-        this.sprite = new Sprite(manager.manager.get(projectile_texture_filepath, Texture.class));
+        this.sprite = new Sprite(manager.manager.get(projectileTextureFilepath, Texture.class));
         this.sprite.setPosition(pos[0], pos[1]);
         this.damage = damage;
 
@@ -31,7 +31,7 @@ public class Projectile {
 
     public void update(float delta) {
         // projectile behaviors here
-        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.projectile_speed));
+        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.PROJECTILE_SPEED));
 
         if (this.sprite.getY() > GameConstants.GAME_HEIGHT) {
             this.remove();

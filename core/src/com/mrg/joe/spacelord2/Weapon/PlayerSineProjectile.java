@@ -15,7 +15,7 @@ public class PlayerSineProjectile extends Projectile {
     public PlayerSineProjectile(Player player, ProjectilePosition position) {
 
         // used same texture as shotgun
-        super(player.getPlayerNosePosition(), GameConstants.player_sine_damage, player.assets, "weapons/player_shotgun_projectile.png");
+        super(player.getPlayerNosePosition(), GameConstants.PLAYER_SINE_DAMAGE, player.assets, "weapons/player_shotgun_projectile.png");
         this.position = position;
         this.sprite.setX(this.getX() - this.sprite.getWidth() / 2);
     }
@@ -23,7 +23,7 @@ public class PlayerSineProjectile extends Projectile {
     @Override
     public void update(float delta) {
         // projectile behaviors here
-        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.projectile_speed));
+        this.sprite.setY(this.sprite.getY() + (delta * GameConstants.PROJECTILE_SPEED));
         double wiggle = Math.cos(degrees) * (600 * delta);
 
         if (this.position == ProjectilePosition.FAR_LEFT) {

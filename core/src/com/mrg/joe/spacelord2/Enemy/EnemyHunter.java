@@ -13,7 +13,7 @@ public class EnemyHunter extends Enemy {
     public EnemyHunter() {
 
 
-        super(GameConstants.enemy_hunter_health, 200);
+        super(GameConstants.ENEMY_HUNTER_HEALTH, 200);
         this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
 

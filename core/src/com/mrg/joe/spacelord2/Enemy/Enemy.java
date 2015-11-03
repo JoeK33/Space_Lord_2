@@ -23,7 +23,7 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 public class Enemy implements Pool.Poolable {
     protected Sprite sprite;
     private int health;
-    private Texture enemy_texture;
+    private Texture enemyTexture;
     private Color color;
     protected Weapon weapon;
     protected boolean alive;
@@ -55,8 +55,8 @@ public class Enemy implements Pool.Poolable {
     public void makeSprite(Assets manager, String filepath) {
         this.assets = manager;
 
-        this.enemy_texture = manager.manager.get(filepath, Texture.class);
-        this.sprite = new Sprite(enemy_texture);
+        this.enemyTexture = manager.manager.get(filepath, Texture.class);
+        this.sprite = new Sprite(enemyTexture);
         this.color = this.sprite.getColor();
 
 
@@ -82,7 +82,7 @@ public class Enemy implements Pool.Poolable {
     }
 
     public void setTexture(Texture texture) {
-        this.enemy_texture = texture;
+        this.enemyTexture = texture;
     }
 
 
@@ -119,18 +119,15 @@ public class Enemy implements Pool.Poolable {
 
                 double wiggle = Math.cos(degrees) * (50 * delta);
 
-
                 this.setPosition(this.getX() + ((float) (wiggle)), this.getY());
-
 
                 degrees += .05f;
 
                 if (degrees > 360) {
                     degrees = 0;
                 }
-            // follows player rather slowly
+                // follows player rather slowly
             } else if (this.behavior == Behavior.TRACK_PLAYER) {
-
 
                 if (player.getCenterX() <= this.getCenterX()) {
                     goingLeft = true;
@@ -157,7 +154,6 @@ public class Enemy implements Pool.Poolable {
                 }
                 // enemy goes back and forth across the width of the screen
             } else if (this.behavior == Behavior.PATROL) {
-
 
 
                 if (goingLeft) {
@@ -272,11 +268,8 @@ public class Enemy implements Pool.Poolable {
             @Override
             public void run() {
                 sprite.setColor(color);
-
             }
         }, .1f);
-
-
     }
 
     public float getY() {
@@ -305,10 +298,10 @@ public class Enemy implements Pool.Poolable {
     }
 
     public float[] getNosePos() {
-        float[] nose_pos = new float[2];
-        nose_pos[0] = this.getX() + this.getWidth() / 2;
-        nose_pos[1] = this.getY();
-        return nose_pos;
+        float[] nosePos = new float[2];
+        nosePos[0] = this.getX() + this.getWidth() / 2;
+        nosePos[1] = this.getY();
+        return nosePos;
     }
 
     public Weapon getWeapon() {

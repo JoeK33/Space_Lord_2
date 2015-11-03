@@ -20,8 +20,8 @@ import com.mrg.joe.spacelord2.Weapon.Weapon;
 /**
  * Created by Joe on 8/26/2015.
  *
- * This is the player.  Controls all the player's weapons and the timers that govern them.  Controls player movement and restricts where they can move
- * in the field of play.
+ * This is the player.  Controls all the player's weapons and the timers that govern them.
+ * Controls player movement and restricts where they can move in the field of play.
  */
 public class Player {
 
@@ -31,12 +31,12 @@ public class Player {
     private int health;
     private Color color;
     private int score;
-    private Timer Shotguntimer;
-    private Timer Rockettimer;
-    private Timer Lasertimer;
-    private Timer Sinetimer;
+    private Timer shotgunTimer;
+    private Timer rocketTimer;
+    private Timer laserTimer;
+    private Timer sineTimer;
     private Explosion explosion;
-    private boolean Alive;
+    private boolean alive;
     private Sound hitSound;
     private Sound explosionSound;
     private boolean explosionPlayed;
@@ -51,7 +51,7 @@ public class Player {
 
         this.texture = assets.manager.get("player.png");
         this.sprite = new Sprite(texture);
-        this.Alive = true;
+        this.alive = true;
 
         // players weapons go here.
         this.weapons = new Weapon[5];
@@ -85,10 +85,10 @@ public class Player {
 
     public float[] getPlayerNosePosition() {
 
-        float[] nose_pos = new float[2];
-        nose_pos[0] = this.getX() + this.getWidth() / 2;
-        nose_pos[1] = this.getY() + this.getHeight();
-        return nose_pos;
+        float[] nosePos = new float[2];
+        nosePos[0] = this.getX() + this.getWidth() / 2;
+        nosePos[1] = this.getY() + this.getHeight();
+        return nosePos;
     }
 
     // scale rectangle a bit to make hit detection more forgiving.
@@ -146,11 +146,11 @@ public class Player {
 
 
         if (this.getHealth() <= 0) {
-            this.Alive = false;
+            this.alive = false;
         }
 
         // make weapons stop firing when player dies
-        if (!this.Alive) {
+        if (!this.alive) {
 
             for (Weapon w : weapons) {
                 w.turnOff();
@@ -176,7 +176,7 @@ public class Player {
     }
 
     public boolean isAlive() {
-        return this.Alive;
+        return this.alive;
     }
 
     public void turnOnWeapon(int weaponSlot) {
@@ -207,7 +207,7 @@ public class Player {
 
 
     // timers for the powerup weapons
-    public void Powerup(PowerupType type) {
+    public void powerup(PowerupType type) {
 
         if (type == PowerupType.HEALTH) {
 
@@ -217,16 +217,16 @@ public class Player {
         } else if (type == PowerupType.SHOTGUN) {
             this.weapons[1].turnOn();
 
-            if (Shotguntimer != null) {
-                Shotguntimer.clear();
+            if (shotgunTimer != null) {
+                shotgunTimer.clear();
             }
 
-            if (Shotguntimer == null) {
+            if (shotgunTimer == null) {
 
-                Shotguntimer = new Timer();
+                shotgunTimer = new Timer();
             }
 
-            Shotguntimer.scheduleTask(new Timer.Task() {
+            shotgunTimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[1].turnOff();
@@ -239,17 +239,17 @@ public class Player {
 
             this.weapons[2].turnOn();
 
-            if (Rockettimer != null) {
-                Rockettimer.clear();
+            if (rocketTimer != null) {
+                rocketTimer.clear();
             }
 
-            if (Rockettimer == null) {
+            if (rocketTimer == null) {
 
-                this.Rockettimer = new Timer();
+                this.rocketTimer = new Timer();
             }
 
 
-            Rockettimer.scheduleTask(new Timer.Task() {
+            rocketTimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[2].turnOff();
@@ -261,17 +261,17 @@ public class Player {
 
             this.weapons[3].turnOn();
 
-            if (Lasertimer != null) {
-                Lasertimer.clear();
+            if (laserTimer != null) {
+                laserTimer.clear();
             }
 
-            if (Lasertimer == null) {
+            if (laserTimer == null) {
 
-                this.Lasertimer = new Timer();
+                this.laserTimer = new Timer();
             }
 
 
-            Lasertimer.scheduleTask(new Timer.Task() {
+            laserTimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[3].turnOff();
@@ -283,17 +283,17 @@ public class Player {
 
             this.weapons[4].turnOn();
 
-            if (Sinetimer != null) {
-                Sinetimer.clear();
+            if (sineTimer != null) {
+                sineTimer.clear();
             }
 
-            if (Sinetimer == null) {
+            if (sineTimer == null) {
 
-                this.Sinetimer = new Timer();
+                this.sineTimer = new Timer();
             }
 
 
-            Sinetimer.scheduleTask(new Timer.Task() {
+            sineTimer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     weapons[4].turnOff();
@@ -333,7 +333,7 @@ public class Player {
     public void draw(SpriteBatch batch) {
 
 
-        if (this.Alive) {
+        if (this.alive) {
             this.sprite.draw(batch);
         } else {
             this.explosion.draw(batch);
@@ -355,7 +355,7 @@ public class Player {
     }
 
     public void addScore(int i) {
-        if (this.Alive) {
+        if (this.alive) {
             this.score += i;
         }
     }
@@ -373,18 +373,18 @@ public class Player {
 
         timerDelay = TimeUtils.nanosToMillis(TimeUtils.nanoTime());
 
-        if (Shotguntimer != null) {
-            Shotguntimer.stop();
+        if (shotgunTimer != null) {
+            shotgunTimer.stop();
         }
 
-        if (Rockettimer != null) {
-            Rockettimer.stop();
+        if (rocketTimer != null) {
+            rocketTimer.stop();
         }
-        if (Lasertimer != null) {
-            Lasertimer.stop();
+        if (laserTimer != null) {
+            laserTimer.stop();
         }
-        if (Sinetimer != null) {
-            Sinetimer.stop();
+        if (sineTimer != null) {
+            sineTimer.stop();
         }
     }
 
@@ -392,22 +392,22 @@ public class Player {
     //  in its own thread while the game was paused.
     public void resumePowerupTimers() {
 
-        if (Shotguntimer != null) {
-            Shotguntimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
-            Shotguntimer.start();
+        if (shotgunTimer != null) {
+            shotgunTimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            shotgunTimer.start();
         }
 
-        if (Rockettimer != null) {
-            Rockettimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
-            Rockettimer.start();
+        if (rocketTimer != null) {
+            rocketTimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            rocketTimer.start();
         }
-        if (Lasertimer != null) {
-            Lasertimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
-            Lasertimer.start();
+        if (laserTimer != null) {
+            laserTimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            laserTimer.start();
         }
-        if (Sinetimer != null) {
-            Sinetimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
-            Sinetimer.start();
+        if (sineTimer != null) {
+            sineTimer.delay(TimeUtils.nanosToMillis(TimeUtils.nanoTime()) - timerDelay);
+            sineTimer.start();
         }
 
     }

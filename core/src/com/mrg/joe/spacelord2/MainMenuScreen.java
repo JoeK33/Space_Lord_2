@@ -24,8 +24,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by Joe on 10/5/2015.
  * <p/>
- * Main menu screen.  This is what the player sees upon first opening the game.  Has buttons for sign in, play, leaderboards, and achievements.
- *
+ * Main menu screen.  This is what the player sees upon first opening the game.
+ * Has buttons for sign in, play, leaderboards, and achievements.
  *
  * Thanks to sadaf noor for the menu tutorial and sample code http://www.sadafnoor.com/blog/how-to-create-simple-menu-in-libgdx/
  */
@@ -148,7 +148,7 @@ public class MainMenuScreen implements Screen {
         });
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConstants.GAME_WIDTH,GameConstants.GAME_HEIGHT,camera);
+        viewport = new FitViewport(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT, camera);
         viewport.apply();
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 

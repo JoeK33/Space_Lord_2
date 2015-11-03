@@ -12,9 +12,13 @@ buildscript {
 }
 
 
+
+
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+
 
     version = '1.0'
     ext {
@@ -31,6 +35,9 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
+
+
+
 }
 
 project(":android") {
@@ -57,6 +64,7 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java"
+    // apply plugin: "checkstyle"
 
 
     dependencies {
@@ -65,8 +73,19 @@ project(":core") {
 
 
     }
+
+ //   task checkstyle(type: Checkstyle){
+  //      configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+  //      source 'src'
+  //      include '**/*.java'
+  //      exclude '**/gen/**'
+  //      classpath = files()
+   // }
 }
+
+
 
 tasks.eclipse.doLast {
     delete ".project"
 }
+

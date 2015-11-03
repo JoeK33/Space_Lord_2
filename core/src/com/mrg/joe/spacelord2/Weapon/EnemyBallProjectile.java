@@ -28,7 +28,8 @@ public class EnemyBallProjectile extends Projectile {
 
     @Override
     public void update(float delta) {
-        this.sprite.setPosition((float) (this.getX() + (velX * (delta * GameConstants.projectile_speed))), (float) (this.sprite.getY() + (velY * (delta * GameConstants.projectile_speed))));
+        this.sprite.setPosition((float) (this.getX() + (velX * (delta * GameConstants.PROJECTILE_SPEED))),
+                (float) (this.sprite.getY() + (velY * (delta * GameConstants.PROJECTILE_SPEED))));
 
         if (this.sprite.getY() < -200) {
 

@@ -16,7 +16,7 @@ public class PlayerShotgunWeapon extends Weapon {
     public PlayerShotgunWeapon(Player player) {
 
         this.player = player;
-        this.damage = GameConstants.player_shotgun_damage;
+        this.damage = GameConstants.PLAYER_SHOTGUN_DAMAGE;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PlayerShotgunWeapon extends Weapon {
 
         if (this.isOn) {
             // creates new projectiles every interval in seconds
-            if (System.nanoTime() > interval + (3 * GameConstants.projectile_creation_interval * 1000000000)) {
+            if (System.nanoTime() > interval + (3 * GameConstants.PROJECTILE_CREATION_INTERVAL * 1000000000)) {
                 projectiles.add(new PlayerShotgunProjectile(this.player, ProjectilePosition.FAR_RIGHT));
                 projectiles.add(new PlayerShotgunProjectile(this.player, ProjectilePosition.INNER_RIGHT));
                 projectiles.add(new PlayerShotgunProjectile(this.player, ProjectilePosition.INNER_LEFT));
@@ -36,7 +36,7 @@ public class PlayerShotgunWeapon extends Weapon {
 
         // update projectiles
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
                 // remove projectiles that fly off screen

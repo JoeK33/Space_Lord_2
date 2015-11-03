@@ -54,7 +54,8 @@ public class EnemyBlasterProjectile extends Projectile {
 
         // if still with the enemy, move with them. once fired, stay on course.
         if (!launched) {
-            this.sprite.setPosition(enemy.getX() + enemy.getWidth() / 2 - getProjectileHeight() / 2, enemy.getY() - getProjectileHeight() + 15);
+            this.sprite.setPosition(enemy.getX() + enemy.getWidth() / 2 - getProjectileHeight() / 2,
+                    enemy.getY() - getProjectileHeight() + 15);
 
             this.deltax = SpaceLord2.player.getPlayerNosePosition()[0] - (this.sprite.getX() + this.sprite.getWidth() / 2);
             this.deltay = SpaceLord2.player.getPlayerNosePosition()[1] - (this.sprite.getY());
@@ -63,7 +64,8 @@ public class EnemyBlasterProjectile extends Projectile {
             velY = (deltay / distance);
 
         } else {
-            this.sprite.setPosition((float) (this.getX() + (velX * (delta * GameConstants.projectile_speed))), (float) (this.sprite.getY() + (velY * (delta * GameConstants.projectile_speed))));
+            this.sprite.setPosition((float) (this.getX() + (velX * (delta * GameConstants.PROJECTILE_SPEED))),
+                    (float) (this.sprite.getY() + (velY * (delta * GameConstants.PROJECTILE_SPEED))));
 
             if (this.sprite.getY() < -200) {
                 this.remove();

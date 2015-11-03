@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class EnemyGenericWeapon extends Weapon {
 
 
-    private int small_projectile_width = 12;
+    private int smallProjectileWidth = 12;
 
     private Enemy enemy;
 
@@ -29,7 +29,8 @@ public class EnemyGenericWeapon extends Weapon {
                 // creates new projectiles every interval in seconds
                 if (System.nanoTime() > interval + (4L * 1000000000L)) {
                     if ((int) (Math.random() * 10) == 5) {
-                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - small_projectile_width, enemy.getNosePos()[1]}, enemy.assets));
+                        projectiles.add(new EnemyMgProjectile(new float[]{enemy.getNosePos()[0] - smallProjectileWidth,
+                                enemy.getNosePos()[1]}, enemy.assets));
 
                         interval = System.nanoTime();
                     }
@@ -38,7 +39,7 @@ public class EnemyGenericWeapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 

@@ -11,7 +11,7 @@ public class EnemySmall extends Enemy {
     private Weapon weapon;
 
     public EnemySmall() {
-        super(GameConstants.enemy_small_health, 50);
+        super(GameConstants.ENEMY_SMALL_HEALTH, 50);
         this.weapon = new EnemyGenericWeapon(this);
         super.weapon = this.weapon;
     }

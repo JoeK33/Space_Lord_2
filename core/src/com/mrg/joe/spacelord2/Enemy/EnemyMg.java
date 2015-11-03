@@ -13,7 +13,7 @@ public class EnemyMg extends Enemy {
     private Weapon weapon;
 
     public EnemyMg() {
-        super(GameConstants.enemy_mg_health, 250);
+        super(GameConstants.ENEMY_MG_HEALTH, 250);
         this.weapon = new EnemyMachineGunWeapon(this);
         super.weapon = this.weapon;
     }

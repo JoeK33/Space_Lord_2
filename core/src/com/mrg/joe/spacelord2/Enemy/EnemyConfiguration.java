@@ -34,276 +34,199 @@ import java.util.List;
  */
 public class EnemyConfiguration {
 
-    private float row_y;
+    private float rowY;
     private LinkedList<Enemy> enemyList;
     private float rowHeight;
-    private int config;
-
 
     public EnemyConfiguration(int config, EnemyPools pools) {
-        float spawn_height = GameConstants.GAME_HEIGHT + 200;
-        float screen_width = GameConstants.GAME_WIDTH;
-        this.config = config;
+        float spawnHeight = GameConstants.GAME_HEIGHT + 200;
+        float gameWidth = GameConstants.GAME_WIDTH;
         enemyList = new LinkedList<Enemy>();
-        this.setY(spawn_height);
+        this.setY(spawnHeight);
 
         if (config == 0) {
-
         } else if (config == 1) {
             // four fighters
             Enemy[] enemies = new Enemy[4];
             for (int i = 0; i < 4; i++) {
-                enemies[i] = pools.EnemyFighterPool.obtain();
+                enemies[i] = pools.enemyFighterPool.obtain();
             }
             rowHeight = enemies[0].getHeight();
             float enemyOffset = (enemies[0].getWidth() / 4) * 2;
-            enemies[0].init((screen_width / 8) * 1 - enemyOffset, this.row_y, Behavior.WIGGLE);
-            enemies[1].init((screen_width / 8) * 3 - enemyOffset, this.row_y, Behavior.WIGGLE);
-            enemies[2].init((screen_width / 8) * 5 - enemyOffset, this.row_y, Behavior.WIGGLE);
-            enemies[3].init((screen_width / 8) * 7 - enemyOffset, this.row_y, Behavior.WIGGLE);
+            enemies[0].init((gameWidth / 8) * 1 - enemyOffset, this.rowY, Behavior.WIGGLE);
+            enemies[1].init((gameWidth / 8) * 3 - enemyOffset, this.rowY, Behavior.WIGGLE);
+            enemies[2].init((gameWidth / 8) * 5 - enemyOffset, this.rowY, Behavior.WIGGLE);
+            enemies[3].init((gameWidth / 8) * 7 - enemyOffset, this.rowY, Behavior.WIGGLE);
             for (int i = 0; i < 4; i++) {
                 enemyList.add(enemies[i]);
             }
-
         } else if (config == 2) {
             // a row of 7 small enemies
             Enemy[] enemies = new Enemy[7];
             for (int i = 0; i < 7; i++) {
-                enemies[i] = pools.EnemySmallPool.obtain();
+                enemies[i] = pools.enemySmallPool.obtain();
             }
             rowHeight = enemies[0].getHeight();
             float enemyOffset = (enemies[0].getWidth() / 4) * 2;
             for (int i = 1; i < 8; i++) {
-                enemies[i - 1].init((screen_width / 8) * i - enemyOffset, this.row_y, Behavior.WIGGLE);
+                enemies[i - 1].init((gameWidth / 8) * i - enemyOffset, this.rowY, Behavior.WIGGLE);
                 enemyList.add(enemies[i - 1]);
             }
         } else if (config == 3) {
-
             //single patrolling machine gun enemy
-            Enemy e = pools.EnemyMgPool.obtain();
+            Enemy e = pools.enemyMgPool.obtain();
             rowHeight = e.getHeight();
-            float enemyX = (0 + (int) (Math.random() * ((screen_width - e.getWidth()) + 1)));
-            e.init(enemyX, this.row_y, Behavior.PATROL);
+            float enemyX = (0 + (int) (Math.random() * ((gameWidth - e.getWidth()) + 1)));
+            e.init(enemyX, this.rowY, Behavior.PATROL);
             enemyList.add(e);
-
-
         } else if (config == 4) {
-
             // boss
-            Enemy e = pools.EnemyBossPool.obtain();
+            Enemy e = pools.enemyBossPool.obtain();
             rowHeight = e.getHeight();
-            e.init((screen_width / 2) - (e.getWidth() / 2), this.row_y, Behavior.TRACK_PLAYER);
+            e.init((gameWidth / 2) - (e.getWidth() / 2), this.rowY, Behavior.TRACK_PLAYER);
             enemyList.add(e);
-
         } else if (config == 5) {
-
             // single blaster enemy
-            Enemy e = pools.EnemyBlasterPool.obtain();
+            Enemy e = pools.enemyBlasterPool.obtain();
             rowHeight = e.getHeight();
-            e.init((screen_width / 2) - (e.getWidth() / 2), this.row_y, Behavior.TRACK_PLAYER);
-
+            e.init((gameWidth / 2) - (e.getWidth() / 2), this.rowY, Behavior.TRACK_PLAYER);
             enemyList.add(e);
-
-
         } else if (config == 6) {
-
             // single boss 2 and hunter
-            Enemy e1 = pools.EnemyBoss2Pool.obtain();
-            Enemy e2 = pools.EnemyHunterPool.obtain();
+            Enemy e1 = pools.enemyBoss2Pool.obtain();
+            Enemy e2 = pools.enemyHunterPool.obtain();
             rowHeight = e1.getHeight() + 200;
-            e1.init((screen_width / 2) - (e1.getWidth() / 2), this.row_y, Behavior.TRACK_PLAYER);
-            e2.init((screen_width / 2) - (e2.getWidth() / 2), this.row_y + 200, Behavior.HUNT);
-
-
+            e1.init((gameWidth / 2) - (e1.getWidth() / 2), this.rowY, Behavior.TRACK_PLAYER);
+            e2.init((gameWidth / 2) - (e2.getWidth() / 2), this.rowY + 200, Behavior.HUNT);
             enemyList.add(e1);
             enemyList.add(e2);
-
         } else if (config == 7) {
-
             // single hunter
-
-            Enemy e = pools.EnemyHunterPool.obtain();
+            Enemy e = pools.enemyHunterPool.obtain();
             rowHeight = e.getHeight();
-            e.init((screen_width / 2) - (e.getWidth() / 2), this.row_y, Behavior.HUNT);
+            e.init((gameWidth / 2) - (e.getWidth() / 2), this.rowY, Behavior.HUNT);
             enemyList.add(e);
-
         } else if (config == 8) {
-
             // single boss 3
-
-            Enemy e = pools.EnemyBoss3Pool.obtain();
+            Enemy e = pools.enemyBoss3Pool.obtain();
             rowHeight = e.getHeight();
-            e.init((screen_width / 2) - (e.getWidth() / 2), this.row_y, Behavior.PATROL);
+            e.init((gameWidth / 2) - (e.getWidth() / 2), this.rowY, Behavior.PATROL);
             enemyList.add(e);
-
-
         } else if (config == 9) {
-
             // single boss 4
-
-            Enemy e = pools.EnemyBoss4Pool.obtain();
+            Enemy e = pools.enemyBoss4Pool.obtain();
             rowHeight = e.getHeight();
-            e.init((screen_width / 2) - (e.getWidth() / 2), this.row_y, Behavior.PATROL);
+            e.init((gameWidth / 2) - (e.getWidth() / 2), this.rowY, Behavior.PATROL);
             enemyList.add(e);
-
         } else if (config == 10) {
-
             //two wiggling machine gun enemies
-
-            Enemy e1 = pools.EnemyMgPool.obtain();
-            Enemy e2 = pools.EnemyMgPool.obtain();
+            Enemy e1 = pools.enemyMgPool.obtain();
+            Enemy e2 = pools.enemyMgPool.obtain();
             rowHeight = e1.getHeight();
-
-            e1.init(screen_width / 4 - e1.getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            e2.init((screen_width / 4) * 3 - e2.getWidth() / 2, this.row_y, Behavior.WIGGLE);
+            e1.init(gameWidth / 4 - e1.getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            e2.init((gameWidth / 4) * 3 - e2.getWidth() / 2, this.rowY, Behavior.WIGGLE);
             enemyList.add(e1);
             enemyList.add(e2);
-
         } else if (config == 11) {
-
             //two wiggling blaster enemies
-
-            Enemy e1 = pools.EnemyBlasterPool.obtain();
-            Enemy e2 = pools.EnemyBlasterPool.obtain();
+            Enemy e1 = pools.enemyBlasterPool.obtain();
+            Enemy e2 = pools.enemyBlasterPool.obtain();
             rowHeight = e1.getHeight();
-
-            e1.init(screen_width / 4 - e1.getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            e2.init((screen_width / 4) * 3 - e2.getWidth() / 2, this.row_y, Behavior.WIGGLE);
+            e1.init(gameWidth / 4 - e1.getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            e2.init((gameWidth / 4) * 3 - e2.getWidth() / 2, this.rowY, Behavior.WIGGLE);
             enemyList.add(e1);
             enemyList.add(e2);
-
         } else if (config == 12) {
-
             //three wiggling fighter enemies
-
             Enemy[] enemies = new Enemy[3];
             for (int i = 0; i < 3; i++) {
-                enemies[i] = pools.EnemyFighterPool.obtain();
+                enemies[i] = pools.enemyFighterPool.obtain();
             }
             rowHeight = enemies[0].getHeight();
-
-            enemies[0].init((screen_width / 4) - enemies[0].getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            enemies[1].init((screen_width / 4) * 2 - enemies[1].getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            enemies[2].init((screen_width / 4) * 3 - enemies[2].getWidth() / 2, this.row_y, Behavior.WIGGLE);
-
+            enemies[0].init((gameWidth / 4) - enemies[0].getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            enemies[1].init((gameWidth / 4) * 2 - enemies[1].getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            enemies[2].init((gameWidth / 4) * 3 - enemies[2].getWidth() / 2, this.rowY, Behavior.WIGGLE);
             for (int i = 0; i < 3; i++) {
                 enemyList.add(enemies[i]);
             }
-
         } else if (config == 13) {
-
             //two small enemies
-
-            Enemy e1 = pools.EnemySmallPool.obtain();
-            Enemy e2 = pools.EnemySmallPool.obtain();
+            Enemy e1 = pools.enemySmallPool.obtain();
+            Enemy e2 = pools.enemySmallPool.obtain();
             rowHeight = e1.getHeight();
-
-            e1.init(screen_width / 4 - e1.getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            e2.init((screen_width / 4) * 3 - e2.getWidth() / 2, this.row_y, Behavior.WIGGLE);
+            e1.init(gameWidth / 4 - e1.getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            e2.init((gameWidth / 4) * 3 - e2.getWidth() / 2, this.rowY, Behavior.WIGGLE);
             enemyList.add(e1);
             enemyList.add(e2);
-
         } else if (config == 14) {
-
             // four small enemies
-
             Enemy[] enemies = new Enemy[4];
             for (int i = 0; i < 4; i++) {
-                enemies[i] = pools.EnemySmallPool.obtain();
+                enemies[i] = pools.enemySmallPool.obtain();
             }
             rowHeight = enemies[0].getHeight();
             float enemyOffset = (enemies[0].getWidth() / 4) * 2;
-            enemies[0].init((screen_width / 8) * 1 - enemyOffset, this.row_y, Behavior.WIGGLE);
-            enemies[1].init((screen_width / 8) * 3 - enemyOffset, this.row_y, Behavior.WIGGLE);
-            enemies[2].init((screen_width / 8) * 5 - enemyOffset, this.row_y, Behavior.WIGGLE);
-            enemies[3].init((screen_width / 8) * 7 - enemyOffset, this.row_y, Behavior.WIGGLE);
+            enemies[0].init((gameWidth / 8) * 1 - enemyOffset, this.rowY, Behavior.WIGGLE);
+            enemies[1].init((gameWidth / 8) * 3 - enemyOffset, this.rowY, Behavior.WIGGLE);
+            enemies[2].init((gameWidth / 8) * 5 - enemyOffset, this.rowY, Behavior.WIGGLE);
+            enemies[3].init((gameWidth / 8) * 7 - enemyOffset, this.rowY, Behavior.WIGGLE);
             for (int i = 0; i < 4; i++) {
                 enemyList.add(enemies[i]);
             }
-
-
         } else if (config == 15) {
-
             //two wiggling fighter enemies
-
-            Enemy e1 = pools.EnemyFighterPool.obtain();
-            Enemy e2 = pools.EnemyFighterPool.obtain();
+            Enemy e1 = pools.enemyFighterPool.obtain();
+            Enemy e2 = pools.enemyFighterPool.obtain();
             rowHeight = e1.getHeight();
-
-            e1.init(screen_width / 4 - e1.getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            e2.init((screen_width / 4) * 3 - e2.getWidth() / 2, this.row_y, Behavior.WIGGLE);
+            e1.init(gameWidth / 4 - e1.getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            e2.init((gameWidth / 4) * 3 - e2.getWidth() / 2, this.rowY, Behavior.WIGGLE);
             enemyList.add(e1);
             enemyList.add(e2);
-
         } else if (config == 16) {
-
             //single centered wiggling mg
-
-            Enemy e = pools.EnemyMgPool.obtain();
-            e.init(screen_width / 2 - e.getWidth() / 2, this.row_y, Behavior.WIGGLE);
+            Enemy e = pools.enemyMgPool.obtain();
+            e.init(gameWidth / 2 - e.getWidth() / 2, this.rowY, Behavior.WIGGLE);
             rowHeight = e.getHeight();
-
             enemyList.add(e);
-
-
         } else if (config == 17) {
-
-
             // 3 small enemies
-
-            //three wiggling fighter enemies
-
             Enemy[] enemies = new Enemy[3];
             for (int i = 0; i < 3; i++) {
-                enemies[i] = pools.EnemySmallPool.obtain();
+                enemies[i] = pools.enemySmallPool.obtain();
             }
             rowHeight = enemies[0].getHeight();
-
-            enemies[0].init((screen_width / 4) - enemies[0].getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            enemies[1].init((screen_width / 4) * 2 - enemies[1].getWidth() / 2, this.row_y, Behavior.WIGGLE);
-            enemies[2].init((screen_width / 4) * 3 - enemies[2].getWidth() / 2, this.row_y, Behavior.WIGGLE);
-
+            enemies[0].init((gameWidth / 4) - enemies[0].getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            enemies[1].init((gameWidth / 4) * 2 - enemies[1].getWidth() / 2, this.rowY, Behavior.WIGGLE);
+            enemies[2].init((gameWidth / 4) * 3 - enemies[2].getWidth() / 2, this.rowY, Behavior.WIGGLE);
             for (int i = 0; i < 3; i++) {
                 enemyList.add(enemies[i]);
             }
         }
-
-
     }
-
 
     public void setY(float y) {
-        this.row_y = y;
+        this.rowY = y;
     }
-
 
     public List<Enemy> getEnemyConfiguration() {
         return enemyList;
     }
 
     public float getRowY() {
-
-
         if (!this.isEmpty()) {
             Enemy e = enemyList.getFirst();
             return e.getY();
         }
         return -100;
-
-
     }
 
     public void update() {
-
-        for (Iterator ite = enemyList.iterator(); ite.hasNext(); ) {
+        for (Iterator ite = enemyList.iterator(); ite.hasNext();) {
             Enemy e = (Enemy) ite.next();
-
             if (!e.isAlive()) {
                 ite.remove();
             }
-
         }
-
     }
 
 
@@ -316,24 +239,17 @@ public class EnemyConfiguration {
 
     }
 
-
     public void advanceRow() {
-
-        for (Iterator ite = enemyList.iterator(); ite.hasNext(); ) {
+        for (Iterator ite = enemyList.iterator(); ite.hasNext();) {
             Enemy e = (Enemy) ite.next();
-
             e.setAdvancing(true);
-
         }
     }
 
     public void stopRow() {
-
-        for (Iterator ite = enemyList.iterator(); ite.hasNext(); ) {
+        for (Iterator ite = enemyList.iterator(); ite.hasNext();) {
             Enemy e = (Enemy) ite.next();
-
             e.setAdvancing(false);
-
         }
     }
 

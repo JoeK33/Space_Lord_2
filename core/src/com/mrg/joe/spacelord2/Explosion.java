@@ -30,16 +30,18 @@ public class Explosion {
         int pick = (int) (3 * Math.random());
 
 
-        if(pick == 0){
+        if (pick == 0) {
             this.explodeSheet =   manager.manager.get("explosion_sheet.png");
-        }else if(pick == 1){
+        } else if (pick == 1) {
             this.explodeSheet =   manager.manager.get("explosion_sheet2.png");
-        }else if(pick == 2){
+        } else if (pick == 2) {
             this.explodeSheet =  manager.manager.get("explosion_sheet3.png");
         }
 
 
-        TextureRegion[][] tmp = TextureRegion.split(this.explodeSheet, this.explodeSheet.getWidth() / FRAME_COLS, this.explodeSheet.getHeight() / FRAME_ROWS);
+        TextureRegion[][] tmp = TextureRegion.split(this.explodeSheet,
+                this.explodeSheet.getWidth() / FRAME_COLS,
+                this.explodeSheet.getHeight() / FRAME_ROWS);
         this.explodeFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
 
@@ -60,23 +62,23 @@ public class Explosion {
     public void draw(SpriteBatch batch) {
         // explosion is centered on the thing that is exploding's center
 
-        if(!this.explodeAnimation.isAnimationFinished(this.stateTime)) {
+        if (!this.explodeAnimation.isAnimationFinished(this.stateTime)) {
             this.stateTime += Gdx.graphics.getDeltaTime();
             batch.draw(
                     this.explodeAnimation.getKeyFrame(this.stateTime, false),
-                    this.sprite.getX() + this.sprite.getWidth()/2 - ((this.explodeSheet.getWidth() / FRAME_COLS) / 2),
-                    this.sprite.getY() + this.sprite.getHeight()/2 - ((this.explodeSheet.getHeight() / FRAME_ROWS) / 2)
+                    this.sprite.getX() + this.sprite.getWidth() / 2 - ((this.explodeSheet.getWidth() / FRAME_COLS) / 2),
+                    this.sprite.getY() + this.sprite.getHeight() / 2 - ((this.explodeSheet.getHeight() / FRAME_ROWS) / 2)
             );
 
         }
 
     }
 
-    public boolean isFinished(){
+    public boolean isFinished() {
         return this.explodeAnimation.isAnimationFinished(this.stateTime);
     }
 
-   public void resetTime(){
+   public void resetTime() {
         this.stateTime = 0f;
     }
 }

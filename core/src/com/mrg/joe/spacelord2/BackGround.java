@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class BackGround {
 
-    private Texture bg_spriteTexture;
-    private Sprite bg_sprite;
-    private float bg_scrollTimer = 0.0f;
+    private Texture bgSpriteTexture;
+    private Sprite bgSprite;
+    private float bgScrollTimer = 0.0f;
 
 
     public BackGround() {
@@ -22,32 +22,32 @@ public class BackGround {
         int screenHeight = GameConstants.GAME_HEIGHT;
         int screenWidth = GameConstants.GAME_WIDTH;
 
-        bg_spriteTexture = new Texture(Gdx.files.internal("space_tile.png"));
-        bg_spriteTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        bg_sprite = new Sprite(bg_spriteTexture, 0, 0, screenWidth, screenHeight);
-        bg_sprite.setSize(screenWidth, screenHeight);
+        bgSpriteTexture = new Texture(Gdx.files.internal("space_tile.png"));
+        bgSpriteTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        bgSprite = new Sprite(bgSpriteTexture, 0, 0, screenWidth, screenHeight);
+        bgSprite.setSize(screenWidth, screenHeight);
         this.update();
     }
 
     public void draw(SpriteBatch batch) {
-        bg_sprite.draw(batch);
+        bgSprite.draw(batch);
     }
 
     public void update() {
 
-        bg_scrollTimer += Gdx.graphics.getDeltaTime();
+        bgScrollTimer += Gdx.graphics.getDeltaTime();
 
-        if (bg_scrollTimer > 1.0f)
-            bg_scrollTimer = 0.0f;
+        if (bgScrollTimer > 1.0f)
+            bgScrollTimer = 0.0f;
 
-        bg_sprite.setV(bg_scrollTimer);
-        bg_sprite.setV2(bg_scrollTimer - 4f);
+        bgSprite.setV(bgScrollTimer);
+        bgSprite.setV2(bgScrollTimer - 4f);
 
 
     }
 
     public void dispose() {
-        this.bg_spriteTexture.dispose();
+        this.bgSpriteTexture.dispose();
     }
 
 

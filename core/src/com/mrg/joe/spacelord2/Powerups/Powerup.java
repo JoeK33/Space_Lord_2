@@ -76,7 +76,8 @@ public class Powerup {
 
         if (!deployed) {
 
-            this.sprite.setPosition((float) (Math.random() * (GameConstants.GAME_WIDTH - this.sprite.getWidth())), GameConstants.GAME_HEIGHT + this.sprite.getHeight());
+            this.sprite.setPosition((float) (Math.random() * (GameConstants.GAME_WIDTH - this.sprite.getWidth())),
+                    GameConstants.GAME_HEIGHT + this.sprite.getHeight());
             this.deployed = true;
         }
     }

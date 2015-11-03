@@ -13,7 +13,7 @@ public class EnemyBlaster extends Enemy {
 
 
     public EnemyBlaster() {
-        super(GameConstants.enemy_blaster_health, 500);
+        super(GameConstants.ENEMY_BLASTER_HEALTH, 500);
     }
 
 

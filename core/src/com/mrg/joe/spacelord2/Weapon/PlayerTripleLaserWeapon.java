@@ -18,7 +18,7 @@ public class PlayerTripleLaserWeapon extends Weapon {
 
     public PlayerTripleLaserWeapon(Player player) {
         this.player = player;
-        this.damage = GameConstants.player_minigun_damage;
+        this.damage = GameConstants.PLAYER_MINIGUN_DAMAGE;
     }
 
 
@@ -28,8 +28,9 @@ public class PlayerTripleLaserWeapon extends Weapon {
 
         // creates new projectiles every interval in seconds
         if (this.isOn) {
-            if (System.nanoTime() > interval + (GameConstants.projectile_creation_interval * 1000000000)) {
-                projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
+            if (System.nanoTime() > interval + (GameConstants.PROJECTILE_CREATION_INTERVAL * 1000000000)) {
+                projectiles.add(new PlayerProjectile(player, GameConstants.PLAYER_MINIGUN_DAMAGE,
+                        new float[]{player.getCenterX() - (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
                 // offset firing to make it look better
                 Timer timer = new Timer();
@@ -37,7 +38,8 @@ public class PlayerTripleLaserWeapon extends Weapon {
                     @Override
                     public void run() {
                         if (player.isAlive() && !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
+                            projectiles.add(new PlayerProjectile(player, GameConstants.PLAYER_MINIGUN_DAMAGE,
+                                    new float[]{player.getCenterX() + (player.getWidth() / 4), player.getY() + player.getHeight()}));
 
                         }
 
@@ -49,7 +51,8 @@ public class PlayerTripleLaserWeapon extends Weapon {
                     @Override
                     public void run() {
                         if (player.isAlive() && !SpaceLord2.hud.isPaused()) {
-                            projectiles.add(new PlayerProjectile(player, GameConstants.player_minigun_damage, player.getPlayerNosePosition()));
+                            projectiles.add(new PlayerProjectile(player, GameConstants.PLAYER_MINIGUN_DAMAGE,
+                                    player.getPlayerNosePosition()));
 
                         }
 
@@ -60,7 +63,7 @@ public class PlayerTripleLaserWeapon extends Weapon {
         }
 
         if (!projectiles.isEmpty()) {
-            for (Iterator itr = projectiles.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = projectiles.iterator(); itr.hasNext();) {
                 Projectile p = (Projectile) itr.next();
                 p.update(delta);
 
